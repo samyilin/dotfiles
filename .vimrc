@@ -27,8 +27,8 @@ else
   if &compatible
     set nocompatible               " Be iMproved
   endif
-  set runtimepath+=/home/samsu/.cache/dein/repos/github.com/Shougo/dein.vim
-  call dein#begin('/home/samsu/.cache/dein')
+  set runtimepath+=~/.cache/dein/repos/github.com/Shougo/dein.vim
+  call dein#begin('~/.cache/dein')
   call dein#add('tpope/vim-sensible')
   call dein#add('morhetz/gruvbox')
   call dein#add('tpope/vim-vinegar')
