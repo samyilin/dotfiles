@@ -24,29 +24,31 @@ if empty(glob('~/.cache/dein'))
   silent !sh ~/installer.sh ~/.cache/dein
   call dein#install()
 else
-        if &compatible
-                set nocompatible               " Be iMproved
-        endif
+  if &compatible
+    set nocompatible               " Be iMproved
+  endif
   set runtimepath+=/home/samsu/.cache/dein/repos/github.com/Shougo/dein.vim
   call dein#begin('/home/samsu/.cache/dein')
-        call dein#add('tpope/vim-sensible')
-        call dein#add('morhetz/gruvbox')
+  call dein#add('tpope/vim-sensible')
+  call dein#add('morhetz/gruvbox')
   call dein#add('tpope/vim-vinegar')
-        call dein#end()
-
-        " Required:
-        filetype plugin indent on
-        syntax enable
-        " If you want to install not installed plugins on startup.
-        if dein#check_install()
-                call dein#install()
-        endif
+  call dein#add('vim-airline/vim-airline')
+  call dein#add('vim-airline/vim-airline-themes')
+  call dein#end()
+  
+  " Required:
+  filetype plugin indent on
+  syntax enable
+  " If you want to install not installed plugins on startup.
+  if dein#check_install()
+    call dein#install()
+  endif
 endif
 "End dein Scripts-------------------------
 
 set background=dark
 autocmd vimenter * ++nested colorscheme gruvbox
-
+let g:airline_theme='base16_gruvbox_dark_hard'
 if (has("termguicolors"))
   set termguicolors
 endif
