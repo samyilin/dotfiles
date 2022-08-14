@@ -15,7 +15,7 @@ set ruler " see ruf for formatting
 " show command and insert mode
 set showmode
 
-set tabstop=2
+" set tabstop=2
 
 "#######################################################################
 "dein Scripts-----------------------------
@@ -35,7 +35,6 @@ else
   call dein#add('vim-airline/vim-airline')
   call dein#add('vim-airline/vim-airline-themes')
   call dein#end()
-  
   " Required:
   filetype plugin indent on
   syntax enable
@@ -57,10 +56,10 @@ endif
 " disable visual bell (also disable in .inputrc)
 set t_vb=
 
-set softtabstop=2
+" set softtabstop=2
 
 " mostly used with >> and <<
-set shiftwidth=2
+" set shiftwidth=2
 
 set smartindent
 
