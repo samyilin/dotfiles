@@ -16,6 +16,9 @@ set ruler " see ruf for formatting
 set showmode
 
 " set tabstop=2
+" inhibits errors when running Alacritty on Windows 
+
+set t_u7=
 
 "#######################################################################
 "dein Scripts-----------------------------
@@ -135,7 +138,7 @@ set omnifunc=syntaxcomplete#Complete
 "fix bork bash detection
 if has("eval")  " vim-tiny detection
 fun! s:DetectBash()
-    if getline(1) == '#!/usr/bin/bash' || getline(1) == '#!/bin/bash'
+    if getline(1) == '#!/usr/bin/bash' || getline(1) == '#!/bin/bash' || getline(1) == '#!/bin/sh'
         set ft=bash
         set shiftwidth=2
     endif
