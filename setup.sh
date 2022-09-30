@@ -20,20 +20,24 @@ cd ~
 # This is the default behaviour.
 # If argument --vim_import_method (-v) equals 'IDE', get LSP and other goodies in there before making the user aware of it. Prompts the user that they could use Neovim, Emacs or VSCode as well.
 if [ -f ~/.bashrc ]; then
-    
-    cat dotfiles/.bashrc >> .bashrc
-else
-    touch .bashrc && echo '#!/bin/sh' >> .bashrc && cat dotfiles/.bashrc >> .bashrc || echo Unknown Error, Check User Priviledge
+    if ! grep -FxPq "if [ -f ~/.bash_personal ]; then . ~/.bash_personal; fi" ~/.bashrc; then
+        echo "if [ -f ~/.bash_personal ]; then . ~/.bash_personal; fi" >> ~/.bashrc && cp ~/dotfiles/.bashrc ~/.bash_personal
+    fi
 fi
+else
+
 if [ -f ~/.bash_aliases ]; then
-    cat dotfiles/.bash_aliases >> .bash_aliases
-else
-    touch .bash_aliases && echo '#!/bin/sh' >> .bash_aliases && cat dotfiles/.bash_aliases >> .bash_aliases || echo Unknown Error, Check User Priviledge
+    if ! grep -Fxq "if [ -f ~/.bash_aliases ]; then . ~/.bash_aliases; fi" ~/.bashrc; 
+        echo "if [ -f ~/.bash_aliases ]; then . ~/.bash_aliases; fi" >> ~/.bashrc && cp ~/dotfiles/.bash_aliases ~/.bash_aliases
+    fi
 fi
-if ! command -v tmux &> /dev/null
-then
+if [ -z "$(which vim)" -o -z "$(which vimtutor)" ]; then
+  echo "Warning, doesn't look like you have full Vim version."
+  echo "Use your system package manager to install vim."
+fi
+if ! command -v tmux &> /dev/null; then
     echo 'tmux is not installed, do you wish to install it? Not installing it would '
-    # prompt the user to say yes or no, then guess which system
+    # prompt the user to say yes or no, then guess which package manager the user needs
     sudo dnf install tmux || sudo apt-get install 
 else
     cp dotfiles/.tmux.conf ~/.tmux.conf
