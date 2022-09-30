@@ -175,6 +175,6 @@ set path+=**
 " Create the `tags` file (may need to install ctags first)
 command! MakeTags !ctags -R .
 
-if filereadable("~/.vim_personal")
-    source ~/.vim_personal
+if filereadable("~/.vimpersonal")
+    set rtp^=~/.vimpersonal
 endif
