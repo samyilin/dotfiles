@@ -6,5 +6,5 @@ fi
 # launch emacs in server mode if it's not running
 if ! pgrep -x "emacs" > /dev/null
 then
-    emacs --daemon
+    emacs --daemon || echo 'emacs is not installed in your system, quitting'
 fi
