@@ -22,7 +22,6 @@ set showmode
 if empty(glob('~/.cache/dein'))
   silent !curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > ~/installer.sh
   silent !sh ~/installer.sh ~/.cache/dein
-  call dein#install()
 else
   if &compatible
     set nocompatible               " Be iMproved
@@ -175,3 +174,7 @@ nmap <leader>2 :set paste<CR>i
 set path+=**
 " Create the `tags` file (may need to install ctags first)
 command! MakeTags !ctags -R .
+
+if filereadable("~/.vim_personal")
+    source ~/.vim_personal
+endif
