@@ -1,3 +1,4 @@
+#!/bin/bash
 ##################################################################
 # This is my personal bash profile section, nothing to see here.
 # stops bash execution if it runs into errors.
