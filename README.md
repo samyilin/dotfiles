@@ -30,6 +30,7 @@ git https://github.com/tpope/vim-sensible && cp vim-sensible/plugin/sensible.vi 
 vim -u ~/sensible.vim
 ```
 Should be a good enough minimal starting kit as a plain text editor. Missing some functionalities and themes, but it's a start.
+
 2. Help the user setup your dotfile, question mark?
 
 ## Future State
