@@ -2,5 +2,6 @@
 if ! command -v tmux &> /dev/null; then
     echo 'tmux is not installed, quitting'
 else
-    cp dotfiles/.tmux.conf ~/.tmux.conf
+    find $HOME/.tmux.conf && mv -f $HOME/.tmux.conf $HOME/.tmux.conf.bak
+    ln -sf "$PWD/.tmux.conf" "$HOME/.tmux.conf"
 fi
