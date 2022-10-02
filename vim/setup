@@ -2,6 +2,6 @@
 if [ -z "$(which vim)" -o -z "$(which vimtutor)" ]; then
   echo "Warning, doesn't look like you have full Vim version."
 fi
-find ~/.vimrc  2>/dev/null && touch ~/.vimrc && mv ~/.vimrc ~/.vimrc.bak
+find $HOME/.vimrc  2>/dev/null && touch $HOME/.vimrc && mv $HOME/.vimrc $HOME/.vimrc.bak
 ln -sf "$PWD/.vimrc" "$HOME/.vimrc"
 echo "Enter and quit Vim twice, then type reset on Bash shell to setup vim properly"
