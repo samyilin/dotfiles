@@ -1,8 +1,6 @@
 #!/bin/bash
 
-# Sets up bash profile, vimrc and more. WIP
-# Target endstate: Have some flags to get the config files, and some hints/help the user to set up their system, hopefully.
-# quit script if error occurs
+# Sets up bash profile, vimrc and more. Always WIP.
 set -e
 # go into home dir, if not already
 cd ~
