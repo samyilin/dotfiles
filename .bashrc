@@ -13,4 +13,6 @@ fi
 
 # loads default bashrc existent on system if it's there
 
-find ~/.bashrc.bak >/dev/null && . ~/.bashrc.bak
+if [ -f ~/.bashrc.bak ]; then
+        . ~/.bashrc.bak
+fi
