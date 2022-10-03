@@ -3,4 +3,4 @@ Code to install must-have / optional programs for different systems (Linux distr
 ## What would be in here?
 Programs that are not present in a minimal install.
 
-Some programs are either out-of-date on Ubunto or not packaged right (i.e. emacs-nativecomp), so they may be added as well.
+Some programs are either out-of-date on Ubuntu or not packaged right (i.e. emacs-nativecomp), so they may be added as well.
