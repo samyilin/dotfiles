@@ -5,8 +5,8 @@
 
 # If not running interactively, don't do anything
 case $- in
-	*i*) ;;
-	*) return;;
+        *i*) ;;
+        *) return;;
 esac
 # launches emacs in server mode if not already running.
 if ! pgrep -x "emacs" > /dev/null
@@ -17,10 +17,10 @@ fi
 # Loads aliases after Emacs launch to avoid naming collision
 # loads default bashrc existent on system if it's there
 for file in ~/.{bash_aliases,bashrc.bak}; do
-	if [[ -r "$file" ]] && [[ -f "$file" ]]; then
-		# shellcheck source=/dev/null
-		. "$file"
-	fi
+        if [[ -r "$file" ]] && [[ -f "$file" ]]; then
+                # shellcheck source=/dev/null
+                . "$file"
+        fi
 done
 unset file
 
