@@ -11,6 +11,6 @@ if [ -f ~/.bash_aliases ]; then
         . ~/.bash_aliases
 fi
 
-# loads default bashrc existent on system before import
+# loads default bashrc existent on system if it's there
 
-touch ~/.bashrc.bak && . ~/.bashrc.bak
+find ~/.bashrc.bak >/dev/null && . ~/.bashrc.bak
