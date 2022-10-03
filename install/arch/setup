@@ -6,4 +6,6 @@ sudo pacman -S archlinux-keyring
 sudo pacman-key --populate
 sudo pacman -Syu
 
-sudo pacman -S git tmux vim emacs-nativecomp openssh
+# Arch linux is absurdingly tiny in the sense that some commonly used
+# things are missing, such as openssh and which
+sudo pacman -S git tmux vim emacs-nativecomp openssh which busybox

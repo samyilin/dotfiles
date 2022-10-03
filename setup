@@ -9,11 +9,11 @@ echo "if some programs weren't installed during initial setup, go to this reposi
 echo "subfolder with the programs' name to execute the appropriate setup file."
 sleep 3
 # if there's existing .profile and it isn't a symlink, then move it to a backup
-if [ -f $HOME/.profile && ! -L $HOME/.profile ]; then
+if [ -f $HOME/.profile ] && [ ! -L $HOME/.profile ]; then
     mv -f .profile .profile.bak
 fi
 
-if [ -f $HOME/.bashrc && ! -L $HOME/.bashrc]; then
+if [ -f $HOME/.bashrc ] &&  [ ! -L $HOME/.bashrc ]; then
     mv -f .bashrc .bashrc.bak
 fi
 
