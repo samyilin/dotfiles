@@ -2,16 +2,20 @@
 
 # Sets up bash profile, vimrc and more. Always WIP.
 set -e
-# go into home dir, if not already
-cd ~
+
 # copy bashrc and bash aliases in.
 echo "This program is not meant to be used repetitively."
 echo "if some programs weren't installed during initial setup, go to this repository's "
 echo "subfolder with the programs' name to execute the appropriate setup file."
 sleep 3
-# if there's existing .profile, then move it to a backup
-find .profile 2>/dev/null && mv -f .profile .profile.bak
-find .bashrc 2>/dev/null && mv -f .bashrc .bashrc.bak
+# if there's existing .profile and it isn't a symlink, then move it to a backup
+if [ -f $HOME/.profile && ! -L $HOME/.profile ]; then
+    mv -f .profile .profile.bak
+fi
+
+if [ -f $HOME/.bashrc && ! -L $HOME/.bashrc]; then
+    mv -f .bashrc .bashrc.bak
+fi
 
 ln -sf "$PWD/.profile" "$HOME/.profile"
 ln -sf "$PWD/.bashrc" "$HOME/.bashrc"
