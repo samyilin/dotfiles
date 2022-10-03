@@ -6,4 +6,4 @@ sudo pacman -S archlinux-keyring
 sudo pacman-key --populate
 sudo pacman -Syu
 
-sudo pacman -S git tmux vim emacs-nativecomp
+sudo pacman -S git tmux vim emacs-nativecomp openssh
