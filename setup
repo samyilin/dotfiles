@@ -16,7 +16,11 @@ fi
 if [ -f $HOME/.bashrc ] &&  [ ! -L $HOME/.bashrc ]; then
     mv -f .bashrc .bashrc.bak
 fi
-
+if ! command -v which &> /dev/null; then
+  echo "Looks like which is not installed, install whicn bfore
+  proceeding further."
+  exit 1
+fi
 ln -sf "$PWD/.profile" "$HOME/.profile"
 ln -sf "$PWD/.bashrc" "$HOME/.bashrc"
 ln -sf "$PWD/.gitconfig" "$HOME/.gitconfig"
@@ -24,4 +28,5 @@ ln -sf "$PWD/.gitconfig" "$HOME/.gitconfig"
 for i in vim tmux; do
   cd $i && ./setup
   cd -
+  sleep 3
 done

@@ -3,4 +3,5 @@ if ! command -v tmux &> /dev/null; then
     echo 'tmux is not installed, skipping...'
 else
     ln -sf "$PWD/.tmux.conf" "$HOME/.tmux.conf"
+    echo "tmux config done."
 fi

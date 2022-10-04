@@ -4,3 +4,6 @@
 name = Sam Su
 # Change to work email if used at work
 email = samsu42@yahoo.ca
+[core]
+# use vim as default commit editor. Can be changed later though.
+editor = vim
