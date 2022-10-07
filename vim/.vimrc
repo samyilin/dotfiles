@@ -16,7 +16,8 @@ set ruler " see ruf for formatting
 set showmode
 
 " set tabstop=2
-" inhibits errors when running Alacritty on Windows 
+" inhibits errors when running Alacritty on Windows
+" Work laptop setup
 set t_u7=
 
 "#######################################################################

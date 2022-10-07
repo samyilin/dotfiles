@@ -4,10 +4,6 @@
 set -e
 
 # copy bashrc and bash aliases in.
-echo "This program is not meant to be used repetitively."
-echo "if some programs weren't installed during initial setup, go to this repository's "
-echo "subfolder with the programs' name to execute the appropriate setup file."
-sleep 3
 # if there's existing .profile and it isn't a symlink, then move it to a backup
 if [ -f $HOME/.profile ] && [ ! -L $HOME/.profile ]; then
     mv -f .profile .profile.bak

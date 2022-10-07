@@ -11,7 +11,7 @@ esac
 # launches emacs in server mode if not already running.
 if ! pgrep -x "emacs" > /dev/null
 then
-    emacs --daemon 2>&1 >> /dev/null || echo 'emacs is not installed in your system, quitting'
+    emacs --daemon > /dev/null 2>&1 || echo 'emacs is not installed in your system, quitting'
 fi
 
 # Loads aliases after Emacs launch to avoid naming collision
