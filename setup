@@ -6,11 +6,11 @@ set -e
 # copy bashrc and bash aliases in.
 # if there's existing .profile and it isn't a symlink, then move it to a backup
 if [ -f $HOME/.profile ] && [ ! -L $HOME/.profile ]; then
-    mv -f $HOME/.profile $HOME/.profile.bak
+  mv -f $HOME/.profile $HOME/.profile.bak
 fi
 
 if [ -f $HOME/.bashrc ] &&  [ ! -L $HOME/.bashrc ]; then
-    mv -f $HOME/.bashrc $HOME/.bashrc.bak
+  mv -f $HOME/.bashrc $HOME/.bashrc.bak
 fi
 if ! command -v which &> /dev/null; then
   echo "Looks like which is not installed, install whicn bfore

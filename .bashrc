@@ -28,4 +28,10 @@ for file in ~/.{bash_aliases,bashrc.bak}; do
         fi
 done
 unset file
+# This line is executed upon exiting shell. Currently it tries to kill
+# emacs, be careful though. you may not want this.
+function cleanup {
+  killall emacs;
+}
+trap cleanup EXIT
 
