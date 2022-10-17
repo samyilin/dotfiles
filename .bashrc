@@ -11,7 +11,12 @@ esac
 # launches emacs in server mode if not already running.
 if ! pgrep -x "emacs" > /dev/null
 then
-    emacs --daemon > /dev/null 2>&1 || echo 'emacs is not installed in your system, quitting'
+    emacs --daemon > /dev/null || echo 'emacs is not installed in your system, quitting'
+fi
+if ! command -v neofetch &> /dev/null; then
+    echo 'neofetch is not installed, quitting.'
+else
+  neofetch
 fi
 
 # Loads aliases after Emacs launch to avoid naming collision
