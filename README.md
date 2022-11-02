@@ -38,6 +38,19 @@ This project is designed based on 3 premise:
    Having a dotfile that you can completely get rid of, including
    symlinks, is a useful and simple feature.
 
+## Assumptions
+
+There're very few assumptions here, but here are them:
+
+1. Bash is the default shell on the system, or at least it can be found
+   at /bin/bash.
+
+   This assumption is NOT true for MacOS, but true for any other good
+   old Linux box. I don't use too much of it to really care. When I have
+   to use MacOS, I will try to use more compliant options.
+2. Your .bash_aliases, .gitconfig, .tmux.conf or .vimrc is nonexistent.
+   This is true most of the times, but if not, then try to preserve your
+   own copies before trying mine!.
 
 ## How to use
 
