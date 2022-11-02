@@ -3,5 +3,6 @@
 # Most are symlinks, only a couple can be tricky.
 rm -f $HOME/.bashrc.personal $HOME/.bash_aliases $HOME/.gitconfig $HOME/.profile.personal $HOME/.vimrc $HOME/.tmux.conf
 rm -rf $HOME/.cache/dein
-unlink $HOME/.bashrc
-unlink $HOME/.profile
+unlink $HOME/.bashrc 2>/dev/null
+unlink $HOME/.profile 2>/dev/null
+exec bash
