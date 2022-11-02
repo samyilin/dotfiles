@@ -45,12 +45,13 @@ There're very few assumptions here, but here are them:
 1. Bash is the default shell on the system, or at least it can be found
    at /bin/bash.
 
-   This assumption COULD be wrong in some didstro, but it is true most 
+   This assumption COULD be wrong in some distro, but it is true most 
    of the time.
 2. Your .bash_aliases, .gitconfig, .tmux.conf or .vimrc is nonexistent.
 
    This is true most of the times, but if not, then try to preserve your
-   own copies before trying mine!.
+   own copies before trying mine! I could add functionality to preserve 
+   your own copy later on though.
 
 ## How to use
 
