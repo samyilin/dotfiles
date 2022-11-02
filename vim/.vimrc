@@ -27,7 +27,7 @@ set t_u7=
 if empty(glob('~/.cache/dein'))
   silent !curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > ~/installer.sh
   silent !sh ~/installer.sh ~/.cache/dein
-  silent !sh rm ~/installer.sh
+  silent !rm ~/installer.sh
 else
   if &compatible
     set nocompatible               " Be iMproved
