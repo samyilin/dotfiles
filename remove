@@ -1,0 +1,7 @@
+#!/bin/bash
+# A quick script to remove customizations due to this dotfile.
+# Most are symlinks, only a couple can be tricky.
+rm $HOME/.bashrc.personal $HOME/.bash_aliases $HOME/.gitconfig $HOME/.profile.personal $HOME/.vimrc $HOME/.tmux.conf
+rm -rf $HOME/.cache/dein
+unlink $HOME/.bashrc
+unlink $HOME/.profile

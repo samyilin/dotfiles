@@ -8,4 +8,4 @@ sudo pacman -Syu
 
 # Arch linux is absurdingly tiny in the sense that some commonly used
 # things are missing, such as openssh and which
-sudo pacman -S git tmux vim emacs-nativecomp openssh which busybox
+sudo pacman -S git tmux vim emacs-nativecomp openssh busybox

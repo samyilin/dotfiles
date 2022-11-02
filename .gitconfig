@@ -1,4 +1,5 @@
-# This is Git's per-user configuration file.
+# This is Git's per-user configuration file. 
+# This is personal, and subject to the user's usecase.
 [user]
 # Please adapt and uncomment the following lines:
 name = Sam Su

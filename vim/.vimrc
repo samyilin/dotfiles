@@ -22,9 +22,12 @@ set t_u7=
 
 "#######################################################################
 "dein Scripts-----------------------------
+"if the below dir is empty, download dein installer and install dein,
+"then get rid of installer script.
 if empty(glob('~/.cache/dein'))
   silent !curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > ~/installer.sh
   silent !sh ~/installer.sh ~/.cache/dein
+  silent !sh rm ~/installer.sh
 else
   if &compatible
     set nocompatible               " Be iMproved
