@@ -1,0 +1,11 @@
+#!/bin/bash
+
+if ! command -v ssh-keygen &>/dev/null; then
+  echo "No ssh agent was installed on your system. It's typically openssh. Quitting ssh setup"
+else
+  echo "Do you wish to setup ssh? This is used to set up git for work/life git repo. [yes|no]"
+  read response
+  if $response = "yes"; then
+    echo "Please put in your email account. used for work/life git repo."
+    read email
+    ssh-keygen -t ed25519 -C "$email"

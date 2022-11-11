@@ -1,0 +1,3 @@
+#!/bin/bash
+rm -f $HOME/.vimrc
+rm -rf $HOME/.cache/dein

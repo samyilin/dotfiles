@@ -2,7 +2,7 @@
 
 # Sets up bash profile, vimrc and more. Always WIP.
 set -e
-echo "Starting Setup" && sleep 2
+echo "Starting Setup..." && sleep 1
 # if there's a bashrc already and it isn't a link, check the following.
 if [ -f $HOME/.bashrc ] && [ ! -L $HOME/.bashrc ]; then
   # add the sourcing line to default .bashrc if not there already
@@ -25,6 +25,7 @@ else
   # bashrc
   if [ ! -f $HOME/.bashrc ]; then
     ln -sf "$PWD/.bashrc.default" "$HOME/.bashrc"
+    ln -sf "$PWD/.bashrc.personal" "$HOME/.bashrc.personal"
   fi
 fi
 
@@ -53,8 +54,10 @@ else
 fi
 # Doesn't seem like there's typically a default .bash_aliases, so won't
 # go through the same sharade. Same for .gitconfig. 
+if [ -f $HOME/.bash_aliases ] && [ ! -L $HOME/.bash_aliases ]; then 
+  mv $HOME/.bash_aliases $HOME/.bash_aliases.bak
+fi
 ln -sf "$PWD/.bash_aliases.personal" "$HOME/.bash_aliases"
-ln -sf "$PWD/.gitconfig" "$HOME/.gitconfig"
 
 for i in vim tmux; do
   cd $i && ./setup
