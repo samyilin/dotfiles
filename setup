@@ -6,16 +6,16 @@ echo "Starting Setup..." && sleep 1
 # if there's a bashrc already and it isn't a link, check the following.
 if [ -f $HOME/.bashrc ] && [ ! -L $HOME/.bashrc ]; then
   # add the sourcing line to default .bashrc if not there already
-  case `grep -Fx "test -d $HOME/.bashrc && . $HOME/.bashrc.personal" "$HOME/.bashrc" >/dev/null; echo $?` in
+  case `grep -Fx "test -f $HOME/.bashrc.personal && . $HOME/.bashrc.personal" "$HOME/.bashrc" >/dev/null; echo $?` in
     0)
       echo "bashrc already exists and is setup already"
       ;;
     1)
-      echo "test -d $HOME/.bashrc && . $HOME/.bashrc.personal" >> $HOME/.bashrc
+      echo "test -f $HOME/.bashrc.personal && . $HOME/.bashrc.personal" >> $HOME/.bashrc
       # code if not found
       ;;
     *)
-      echo "Unknown error, chec if grep is installed."
+      echo "Unknown error, check if grep is installed."
       # code if an error occurred
       ;;
   esac
@@ -31,12 +31,12 @@ fi
 
 if [ -f $HOME/.profile ] && [ ! -L $HOME/.profile ]; then
   # add the sourcing line to default .profile if not there already
-  case `grep -Fx "test -d $HOME/.profile && . $HOME/.profile.personal"  "$HOME/.profile" >/dev/null; echo $?` in
+  case `grep -Fx "test -f $HOME/.profile && . $HOME/.profile.personal"  "$HOME/.profile" >/dev/null; echo $?` in
     0)
       echo "profile already exists and is setup already"
       ;;
     1)
-      echo "test -d $HOME/.profile && . $HOME/.profile.personal" >> $HOME/.profile
+      echo "test -f $HOME/.profile && . $HOME/.profile.personal" >> $HOME/.profile
       # code if not found
       ;;
     *)
