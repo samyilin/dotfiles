@@ -1,0 +1,32 @@
+#!/bin/bash
+
+# If running in a system with systemd, then use
+#
+# sh <(curl -L https://nixos.org/nix/install) --daemon
+#
+# If system doesn't have systemd (WSL on Windows 10) or you do not want
+# to use sudo/doas every time you upgrade or uninstall packages
+# (company laptop, wink wink), then use
+#
+# sh <(curl -L https://nixos.org/nix/install) --no-daemon
+#
+# These are taken from https://nixos.org/download.html
+#
+# To install a new package, use
+#
+# sudo -i nix-env -iA nixpkg.PACKAGE_NAME
+#
+# if you installed nix as daeomn-full. Else
+#
+# nix-env -iA nixpkg.PACKAGE_NAME
+#
+# To uninstall a package with daemon-full install, use
+#
+# sudo -i nix-env --uninstall PACKAGE_NAME
+#
+# Else
+#
+# nix-env --uninstall PACKAGE_NAME
+#
+# If you use the above but using deamon-full setup, then system install
+# is still in place, but you as a user cannot use it without sudo/doas.

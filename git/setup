@@ -1,15 +1,22 @@
 #!/bin/bash
 #
 echo "Initializing git configuration."
+sleep 1
 if ! command -v git &>/dev/null; then
   echo "git is not installed, quitting"
 else
-  echo "Type in your first and last name (no accent or special characters - e.g. 'ç'): "
-  read full_name
+  if [ ! -f $HOME/.gitconfig ]; then
+    echo "Type in your first and last name (no accent or special characters - e.g. 'ç'): "
+    read full_name
 
-  echo "Type in your email address (the one used for your work/life git account): "
-  read email
-
-  git config --global user.email "$email"
-  git config --global user.name "$full_name"
+    echo "Type in your email address (the one used for your work/life git account): "
+    read email
+    git config --global user.email "$email"
+    git config --global user.name "$full_name"
+    unset $email
+    unset $full_name
+    echo "Basic git setup done, quitting"
+  else
+    echo "Seems like there's an existing .gitconfig file in your home directory, quitting."
+  fi
 fi

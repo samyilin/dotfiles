@@ -1,3 +1,5 @@
 #!/bin/bash
 
-rm -f $HOME/.tmux.conf
+# only performs unlink. Ensures that physical file won't be inpacted if
+# present.
+unlink $HOME/.tmux.conf 2>/dev/null

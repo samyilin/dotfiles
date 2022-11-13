@@ -40,38 +40,58 @@ This project is designed based on 5 premise:
    your own when you understand it all.
 
    Keep in mind that removing functionality won't help you uninstall
-   packages, vim, emacs, etc. This is the job of your package manager. I
-   might add that functionality later, but not on my roadmap right now.
+   packages such as vim, emacs, etc. This is the job of your package
+   manager. There're way too many package managers for me to cover all
+   the corner cases, so this is a non-goal for this dotfile.
 
-4. Make it modular. Installation for each program's config is separate.
+4. Make it modular. Installation for each program's config should be
+   separate.
 
 5. Make it so that repeatedly using setup script will skip the parts
    that's already been set up.
+
+6. Make it simple and as cross-platform as possible. Certain programs
+   make it way too hard to stay cross-platform. Docker is a primary
+   non-target for this dotfile even though I do use it, precisely
+   because there's many ways to set up docker. Commandline only? Docker
+   Desktop? Systemd or no systemd(WSL have no systemd until Windows 11,
+   sucks so much)? Or even podman + buildah? Don't know your preference.
+   Set it up yourself if you want to.
 
 ## Assumptions
 
 There're very few assumptions here, but here are them:
 
 1. You are running a UNIX-ish system. Any Linux or BSD-like system would
-   do, including MacOS.
+   do, including MacOS. Not Windows.
 
 2. Bash is the default shell on the system, or at least it can be found
    at /bin/bash.
 
-   This assumption COULD be wrong in some distro, but it is true most 
-   of the time. Try 
+   This assumption COULD be wrong in some distro, but it is true most
+   of the time. Try
    ```bash
    exec /bin/bash
    ```
    If it does something instead of throwing an error, you have bash in
-   /bin/bash.
-3. Your .gitconfig, .tmux.conf or .vimrc is nonexistent.
+   /bin/bash. If your command line prompt changed when you ran it, you
+   were probably using a different shell.  Zsh maybe? I don't use zsh,
+   but a lot of people use [oh-my-zsh](https://ohmyz.sh/). I generally
+   consider zsh and oh-my-zsh to be bloat, but it's up to you.
 
-   This is true most of the times, but if not, then try to preserve your
-   own copies before trying mine! I could add functionality to preserve 
-   your own copy later on though.
+   Executing
+   ```bash
+   ps -p $$
+   ```
+   should tell you exactly what you are running. Unless it's a symlink
+   to another program in your environment, or your distro's shipped "ps"
+   does not use the -p flag, which may be possible. In which case, use
+   ```bash
+   readlink /proc/$$/exe
+   ```
+   should be a universal solution. It even works in Busybox!
 
-4. You would prefer to have more than 1 ssh setup if needed.
+3. You would prefer to have more than 1 ssh setup if needed.
 
    For example, you have multiple git instances (Gitlab for work +
    GitHub for self, or personal Gitlab account + work Gitlab account,
@@ -81,149 +101,83 @@ There're very few assumptions here, but here are them:
    different accounts/connections. This way, if one ssh key gets
    compromised, you don't risk compromising all your ssh connections'
    safety. 
-5. Read my scripts to understand what it does. It's dead simple. Don't
-   get burned by me.
-
 ## What programs are being customized/initialized?
 
-Bash, Vim, Tmux, SSH, git.
+Bash, Vim, tmux, SSH, git.
 
 Bash is for interactive shell, Vim for your text editor, tmux for your
 screen multiplexier, ssh and git could work together or separately.
 
-Note that my Vim setup is very simple. I make a clear distinction
-between IDE and text editor, and I don't expect my editor to be an IDE,
-although you can turn vim into an IDE, albeit with too much of other
-people's packages that you don't have full control over. Once they
-(maintainer of plugins/packages) decide to change a feature or push a
-breaking change, you will be screwed, for a while. There're ways to pin
-packages to a certain version, but I hate to maintain and understand
-development of 50-ish plugins or even more. I will use them when I
-become a full time programmer (not likely to happen in my lifetime). In
-general the simpler the better. For rock solid IDE-like experience that
-do not hinder your production, go to an actual IDE. There's some people
-that use Vim full time, I'm not a full-time programmer, so I don't
-care about that aspect enough to customize my vim that way.
+Vim setup is a continuously changing setup.
+
+## What programs/files am I NOT customizing?
+
+1. dircolors. I realize they exist, I just don't care about them enough
+   to write one.  
+
+   Most terminal emulators have customization capabilities that are good
+   enough to get a working gruvbox or other color schemes in terminal
+   anyways, and finetuning that is something that is a non-goal at the
+   moment. Once I consider this to be important, I will put this into
+   TODO.
 
 ## Emacs?
 
 Tried it for a bit, I realized the following puzzle/conondrum:
 
 1. Vim and Emacs are essentially the same. They both have some
-   extensibility, albeit limited by their own design.
-
-   Both Vim and Emacs are built around the idea of text editing, NOT
-   code editing. Both of them center around the idea that everything is
-   a file, aka text, aka a part of the UNIX philosophy. If you want rock
-   solid experience editing text, these are excellent. Once you attempt
-   to make it understand and help you write code, it's NOT built for it,
-   and you have to use something else running alongside it, and such is
-   the curse of DSL. 
-
-   Vim uses Vimscript, and Emacs uses Elisp. Despite how good they are,
-   they are domain specific languages designed and written to understand
-   text structures, NOT code structures. They have been used as code
-   editors simply because features of modern code have been designed to
-   act like text. Your Python program has indents to help you understand
-   structures of functions/classes, your C program have "{}" to help you
-   understand its strucs, types, etc. Languages have keywords that are
-   positioned at certain positions so that we can use some kind of
-   regular expression to parse and highlight. These structures have been
-   used by text editors to utilize their similarity with code, so you
-   can delete between brackets and such. They are a TRICK of a sort to
-   make it look like there's some understanding of code via syntax
-   highlighting, but once you move to code completion or Language Server
-   Protocol or other ideas, you realize that all this toolbox is NOT
-   built to handle it, and there isn't any real incentives for either
-   communities to get more specific features to understand code, so you
-   rely on a NodeJS instance running in the background to do LSP, or you
-   rely on a tree-sitter (no tree-sitter for vim, but yes for neovim,
-   integration with Emacs is ongoing) instance running in the
-   background. There's Ctags (universal ctags), which is good enough for
-   many tasks and small enough, but that's not tree-sitter, even
-   tree-sitter is not as good as it claims.
-
-   There's nothing wrong with using NodeJS or tree-sitter, but once you
-   use that, you are running something that is not that much different
-   from an IDE with plugin systems and a multitude of processes running
-   in the background, so the assumption of simplicity and running a
-   small and reliable program goes away.
-
-   If you are a full-time developer, you NEED IDE-like
-   functionalities,if I were to guess, in which case this config is not
-   what you are looking for.
+   extensibility, albeit limited by their own design (usage of DSL
+   instead of general programming language. Neovim users, I know what
+   you are going to say).
 
 2. But vim and Emacs are not the same. At least you can escape Vim, but
    you cannot escape emacs.
-
-   I know "How to Quit Vim" is a meme these days, but that's the
-   point.Once you learn Vim, you don't have to stick to it for
-   everything. Its language, Vimscript, is designed in such a way that
-   it is only comfortable for writing vim config and text manipulation.
-   Emacs is a different story. People write elisp to do anything they
-   please, and it's a TRAP that prevents you from learning anything
-   else, so not good for beginners, and it's not fast enough. Modern
-   emacs implementations (emacs-nativecomp, or Gcc-emacs) have to
-   use an intermediate language to speed up the code compiliation
-   and interpretation from elisp to C and finally to assembly.
-
-   At least vim is small enough and not powerful enough. You use it to
-   edit text, and it has built in functionality to communicate and call
-   other programs within your system, so you can get familiar with other
-   programs outside of Vim. Emacs have eshell built in there so you
-   don't ever need to escape its comfort zone, and you can
-   write a million programs that mimic other existing UNIX programs.
-   It's not called Editor MACros for nothing. It is the equivalence of
-   Golang in a sense. 
 
 3. I just wish there were good enough Vim emulation outside of Vim
    itself so I don't have to use it. Or else Vim have actual SERVER
    MODE. Vim's clientserver is not server mode that you think.
 
-   I know, every IDE have Vim keybindings, but they are not Vim.
-   Remember our lesson before? Emulation is ALWAYS emulation, not the
-   reality it emulates. The more emulation, the more trouble. Look no
-   further than vim emulation plugin in VSCode. It's only mimicing vim
-   motion, and it's still not feature-complete. You are relying on
-   VSCode to expose an API that they do not see why they need to expose
-   in order to do code folding, which is a valid concern. Ideally, you'd
-   have Vim running in the background understanding text and doing text
-   manipulation when you are in the buffer editing text. On the front,
-   you have an IDE that understands CODE and help you do all kinds of
-   stuff. However, Vim is like Windows in a sense, its GUI and backend
-   are so tightly intergrated, such that any way to attempt to separate
-   and decouple them have failed thus far. Hopefully Neovim
-   does a better job at this so we can get the best of both worlds.
-   Fingers crossed.  WASM is one hope though. In an age where everything
-   is Electron, you don't really have a choice.
+Regardless, emacs is a very interesting piece of software, and I'm
+generally intriged by lisp in general. Might give them (lisp
+language/tools) a more thorough try one day.
 
 ## Neovim?
 
-Someday. When it's good enough at the above point.
+Someday. When it's good enough at the above points.
+
+I know, it's already better in some way. Not good enough for me.
 
 ## IDEs?
 
-This is a minimal setup, not to have a full IDE. Try Intellij suite or
-VSCode if that tickles your fancy. Or even Visual Studio. I don't care.
+This is a minimal setup, not to have a full IDE, although I'm exploring
+options. Try Intellij suite or VSCode if that tickles your fancy. Or
+even Visual Studio. I don't care.
+
+My opinion? IDEs are better at being IDEs than editors, and vice versa.
+Therefore, manage your expectations of what your tool can do and what
+tool your team expects you to use, take these two factors into
+consideration when considering working for an organization.
 
 ## How to use
 
 
-```bash 
-cd $HOME && git clone https://github.com/samyilin/dotfiles && cd dotfiles && ./setup 
+Tries to setup several configs for several programs. One-liner like this
+should work:
 
-``` 
+```bash
+cd $HOME && git clone https://github.com/samyilin/dotfiles && cd dotfiles && ./setup
 
-Tries to setup several configs for several programs.
+```
 
 If program is not installed during setup, i.e. vim, then install vim
 first, then do
 
-```bash 
+```bash
 cd $HOME/dotfiles && ./setup
-``` 
+```
 
-will do it. 
+will do it. Design principles above will ensure no repeated install will
+happen.
 
 If you are not happy with how this dotfile works, simply do
 
@@ -232,9 +186,17 @@ If you are not happy with how this dotfile works, simply do
 cd $HOME/dotfiles && ./remove
 
 ```
-will do it. If you wish to delete this git repo altogether, then do
+will do it. If you wish to delete this git repo from your hard drive
+altogether, then do
 
 ```bash
 rm -rf $HOME/dotfiles
 ```
+##TODO
 
+1. Finish up SSH config. SSH config is harder than I imagined, but not
+   too much harder. I just want to write an SSH wrapper of some kind to
+   ease its use.
+2. Overhaul Vim experience. I want to use some plugins to enable LSP or
+   other IDE-like features. Might use Neovim? Who knows? I might come up
+   with an init.lua just for Neovim.

@@ -19,7 +19,7 @@ if [ -f $HOME/.bashrc ] && [ ! -L $HOME/.bashrc ]; then
       # code if an error occurred
       ;;
   esac
-    ln -sf "$PWD/.bashrc.personal" "$HOME/.bashrc.personal"
+  ln -sf "$PWD/.bashrc.personal" "$HOME/.bashrc.personal"
 else
   # if no bashrc exists right now, force-link default bashrc to be default
   # bashrc
@@ -31,20 +31,9 @@ fi
 
 if [ -f $HOME/.profile ] && [ ! -L $HOME/.profile ]; then
   # add the sourcing line to default .profile if not there already
-  case `grep -Fx "test -f $HOME/.profile && . $HOME/.profile.personal"  "$HOME/.profile" >/dev/null; echo $?` in
-    0)
-      echo "profile already exists and is setup already"
-      ;;
-    1)
-      echo "test -f $HOME/.profile && . $HOME/.profile.personal" >> $HOME/.profile
-      # code if not found
-      ;;
-    *)
-      echo "Unknown error, chec if grep is installed."
-      # code if an error occurred
-      ;;
-  esac
-    ln -sf "$PWD/.profile.personal" "$HOME/.profile.personal"
+  echo ".profile exists and doesn't need to be added again."
+  echo "If your .profile doesn't try to source .bashrc, then it might be necessary"
+  echo "to add those bits into your .profile."
 else
   # if no profile exists right now, force-link default profile to be default
   # profile
@@ -54,12 +43,19 @@ else
 fi
 # Doesn't seem like there's typically a default .bash_aliases, so won't
 # go through the same sharade. Same for .gitconfig. 
-if [ -f $HOME/.bash_aliases ] && [ ! -L $HOME/.bash_aliases ]; then 
-  mv $HOME/.bash_aliases $HOME/.bash_aliases.bak
-fi
-ln -sf "$PWD/.bash_aliases.personal" "$HOME/.bash_aliases"
-
-for i in vim tmux; do
-  cd $i && ./setup
-  cd -
+#
+for i in .inputrc .bash_aliases; do
+  if [ -f $HOME/$i ] && [ ! -L $HOME/$i ]; then
+    mv $HOME/$i $HOME/$i.bak
+  fi
+  ln -sf "$PWD/$i.personal" "$HOME/$i"
 done
+
+
+for i in vim tmux git; do
+  cd $i && ./setup
+  cd ->/dev/null
+done
+
+echo "Please read dotfiles/install/nix for nix specific instructions."
+echo "There're two ways to set up nix, so we do not want to automate that."

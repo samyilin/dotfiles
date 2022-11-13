@@ -29,6 +29,7 @@ if empty(glob('~/.cache/dein'))
   silent !sh ~/installer.sh ~/.cache/dein
   silent !rm ~/installer.sh
 else
+  "remove vi compatibility mode if we are running Vim
   if &compatible
     set nocompatible               " Be iMproved
   endif

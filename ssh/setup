@@ -1,11 +1,31 @@
 #!/bin/bash
+# This file does the following:
+# 1. If ssh-keygen command doesn't work, then there's no usable ssh
+# agent installed in the user's system. Display explanation and quit
+# 2. If ssh-keygen works, then examine if $HOME/.ssh directory exists
+# and if there're any files there. If there aren't, proceed to step 4.
+# If there are, ask if user would like to set up more, then proceed to
+# step 4 if user responded yes.
+# 3. if ssh-keygen works and $HOME/.ssh doesn't exist or $HOME/.ssh is
+# empty, proceed to step 4.
+# 4. Ask user how many ssh keys the user would like to setup, check if
+# user input is valid integer, then do a for loop to execute step 5 each
+# time. After loop finished, proceed to step 6.
+# 5. Display existing ssh files if there are any, fthen ask user to
+# input email account and new ssh file name. Check if this name have
+# been taken, and ask the user to re-enter a new ssh key name unless
+# user wants to override the existing ssh key, in which case backup
+# those ssh keys.
+# 6. Display to user that ssh setup have been completed, and let the
+# user know how and where to go to grab public keys.
 
 if ! command -v ssh-keygen &>/dev/null; then
   echo "No ssh agent was installed on your system. It's typically openssh. Quitting ssh setup"
-else
-  echo "Do you wish to setup ssh? This is used to set up git for work/life git repo. [yes|no]"
-  read response
-  if $response = "yes"; then
-    echo "Please put in your email account. used for work/life git repo."
-    read email
-    ssh-keygen -t ed25519 -C "$email"
+  exit
+elif [ -d "$HOME/.ssh" ]; then
+  if [ -n "$(ls -A $HOME/.ssh 2>/dev/null)" ]; then
+    OUTPUT=$((`find . -maxdepth 1 -type f | wc -l` / 2))
+    printf "There are %i ssh keys in your home directory, would you like to set up more?[yes|no]" "$OUTPUT"
+    read $response
+    
+
