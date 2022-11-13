@@ -3,7 +3,7 @@ echo "Initializing Vim setup"
 sleep 1
 if ! command -v vim &>/dev/null && ! command -v vimtutor &>/dev/null; then
   echo "Doesn't look like you have full vim version, skipping..."
-elif [ @ -f $HOME/.vimrc ]; then
+elif [ ! -f $HOME/.vimrc ]; then
   ln -sf "$PWD/.vimrc" "$HOME/.vimrc"
   echo "Enter and quit vim twice, then type reset on Bash shell to setup vim properly"
   echo "Keys to press: vim <Enter> <Enter> :q vim :q reset"

@@ -1,2 +1,6 @@
+# This is used by readline or the like to set up how command line works.
+# These 2 lines basically enforces a colorscheme for when I do
+# tab-complete within Bash.
+
 set colored-stats on
 set colored-completion-prefix on
