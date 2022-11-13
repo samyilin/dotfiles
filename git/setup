@@ -11,6 +11,14 @@ else
 
     echo "Type in your email address (the one used for your work/life git account): "
     read email
+
+    echo "Which editor would you like to use to edit git commit messages?"
+    read editor
+    if ! command -v $editor &> /dev/null; then
+      printf "Editor %i is not installed in your system, git commit editor is not set up properly" "$editor"
+    else
+      git config --global core.editor "$editor"
+    fi
     git config --global user.email "$email"
     git config --global user.name "$full_name"
     unset $email

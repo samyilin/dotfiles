@@ -121,6 +121,10 @@ Vim setup is a continuously changing setup.
    moment. Once I consider this to be important, I will put this into
    TODO.
 
+2. Terminal emulator. They are easy enough to customize, mostly. Plus, I
+   don't really use a certain one cross-platform right now, so don't
+   really want to set up a lot of settings.json file just for color
+   schemes. 
 ## Emacs?
 
 Tried it for a bit, I realized the following puzzle/conondrum:
@@ -200,3 +204,9 @@ rm -rf $HOME/dotfiles
 2. Overhaul Vim experience. I want to use some plugins to enable LSP or
    other IDE-like features. Might use Neovim? Who knows? I might come up
    with an init.lua just for Neovim.
+3. Multiple git setup or more complicated git setup. Might abandon this
+   altogether though. 
+4. Overhaul tmux settings to incorporate more VIM-like or EMACS-like
+   keybindings? But tmux setting overhaul is definitely needed.
+5. Shellcheck! This is very important. I do want my bash files to be
+   more or less cross-platform and POSIX-compliant. 
