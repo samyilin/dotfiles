@@ -51,6 +51,7 @@ else
 endif
 "End dein Scripts-------------------------
 
+" Theme Setting(s)
 set background=dark
 autocmd vimenter * ++nested colorscheme gruvbox
 let g:airline_theme='base16_gruvbox_dark_hard'
@@ -61,11 +62,6 @@ endif
 
 " disable visual bell (also disable in .inputrc)
 set t_vb=
-
-" set softtabstop=2
-
-" mostly used with >> and <<
-" set shiftwidth=2
 
 set smartindent
 
@@ -78,23 +74,23 @@ if v:version >= 800
   " better ascii friendly listchars
   set listchars=space:*,trail:*,nbsp:*,extends:>,precedes:<,tab:\|>
 
-  " i hate automatic folding
+  " Disable folding
   set foldmethod=manual
   set nofoldenable
 endif
 
 " mark trailing spaces as errors
-match IncSearch '\s\+$'
+" match IncSearch '\s\+$'
 
 " enough for line numbers + gutter within 80 standard
 set textwidth=72
-"set colorcolumn=73
 
 " replace tabs with spaces automatically
 set expandtab
 
 " disable relative line numbers, remove no to sample it
 set norelativenumber
+set nonumber
 
 " turn on default spell checking
 "set spell
@@ -129,9 +125,6 @@ set history=100
 " faster scrolling
 set ttyfast
 
-" make Y consitent with D and C (yank til end)
-map Y y$
-
 " better command-line completion
 set wildmenu
 
@@ -162,12 +155,12 @@ endfunc
 endif
 
 " start at last place you were editing
-au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 
 " functions keys
-map <F1> :set number!<CR> :set relativenumber!<CR>
+nmap <F1> :set number!<CR>:set relativenumber!<CR>
 nmap <F2> :call <SID>SynStack()<CR>
-set pastetoggle=<F3>
+" set pastetoggle=<F3>
 map <F4> :set list!<CR>
 map <F5> :set cursorline!<CR>
 map <F7> :set spell!<CR>
@@ -181,9 +174,7 @@ nmap <leader>2 :set paste<CR>i
 set path+=**
 " Create the `tags` file (may need to install ctags first)
 command! MakeTags !ctags -R .
-if filereadable("~/.vimrc.bak")
-    set rtp^=~/.vimrc.bak
-endif
+
 if filereadable("~/.vimrc.personal")
     set rtp^=~/.vimrc.personal
 endif

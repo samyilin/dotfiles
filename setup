@@ -26,6 +26,7 @@ else
   if [ ! -f $HOME/.bashrc ]; then
     ln -sf "$PWD/.bashrc.default" "$HOME/.bashrc"
     ln -sf "$PWD/.bashrc.personal" "$HOME/.bashrc.personal"
+    echo ".bashrc setup complete."
   fi
 fi
 
@@ -33,7 +34,7 @@ if [ -f $HOME/.profile ] && [ ! -L $HOME/.profile ]; then
   # add the sourcing line to default .profile if not there already
   echo ".profile exists and doesn't need to be added again."
   echo "If your .profile doesn't try to source .bashrc, then it might be necessary"
-  echo "to add those bits into your .profile."
+  echo "to add those lines into your .profile."
 else
   # if no profile exists right now, force-link default profile to be default
   # profile
@@ -51,11 +52,15 @@ for i in .inputrc .bash_aliases; do
   ln -sf "$PWD/$i.personal" "$HOME/$i"
 done
 
-
 for i in vim tmux git; do
-  cd $i && ./setup
+  echo "initializing $i setup"
+  sleep 1
+  cd $i && ./setup && echo "$i setup complete, proceeding to next step" || echo "$i setup skipped, proceeding to next step"
   cd ->/dev/null
 done
 
-echo "Please read dotfiles/install/nix for nix specific instructions."
-echo "There're two ways to set up nix, so we do not want to automate that."
+echo "Please read dotfiles/install/nix for nix specific instructions if needed."
+echo "There're two ways to set up nix, hence why nix setup is not automated."
+sleep 1
+echo "Setup complete, thank you for using this script. "
+exit 1

@@ -1,22 +1,26 @@
 #!/bin/bash
-echo "Initializing tmux setup"
-sleep 1
 if ! command -v tmux &> /dev/null; then
-  echo 'tmux is not installed, skipping...'
+  echo 'tmux is not installed, skipping tmux setup.'
+  exit 1
 elif [ ! -f $HOME/.tmux.conf ]; then
   ln -sf "$PWD/.tmux.conf" "$HOME/.tmux.conf"
   echo "tmux config done,quitting"
+  exit 0
 elif [ -f $HOME/.tmux.conf ] && [ ! -L $HOME/.tmux.conf ]; then
-  echo "It seems that .tmux.conf is in place already."
-  echo "Do you want to preserve yours and try mine?[yes|no]"
-  read $response
-  if $response == "yes"; then
-    mv $HOME/.tmux.conf $HOME/.tmux.conf.bak
-    echo "Your .tmux.conf have been saved to .tmux.conf.bak"
-  elif $reponse == "no"; then
-    echo "tmux setup skipped, quitting"
-  else
-    echo "Invalid response, quitting"
-  fi
-  unset $response
+  response=""
+  while [ $response -ne "no"]
+  do
+    echo "It seems that .tmux.conf is in place already."
+    echo "Do you want to preserve yours and try mine?[yes|no]"
+    read $response
+    if $response == "yes"; then
+      mv $HOME/.tmux.conf $HOME/.tmux.conf.bak
+      echo "Your .tmux.conf have been saved to .tmux.conf.bak"
+      unset $response
+      ln -sf "$PWD/.tmux.conf" "$HOME/.tmux.conf"
+      exit 0
+    fi
+    done
+    unset $response
+    exit 1
 fi

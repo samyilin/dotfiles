@@ -1,7 +1,5 @@
 #!/bin/bash
 #
-echo "Initializing git configuration."
-sleep 1
 if ! command -v git &>/dev/null; then
   echo "git is not installed, quitting"
 else
@@ -12,13 +10,18 @@ else
     echo "Type in your email address (the one used for your work/life git account): "
     read email
 
-    echo "Which editor would you like to use to edit git commit messages?"
-    read editor
-    if ! command -v $editor &> /dev/null; then
-      printf "Editor %i is not installed in your system, git commit editor is not set up properly" "$editor"
-    else
-      git config --global core.editor "$editor"
-    fi
+    editor=""
+    while [  command -v $editor >/dev/null]
+    do
+      echo "Which editor would you like to use to edit git commit messages?"
+      read editor
+      if ! command -v $editor &> /dev/null; then
+        printf "Editor %i is not installed in your system, git commit editor is not set up properly" "$editor"
+      else
+        git config --global core.editor "$editor"
+        exit 0
+      fi
+    done
     git config --global user.email "$email"
     git config --global user.name "$full_name"
     unset $email

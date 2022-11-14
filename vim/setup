@@ -1,25 +1,29 @@
 #!/bin/bash
-echo "Initializing Vim setup"
-sleep 1
 if ! command -v vim &>/dev/null && ! command -v vimtutor &>/dev/null; then
-  echo "Doesn't look like you have full vim version, skipping..."
+  echo "Full vim is not installed, quitting vim setup"
+  exit 1
 elif [ ! -f $HOME/.vimrc ]; then
   ln -sf "$PWD/.vimrc" "$HOME/.vimrc"
   echo "Enter and quit vim twice, then type reset on Bash shell to setup vim properly"
-  echo "Keys to press: vim <Enter> <Enter> :q vim :q reset"
-  echo "Vim setup complete, quitting"
+  echo "Keys to press: vim <Enter> :q <Enter> vim <Enter> :q <Enter> reset <Enter> (<Enter> denotes the enter key)."
+  echo "Please wait till every step is finished before pressing new key combos."
 elif [ -f $HOME/.vimrc ] && [ ! -L $HOME/.vimrc ]; then
-  echo "It seems that .vimrc is in place already."
-  echo "Do you want to preserve yours and try mine?[yes|no]"
-  read $response
-  if $response == "yes"; then
-    mv  $HOME/.vimrc $HOME/.vimrc.bak
-    echo "Your .vimrc have been backed up in .vimrc.bak"
-  elif $response == "no"; then
-    echo "Vim setup skipped, quitting"
-  else
-    echo "Invalid response, quitting"
-  fi
+  response=""
+  while [$response -ne "no"]
+  do
+    echo "It seems that .vimrc is in place already."
+    echo "My setup uses dein as plugin manager."
+    echo "Do you want to preserve yours and try mine?[yes|no]"
+    read $response
+    if $response == "yes"; then
+      mv  $HOME/.vimrc $HOME/.vimrc.bak
+      echo "Your .vimrc have been backed up in .vimrc.bak"
+      ln -sf "$PWD/.vimrc" "$HOME/.vimrc"
+      unset $response
+      exit 0
+    fi
+  done
   unset $response
+  exit 1
 fi
 
