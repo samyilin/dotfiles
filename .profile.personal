@@ -1,5 +1,0 @@
-#!/bin/bash
-# login loads this file before bashrc, so put here just in case
-if [ -n "$BASH_VERSION" ]; then
-  . $HOME/.bashrc
-fi

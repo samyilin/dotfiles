@@ -4,68 +4,64 @@ This is my personal dotfiles for any Linux box, always WIP.
 
 ## Design Principles
 
-This project is designed based on 5 premise:
+This project is designed based on these premises:
 
 1. Overriding existing .bashrc is bad. Whenever possible, try to preserve
    existing config.
 
    I've been burned so many times by this. Very often I'll have an
-   existing Linux box with whatever distribution, sometimes a cloud
-   instance, sometimes a VM instance, sometimes WSL, that:
+   existing Linux box (WSL included) that:
+
    1. I simply don't have full control over, or
    2. I can't have docker set up, or
-   3. .bashrc is just not empty when I can start to configure it.
+   3. .bashrc is just not empty when I start to configure it.
 
-   I can't simply assume there's no existing configuration file on
-   there.  Therefore, I have to assume that there's some kind of default
-   .bashrc or .profile within there already.
+   I can't simply assume there's no existing configuration at all on any
+   setup. Therefore, I have to assume that there's some kind of default
+   .bashrc or .profile or other configs there already.
 
-   Plus, certain programs (Yes gcloud, I'm talking about you) loves to
-   spew lines into .bashrc. So the idea is, we preserve a copy of the
-   default .bashrc and .profile for programs to write to, and write our
-   own configs on top of that on separate file(s) that get loaded after
-   the fact. This way, we preserve system-specific configs and have our
-   own configs be able to be pulled from git when new changes have been
-   made, so we get the best of both worlds.
+   Plus, many programs loves to spew lines into .bashrc or .profile. So
+   the idea is, we preserve a copy of the default .bashrc and .profile
+   for programs to write to, and write our own global configs on top of that on
+   separate file(s) that get loaded after the fact. 
+
 2. Whenever possible, try to use links. This follows the previous
-   principle, insofar that if certain programs love to spew into our
-   .bashrc, then keep the default .bashrc in place and load the link.
+   principle.
+
 3. Make sure it is easy to delete. Most dotfiles in the wild never
    considers this, and just assumes that either:
    1. This dotfile is used for perpetuity, or
+   2. This is a personal dotfile, so it doesn't matter, or
    2. This dotfile is used in containers or VMs anyways, so who cares?
 
-   Having a dotfile that you can completely get rid of, including
-   symlinks, is a useful and simple feature. You get rid of it and use
-   your own when you understand it all.
+   You get rid of my setup and use your own when you understand it all
+   without having to think twice.
 
    Keep in mind that removing functionality won't help you uninstall
    packages such as vim, emacs, etc. This is the job of your package
-   manager. There're way too many package managers for me to cover all
-   the corner cases, so this is a non-goal for this dotfile.
+   manager. 
 
 4. Make it modular. Installation for each program's config should be
-   separate. This way we make sure we have a manageable set of scripts
-   instead of one huge script that does everything.
+   separate to make maintenance easy. 
 
-5. Make it so that repeatedly using setup script(s) will skip the parts
-   that's already been set up. Good for testing, good for when we need to
-   pull down a new update.
+5. Make it so that using setup script(s) repeatedly will skip the parts
+   that's already been set up. This way, there's a global entry to setup
+   everything.
 
-6. Make it simple and as cross-platform as possible. Certain programs
-   make it way too hard to stay cross-platform. Docker is a primary
-   non-target for this dotfile even though I do use it occasionally,
-   precisely because there's many ways to set up docker. Command line
-   only? Docker Desktop? Systemd or no systemd(WSL have no systemd until
-   Windows 11, sucks so much)? Or even podman + buildah? Don't know your
-   preference.
+6. Make it as simple and cross-platform as possible. Certain programs
+   make it way too hard to stay cross-platform.
+
+   In order for our fetch program to run basically everywhere,
+   I've opted to using [pfetch](https://github.com/dylanaraps/pfetch)
+   instead of [neofetch](https://github.com/dylanaraps/neofetch) as a
+   first-class citizen. It'll opt for pfetch first, then neofetch.
 
 ## Assumptions
 
 There're very few assumptions here, but here are them:
 
 1. You are running a UNIX-ish system. Any Linux or BSD-like system would
-   do, including MacOS. Not Windows.
+   do, including MacOS. You don't need this on Windows.
 
 2. Bash is the default shell on the system, or at least it can be found
    at /bin/bash.
@@ -75,46 +71,52 @@ There're very few assumptions here, but here are them:
    ```bash
    exec /bin/bash
    ```
-   If it does something instead of throwing an error, you have bash in
-   /bin/bash. If your command line prompt changed when you ran it, you
-   were probably using a different shell.  Zsh maybe (default on MacOS)?
+   If it does something instead of throwing an error, then you have bash
+   in /bin/bash. Your interactive shell could be zsh (default on MacOS).
    I don't use zsh, but a lot of people use
    [oh-my-zsh](https://ohmyz.sh/). I generally consider zsh and
    oh-my-zsh to be bloat, but it's up to you.
 
    Executing
    ```bash
-   ps -p $$
-   ```
-   should tell you exactly what you are running. Unless it's a symlink
-   to another program in your environment, or your distro's shipped "ps"
-   does not use the -p flag, which may be possible. In which case, use
-   ```bash
    readlink /proc/$$/exe
    ```
-   should be a universal solution. It even works in Busybox!
+   would tell you what your interactive shell is. I think it works on
+   MacOS.
 
 3. You would prefer to have more than 1 ssh setup if needed.
 
    For example, you have multiple git instances (Gitlab for work +
    GitHub for self, or personal Gitlab account + work Gitlab account,
-   etc) or multiple VM instances (either virtual machine or
-   kubernetes/docker instances that you may need to constantly ssh into). It is
+   etc) or multiple VMs/docker instanes that you may need to constantly ssh into. It is
    generally preferred that you use a set of public+private SSH keys for
    different accounts/connections. This way, if one ssh key gets
    compromised, you don't risk compromising all your ssh connections'
    safety. 
 
-4. You are NOT using a similar setup or other people's config at the
-   same time. I know, my design principle stated that we can't assume
-   the configs to be empty, but I don't expect this structure (symlink
-   plus custom configs) or non-auto-generated configs to be existent
-   either. If you use a symlink setup similar to mine, you may run into
-   issues. Anyways, your configs should be relatively clean and not
-   heavily hand-grokked and modified by someone else. I can't test
-   everything, you know.
+4. Your configs should be relatively clean, machine-generated or
+   non-existent, and not heavily hand-grokked and modified by someone
+   else. I can't test everything.
 
-## What programs are being customized/initialized?
+5. You are using two package managers maximum: Your system package
+   manager and nix. Again, I can't test everything. Nix is
+   cross-platform enough. 
+
+
+6. You would follow [XDG Base
+   Directory](https://wiki.archlinux.org/title/XDG_Base_Directory)
+   standards. Linked is not the XDG Base Directory Specification, but
+   practical places of where you SHOULD place your configurations. 
+
+## Non-assumptions
+
+1. You are running GNU/Linux.
+
+   I try to use programs that are not GNU-specific. Haven't thoroughly
+   tested this, though. I will try  to use sh instead of bash for setup
+   scripts in the future. Not a priority at the moment.
+
+## Goals/Programs configuring in this setup?
 
 Bash, Vim, tmux, SSH, git.
 
@@ -123,7 +125,7 @@ screen multiplexer, ssh and git could work together or separately.
 
 Vim setup is a continuously changing setup.
 
-## What programs/files am I NOT customizing?
+## Non-goals/Programs Not Configuring in this setup?
 
 1. dircolors. I realize they exist, I just don't care about them enough
    to write one.  
@@ -131,15 +133,10 @@ Vim setup is a continuously changing setup.
    Most terminal emulators have customization capabilities that are good
    enough to get a working gruvbox or other color schemes in terminal
    anyways, and fine tuning that is something that is a non-goal at the
-   moment. Once I consider this to be important, I will put this into
-   TODO.
+   moment. 
 
 2. Terminal emulator. They are easy enough to customize, mostly, and I
    don't customize them extensively beyond color schemes at this point.
-   Plus, I don't really use a certain one cross-platform right now (I
-   don't think a good cross-platform terminal emulator exists ATM,
-   even), so don't really want to set up a lot of settings.json file or
-   similar files just for color schemes. 
 
 ## Emacs?
 
@@ -161,36 +158,31 @@ language/tools) a more thorough try one day.
 
 Someday I will have time to write a separate init.lua for it. Maybe?
 
-## IDEs?
+## IDEs/Full programming setup?
 
-This is a minimal setup, not to have a full IDE, although I'm exploring
-options within Vim. There's plenty of LSP options within Vim, and
-tree-sitter integration within Neovim. Using a suite of tools is
-complicated to setup from scratch, but maybe I will try it one day.
+This is a minimal setup, not a full IDE-like setup, although I'm exploring
+options within Vim.  
 
 Try IntelliJ suite or VSCode if that tickles your fancy. Or
-even Visual Studio. I don't care.
+even Visual Studio. They are easy enough to setup quickly.
 
-My opinion? IDEs are better at being IDEs than editors, and vice versa.
-Therefore, manage your expectations of what your tool can do and what
-tool your team expects you to use, take these two factors into
-consideration when considering working for an organization.
+My opinion on which IDE/editor to use? IDEs are better at being IDEs
+than editors, and vice versa. Therefore, manage your expectations of
+what your tool can do and what tool your team expects you to use.
 
-## How to use
-
+## How to Set up and Use
 
 This config tries to setup several configs for several programs.
-One-liner like this should work. 
+One-liner like this should work:
 
 ```bash
-cd $HOME && git clone https://github.com/samyilin/dotfiles && cd dotfiles && ./setup
-
+cd $HOME && git clone https://github.com/samyilin/dotfiles && cd dotfiles && ./setup && cd ->/dev/null
 ```
-If you installed a new program that this config customizes, or if you
-want to get the latest updates:
+If you installed a program that this setup customizes after running
+setup script first, or if you want to get the latest updates:
 
 ```bash
-cd $HOME/dotfiles && git pull && ./setup
+cd $HOME/dotfiles && git pull && ./setup && cd ->/dev/null
 ```
 
 Design principles above will ensure no repeated install will
@@ -203,24 +195,38 @@ If you want to remove this config, then
 cd $HOME/dotfiles && ./remove
 
 ```
-will do it. If you wish to delete this git repo from your hard drive
-altogether, then do
+will do it. Re-running shell instance, logging in and out or restarting
+your machine will reset it. If you wish to delete this git repo from
+your hard drive altogether, then do
+
 
 ```bash
 rm -rf $HOME/dotfiles
 ```
 ## TODO
 
-1. Finish up SSH config. SSH config is harder than I imagined, but not
-   too much harder. I just want to write an SSH wrapper of some kind to
-   ease its use.
-2. Overhaul Vim experience. I want to use some plugins to enable LSP or
-   other IDE-like features. Might use Neovim? Who knows? I might come up
-   with an init.lua just for Neovim.
-3. Multiple git setup or more complicated git setup. Might abandon this
-   altogether though. 
-4. Overhaul tmux settings to incorporate more VIM-like or EMACS-like
+Based on personal priority:
+
+1. Finish up SSH + git config. SSH config is harder than I imagined, but
+   not too much harder. I just want to write a cheatsheet or wrapper
+   script to make using SSH + git a bit easier. Most git services (GitHub,
+   GitLab or others) have instructions on how Git should work with SSH.
+
+2. Overhaul Vim experience. Use some plugins to enable LSP or other
+   IDE-like features. Make modular vim setup. Might use Neovim? Who
+   knows?
+
+3. Overhaul tmux settings to incorporate more VIM-like or EMACS-like
    keybindings? But tmux setting overhaul is definitely needed.
-5. Shellcheck! This is very important. I do want my bash files to be
+
+4. Shellcheck! This is very important. I do want my bash files to be
    more or less cross-platform and POSIX-compliant. Not a priority at
    the moment, just want to have a working dotfile right now.
+
+5. SSH configuration for usage other than git. SSH into other machines?
+   X11 forwarding? SSH config is complicated, because there're many use
+   cases for it. I will tackle point 1 on TODO first. 
+
+6. Setup for X11/Wayland/Graphic User Interfaces in general. This is a
+   very low priority item, because I don't have a Linux machine at the
+   moment.

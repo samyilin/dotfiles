@@ -8,24 +8,29 @@ case $- in
         *) return;;
 esac
 
+
 # launches emacs in server mode if not already running.
 if ! pgrep -x "emacs" > /dev/null
 then
      emacs --daemon 2>/dev/null && echo "Emacs running in server mode"|| echo 'emacs is not installed in your system, quitting'
 fi
 
-# Launches neofetch if it's installed. Serves to let me know if I'm in a
-# container
-neofetch || echo "neofetch is not installed or not found."
+# Launch pfetch, if failed, attempt to launch pfetch using nix, then
+# neofetch, then neofetch from nix.
+pfetch 2>/dev/null || $HOME/.nix-profile/bin/pfetch 2>/dev/null|| neofetch || $HOME/.nix-profile/bin/neofetch
 
 if [ -f $HOME/.bash_aliases ]; then
   . $HOME/.bash_aliases
 fi
 
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+fi
+
 # This line is executed upon exiting shell. Currently it tries to kill
 # emacs, be careful though. you may not want this.
 function cleanup {
-  if ! pgrep -x "emacs" > /dev/null
+  if pgrep -x "emacs" > /dev/null
   then
     killall emacs
   fi
