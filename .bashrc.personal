@@ -9,11 +9,12 @@ case $- in
 esac
 
 
-# launches emacs in server mode if not already running.
-if ! pgrep -x "emacs" > /dev/null
-then
-     emacs --daemon 2>/dev/null && echo "Emacs running in server mode"|| echo 'emacs is not installed in your system, quitting'
-fi
+# launches emacs in server mode if not already running. Optional code.
+# You would know what I mean here if you've used emacs extensively.
+
+# if command -V emacs &>/dev/null && ! pgrep -x "emacs" > /dev/null ; then
+#      emacs --daemon 2>/dev/null && echo "Emacs running in server mode"
+# fi
 
 # Launch pfetch, if failed, attempt to launch pfetch using nix, then
 # neofetch, then neofetch from nix.

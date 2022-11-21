@@ -1,4 +1,7 @@
 "####################### Vi Compatible (~/.exrc) #######################
+" As suggested, these bits can be used within .exrc for editing using
+" vi. I don't use vi extensively, but these bits are helpful if you do
+" need them.
 
 " automatically indent new lines
 set autoindent
@@ -15,9 +18,7 @@ set ruler " see ruf for formatting
 " show command and insert mode
 set showmode
 
-" set tabstop=2
 " inhibits errors when running Alacritty on Windows
-" Work laptop setup
 set t_u7=
 
 "#######################################################################
@@ -29,16 +30,30 @@ if empty(glob('~/.cache/dein'))
   silent !sh ~/installer.sh ~/.cache/dein
   silent !rm ~/installer.sh
 else
-  "remove vi compatibility mode if we are running Vim
+  "remove vi compatibility mode if we are running Vim. Mandatory for
+  "dein.
   if &compatible
     set nocompatible               " Be iMproved
   endif
+  " Let dein manage dein
   set runtimepath+=~/.cache/dein/repos/github.com/Shougo/dein.vim
   call dein#begin('~/.cache/dein')
+  " Tim Pope's sensible default. A lot of code can be avoided by using
+  " this. Battle-tested, good default.
   call dein#add('tpope/vim-sensible')
-  call dein#add('morhetz/gruvbox')
+  " Tim Pope's plugin to quickly comment and uncomment based on file
+  " type. Wonderous piece of work. press gcc to comment, or [x]gcc to
+  " comment x number of lines. use gcgc to uncomment.
+  call dein#add('tpope/vim-commentary')
+  " Tim Pope's plugin to enhance netrw experience. Good enough as a
+  " starter kit to file explorer within Vim.
   call dein#add('tpope/vim-vinegar')
+  " Colorscheme. Try other ones too, but this one works well with me.
+  call dein#add('morhetz/gruvbox')
+  " Better tagline at bottom. A bit too heavy for my taste, but what the
+  " heck.
   call dein#add('vim-airline/vim-airline')
+  " Make airline have gruvbox theme.
   call dein#add('vim-airline/vim-airline-themes')
   call dein#end()
   " Required:
@@ -64,7 +79,6 @@ endif
 set t_vb=
 
 set smartindent
-
 set smarttab
 
 if v:version >= 800
@@ -74,7 +88,6 @@ if v:version >= 800
   " better ascii friendly listchars
   set listchars=space:*,trail:*,nbsp:*,extends:>,precedes:<,tab:\|>
 
-  " Disable folding
   set foldmethod=manual
   set nofoldenable
 endif
@@ -88,7 +101,8 @@ set textwidth=72
 " replace tabs with spaces automatically
 set expandtab
 
-" disable relative line numbers, remove no to sample it
+" disable line numbers. Line numbers are useful when you need them, not
+" so much globally.
 set norelativenumber
 set nonumber
 
@@ -116,13 +130,14 @@ set viminfo='20,<1000,s1000
 " wrap around when searching
 set wrapscan
 
-" stop complaints about switching buffer with changes
+" stop complaints about switching buffer with changes. 
 set hidden
 
 " command history
 set history=100
 
-" faster scrolling
+" faster scrolling. If you are ont SSHing into a slow remote connection,
+" this will be good. 
 set ttyfast
 
 " better command-line completion
