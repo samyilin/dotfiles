@@ -71,6 +71,8 @@ exhaustive documentation, see the actual configs.
    Alternatives, nonexhaustive, are
    [dirvish](https://github.com/justinmk/vim-dirvish),
    [nerdtree](https://github.com/preservim/nerdtree) and
-   [coc-explorer](https://github.com/weirongxu/coc-explorer). 
+   [coc-explorer](https://github.com/weirongxu/coc-explorer). Dirvish is
+   the most minimal one, nerdtree is the most popular one, and
+   coc-explorer I'm not too familiar with, but it's allegedly very good. 
 
 TODO

@@ -18,7 +18,7 @@ esac
 
 # Launch pfetch, if failed, attempt to launch pfetch using nix, then
 # neofetch, then neofetch from nix.
-pfetch 2>/dev/null || $HOME/.nix-profile/bin/pfetch 2>/dev/null|| neofetch || $HOME/.nix-profile/bin/neofetch
+pfetch 2>/dev/null || $HOME/.nix-profile/bin/pfetch 2>/dev/null|| neofetch || $HOME/.nix-profile/bin/neofetch 2>/dev/null
 
 if [ -f $HOME/.bash_aliases ]; then
   . $HOME/.bash_aliases

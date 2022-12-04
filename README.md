@@ -12,7 +12,7 @@
    3. Programs have already spewed lines to .bashrc.
 
 2. Whenever possible, try to use links. This follows the previous
-   principle. Additionally, .bashrc or .profile should be left for
+   principle. Additionally, .bashrc, .bashrc_profile or .profile should be left for
    programs to spew lines into in a per-setup basis, hence why links.
 
 3. Make sure it is easy to delete. You get rid of my setup and use your
@@ -32,11 +32,6 @@
 6. Make it as simple and cross-platform as possible. Certain programs
    make it way too hard to stay cross-platform.
 
-   In order for our fetch program to run basically everywhere,
-   I've opted to using [pfetch](https://github.com/dylanaraps/pfetch)
-   instead of [neofetch](https://github.com/dylanaraps/neofetch). It'll
-   try pfetch first, then neofetch.
-
 7. Stay away from GNU coreutils. This follows the previous principle.
    GNU coreutils is good, but not cross-platform enough.
 
@@ -48,8 +43,7 @@ particular order:
 1. You are running a UNIX-ish system. Any Linux or BSD-like system would
    do, including MacOS. You don't need this on Windows.
 
-2. At least you have bash shell in /bin/bash. This assumption would
-   change later so that only POSIX-compliant shells are needed. Try
+2. At least you have bash shell in /bin/bash.  Try
 
    ```bash
    exec /bin/bash
@@ -59,15 +53,14 @@ particular order:
    in /bin/bash. Your interactive shell could be zsh (default on MacOS).
    I don't use zsh, but a lot of people use
    [oh-my-zsh](https://ohmyz.sh/) when using zsh. Far as I understand,
-   zsh is NOT POSIX-compliant. It can emulate it, but not perfect.
-   Executing
+   zsh is NOT POSIX-compliant.  Executing
    
-   ```bash
-   readlink /proc/$$/exe
+   ```bash 
+   readlink /proc/$$/exe 
    ```
    
-   would tell you what your interactive shell is. I think it works on
-   modern MacOS as well.
+   would tell you what your current interactive shell is. I think it
+   works on modern MacOS as well.
 
 3. You would prefer to have more than 1 ssh setup if needed.
 
@@ -78,15 +71,16 @@ particular order:
    don't risk compromising all your ssh connections' safety. 
 
 4. You are using two system package managers maximum: Your system
-   package manager and nix.  Nix is cross-platform enough. Homebrew
-   installs into /usr/bin, it's not a good practice, but it should be a
-   part of your PATH variable, easy enough to be auto-detected.
-
+   package manager and nix.  Nix is cross-platform enough. 
 
 5. You would follow [XDG Base
    Directory](https://wiki.archlinux.org/title/XDG_Base_Directory)
    standards. Linked is not the XDG Base Directory Specification, but
    practical places of where you SHOULD place your configurations. 
+
+6. At least you have Busybox utils or similar minimal environment. This
+   means a grep, some minimal shell (ash or dash) and other utility
+   programs should be present. 
 
 ## Non-assumptions
 
@@ -108,9 +102,9 @@ Bash, Vim, tmux, SSH, git.
 Bash for interactive shell, Vim for text editor, tmux for screen
 multiplexer, ssh and git could work together or separately.
 
-Note: I will only configure Bash as an interactive shell for you. I will
-consider ash or dash later on (not much to configure for ash or dash
-though), but that's it. 
+Note: I will only configure Bash as an interactive shell for you. Zsh or
+fish is not something I would consider as a good interactive shell, and there
+isn't much to configure for ash or dash or other non-interactive shells.
 
 ## Non-goals/Programs Not Configuring in this setup?
 
@@ -209,7 +203,6 @@ Based on personal priority:
    not too much harder. I just want to write a cheatsheet or wrapper
    script to make using SSH + git a bit easier. Most git services (GitHub,
    GitLab or others) have instructions on how Git should work with SSH.
-
 
 6. SSH configuration for usage other than git. SSH into other machines?
    X11 forwarding? SSH config is complicated, because there're many use

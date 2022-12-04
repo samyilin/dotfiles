@@ -25,44 +25,38 @@ set t_u7=
 "dein Scripts-----------------------------
 "if the below dir is empty, download dein installer and install dein,
 "then get rid of installer script.
-if empty(glob('~/.cache/dein'))
-  silent !curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > ~/installer.sh
-  silent !sh ~/installer.sh ~/.cache/dein
-  silent !rm ~/installer.sh
-else
-  "remove vi compatibility mode if we are running Vim. Mandatory for
-  "dein.
-  if &compatible
-    set nocompatible               " Be iMproved
-  endif
-  " Let dein manage dein
-  set runtimepath+=~/.cache/dein/repos/github.com/Shougo/dein.vim
-  call dein#begin('~/.cache/dein')
-  " Tim Pope's sensible default. A lot of code can be avoided by using
-  " this. Battle-tested, good default.
-  call dein#add('tpope/vim-sensible')
-  " Tim Pope's plugin to quickly comment and uncomment based on file
-  " type. Wonderous piece of work. press gcc to comment, or [x]gcc to
-  " comment x number of lines. use gcgc to uncomment.
-  call dein#add('tpope/vim-commentary')
-  " Tim Pope's plugin to enhance netrw experience. Good enough as a
-  " starter kit to file explorer within Vim.
-  call dein#add('tpope/vim-vinegar')
-  " Colorscheme. Try other ones too, but this one works well with me.
-  call dein#add('morhetz/gruvbox')
-  " Better tagline at bottom. A bit too heavy for my taste, but what the
-  " heck.
-  call dein#add('vim-airline/vim-airline')
-  " Make airline have gruvbox theme.
-  call dein#add('vim-airline/vim-airline-themes')
-  call dein#end()
-  " Required:
-  filetype plugin indent on
-  syntax enable
-  " If you want to install not installed plugins on startup.
-  if dein#check_install()
-    call dein#install()
-  endif
+"remove vi compatibility mode if we are running Vim. Mandatory for
+"dein.
+if &compatible
+        set nocompatible               " Be iMproved
+endif
+" Let dein manage dein
+set runtimepath+=~/.cache/dein/repos/github.com/Shougo/dein.vim
+call dein#begin('~/.cache/dein')
+" Tim Pope's sensible default. A lot of code can be avoided by using
+" this. Battle-tested, good default.
+call dein#add('tpope/vim-sensible')
+" Tim Pope's plugin to quickly comment and uncomment based on file
+" type. Wonderous piece of work. press gcc to comment, or [x]gcc to
+" comment x number of lines. use gcgc to uncomment.
+call dein#add('tpope/vim-commentary')
+" Tim Pope's plugin to enhance netrw experience. Good enough as a
+" starter kit to file explorer within Vim.
+call dein#add('tpope/vim-vinegar')
+" Colorscheme. Try other ones too, but this one works well with me.
+call dein#add('morhetz/gruvbox')
+" Better tagline at bottom. A bit too heavy for my taste, but what the
+" heck.
+call dein#add('vim-airline/vim-airline')
+" Make airline have gruvbox theme.
+call dein#add('vim-airline/vim-airline-themes')
+call dein#end()
+" Required:
+filetype plugin indent on
+syntax enable
+" If you want to install not installed plugins on startup.
+if dein#check_install()
+        call dein#install()
 endif
 "End dein Scripts-------------------------
 
@@ -71,7 +65,7 @@ set background=dark
 autocmd vimenter * ++nested colorscheme gruvbox
 let g:airline_theme='base16_gruvbox_dark_hard'
 if (has("termguicolors"))
-  set termguicolors
+        set termguicolors
 endif
 
 
@@ -82,14 +76,14 @@ set smartindent
 set smarttab
 
 if v:version >= 800
-  " stop vim from silently messing with files that it shouldn't
-  set nofixendofline
+        " stop vim from silently messing with files that it shouldn't
+        set nofixendofline
 
-  " better ascii friendly listchars
-  set listchars=space:*,trail:*,nbsp:*,extends:>,precedes:<,tab:\|>
+        " better ascii friendly listchars
+        set listchars=space:*,trail:*,nbsp:*,extends:>,precedes:<,tab:\|>
 
-  set foldmethod=manual
-  set nofoldenable
+        set foldmethod=manual
+        set nofoldenable
 endif
 
 " mark trailing spaces as errors
@@ -125,6 +119,9 @@ set hlsearch
 set incsearch
 set linebreak
 
+set ignorecase
+set smartcase
+
 " prevents truncated yanks, deletes, etc.
 set viminfo='20,<1000,s1000
 " wrap around when searching
@@ -149,24 +146,24 @@ set omnifunc=syntaxcomplete#Complete
 
 "fix bork bash detection
 if has("eval")  " vim-tiny detection
-fun! s:DetectBash()
-    if getline(1) == '#!/usr/bin/bash' || getline(1) == '#!/bin/bash' || getline(1) == '#!/bin/sh'
-        set ft=bash
-        set shiftwidth=2
-    endif
-endfun
-autocmd BufNewFile,BufRead * call s:DetectBash()
+        fun! s:DetectBash()
+                if getline(1) == '#!/usr/bin/bash' || getline(1) == '#!/bin/bash' || getline(1) == '#!/bin/sh'
+                        set ft=bash
+                        set shiftwidth=2
+                endif
+        endfun
+        autocmd BufNewFile,BufRead * call s:DetectBash()
 endif
 
 " displays all the syntax rules for current position, useful
 " when writing vimscript syntax plugins
 if has("syntax")
-function! <SID>SynStack()
-  if !exists("*synstack")
-    return
-  endif
-    echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
-endfunc
+        function! <SID>SynStack()
+                if !exists("*synstack")
+                        return
+                endif
+                echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+        endfunc
 endif
 
 " start at last place you were editing
@@ -191,8 +188,8 @@ set path+=**
 command! MakeTags !ctags -R .
 
 if filereadable("~/.vimrc.personal")
-    set rtp^=~/.vimrc.personal
+        set rtp^=~/.vimrc.personal
 endif
 if filereadable("~/.vimrc.work")
-    set rtp^=~/.vimrc.work
+        set rtp^=~/.vimrc.work
 endif
