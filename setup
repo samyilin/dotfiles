@@ -1,23 +1,27 @@
 #!/bin/sh
 
 # Sets up bash profile, vimrc and more. Always WIP.
-
-
+dir=$(cd -- "$(dirname -- "$0")">>/dev/null 2>&1 && pwd)
 # Helper to determine if a certain required program is missing from user
 # setup. Checks if the command/program exists and is an executable.
+# This is more POSIX compliant than "which" or "type" in shell scripts.
 has() {
-  command -v $1 >/dev/null && test -x $(command -v "$1") >/dev/null && return 0 || return 1; 
+  command -v "$1" >>/dev/null 2>&1 && test -x "$(command -v "$1")" >>/dev/null 2>&1 && return 0 || return 1; 
 }
 # function to setup bash.
 setup_bash() {
-  if [ -f $HOME/.bashrc ] && [ ! -L $HOME/.bashrc ]; then
+  # quit if bash is not installed
+  if ! has bash; then
+    echo "Bash is not installed or not present in /bin/bash, skipping bash setup"
+  fi
+  if [ -f "$HOME"/.bashrc ] && [ ! -L "$HOME"/.bashrc ]; then
     # add the sourcing line to default .bashrc if not there already
-    case `grep -Fx "test -f $HOME/.bashrc.personal && . $HOME/.bashrc.personal" "$HOME/.bashrc" >/dev/null; echo $?` in
+    case $(grep -Fx "test -f $HOME/.bashrc.personal && . $HOME/.bashrc.personal" "$HOME/.bashrc" >/dev/null; echo $?) in
       0)
         echo "bashrc already exists and is setup already"
         ;;
       1)
-        echo "test -f $HOME/.bashrc.personal && . $HOME/.bashrc.personal" >> $HOME/.bashrc
+        echo "test -f $HOME/.bashrc.personal && . $HOME/.bashrc.personal" >> "$HOME"/.bashrc
         # code if not found
         ;;
       *)
@@ -25,55 +29,50 @@ setup_bash() {
         # code if an error occurred
         ;;
     esac
-    ln -sf "$PWD/.bashrc.personal" "$HOME/.bashrc.personal"
-  else
+  elif [ ! -f "$HOME"/.bashrc ]; then
     # if no bashrc exists right now,  copy and paste .bashrc.default to
     # .bashrc. This .bashrc is a placeholder, so no symlink is necessary.
     # Plus, we want this .bashrc to be written to by other programs, so
     # symlinking would lead to master copy (although a placeholder) to be
     # polluted when we commit.
     # bashrc
-    if [ ! -f $HOME/.bashrc ]; then
-      cp "$PWD/.bashrc.default" "$HOME/.bashrc"
-      ln -sf "$PWD/.bashrc.personal" "$HOME/.bashrc.personal"
-      echo ".bashrc setup complete."
-    fi
+    cp "$PWD"/.bashrc.default "$HOME"/.bashrc
   fi
-  # .bash_profile is there just in case some programs need to spew into
-  # it. It is meant to reduce user's hassle. I could've just made it
-  # identical to .profile, but I don't like that approach.
-  if [ -f $HOME/.bash_profile ]; then
-    case `grep -Fx ". $HOME/.profile" "$HOME/.bash_profile" >/dev/null; echo $?` in 
+  ln -sf "$PWD/.bashrc.personal" "$HOME/.bashrc.personal"
+  echo ".bashrc setup complete."
+  if [ -f "$HOME"/.bash_profile ] && [ ! -L "$HOME"/.bash_profile ]; then
+    case $(grep -Fx ". $HOME/.profile" "$HOME/.bash_profile" >/dev/null; echo $?) in
       0)
-        echo "bash_profile already exists and is setup already";;
+        echo ".bash_profile already exists and is setup already"
+        ;;
       1)
-        echo ". $HOME/.profile" >> $HOME/.bash_profile;;
+        echo ". $HOME/.profile" >> "$HOME"/.bash
+        # code if not found
+        ;;
       *)
-        echo "Unknown error, check if grep is installed.";;
+        echo "Unknown error, check if grep is installed."
+        # code if an error occurred
+        ;;
     esac
-  else
-    cp "$PWD/.bash_profile" "$HOME/.bash_profile"
+  elif [ ! -f "$HOME"/.bash_profile ]; then
+    cp "$PWD"/.bash_profile "$HOME"/.bash_profile.bak
   fi
-  if [ -f $HOME/.bash_aliases ] && [ ! -L $HOME/.bash_aliases ]; then
-    mv $HOME/.bash_aliases $HOME/.bash_aliases.bak
-    echo "your default .bash_aliases is backed up at $HOME/.bash_aliases.bak"
-  fi
-  ln -sf "$PWD/.bash_aliases.personal" "$HOME/.bash_aliases"
+  echo ".bash_profile is setup."
 
 }
 
 # setup .profile. Chances are, you would at least want to set up
 # .profile.
 setup_profile() {
-  if [ -f $HOME/.profile ]; then
+  if [ -f "$HOME"/.profile ]; then
     echo ".profile exists and doesn't need to be added again."
   else
-    if [ ! -f $HOME/.profile ]; then
+    if [ ! -f "$HOME"/.profile ]; then
       cp "$PWD/.profile.default" "$HOME/.profile"
     fi
   fi
-  if [ -f $HOME/.inputrc ] && [ ! -L $HOME/.inputrc ]; then
-    mv $HOME/.inputrc $HOME/.inputrc.bak
+  if [ -f "$HOME"/.inputrc ] && [ ! -L "$HOME"/.inputrc ]; then
+    mv "$HOME"/.inputrc "$HOME"/.inputrc.bak
     echo "your default .inputrc is backed up at $HOME/.inputrc.bak"
   fi
   ln -sf "$PWD/.inputrc.personal" "$HOME/.inputrc"
@@ -84,9 +83,20 @@ setup_profile() {
 setup_others() {
   echo "Initializing $1 setup"
   sleep 1
-  cd $1 && ./setup && echo "$1 setup complete, proceeding to next step" || echo "$1 setup skipped, proceeding to next step"
-  cd ->/dev/null
-
+  if has "$1"; then
+    # special logic to handle vim full version.
+    if [ "$1" = vim ]; then
+      if ! has vimtutor; then
+        echo "Full vim is not installed, quitting vim setup"
+        return 1
+      fi
+    fi
+    cd "$1" && ./setup && echo "$1 setup complete, proceeding to next step"
+    cd "$dir" || return 1
+  else
+    echo "$1 is not installed in the system, setup skipped."
+    return 0
+  fi
 }
 main() {
   for i in grep git; do
@@ -97,7 +107,6 @@ main() {
   if [ $# -eq 0 ]; then
     setup_bash
     setup_profile
-
     for i in vim tmux git; do
       setup_others $i
     done

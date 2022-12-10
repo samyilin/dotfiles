@@ -1,39 +1,38 @@
-#!/bin/bash
+#!/bin/sh
 setup_vim() {
   ln -sf "$PWD/.vimrc" "$HOME/.vimrc"
-  if [ ! -d $HOME/.cache/dein ]; then
+  if [ ! -d "$HOME"/.cache/dein ]; then
     echo "Package Manager (dein) is about to be installed."
     echo "Please select the appropriate directory to be installed."
     echo "Recommended choice for vim is option 1 and option 1."
     sleep 10
-    curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > $HOME/installer.sh
-    chmod +x $HOME/installer.sh
-    $HOME/installer.sh $HOME/.cache/dein
-    rm -f $HOME/installer.sh
+    curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > "$HOME"/installer.sh
+    chmod +x "$HOME"/installer.sh
+    "$HOME"/installer.sh "$HOME"/.cache/dein
+    rm -f "$HOME"/installer.sh
     echo "Enter and quit vim, then type reset on Bash shell to setup vim properly"
     echo "Keys to press: vim <Enter> <Enter> :q <Enter> reset <Enter> (<Enter> denotes the enter key)."
     echo "Please wait till every step is finished before pressing new key combos."
   fi
 }
-if ! command -v vim &>/dev/null && ! command -v vimtutor &>/dev/null; then
-  echo "Full vim is not installed, quitting vim setup"
-  exit 1
-elif [ ! -f $HOME/.vimrc ]; then
+if [ ! -f "$HOME"/.vimrc ]; then
   setup_vim
-elif [ -f $HOME/.vimrc ] && [ ! -L $HOME/.vimrc ]; then
-  response=""
-  while [$response -ne "no"]; do
+elif [ -f "$HOME"/.vimrc ] && [ ! -L "$HOME"/.vimrc ]; then
+  while true; do
     echo "It seems that .vimrc is in place already."
     echo "My setup uses dein as plugin manager."
     echo "Do you want to preserve yours and try mine?[yes|no]"
-    read $response
-    if $response == "yes"; then
-      mv  $HOME/.vimrc $HOME/.vimrc.bak
-      echo "Your .vimrc have been backed up in .vimrc.bak"
-      setup_vim
-    fi
+    read -r response
+    case $response in
+      [Yy]* )
+        mv  "$HOME"/.vimrc "$HOME"/.vimrc.bak
+        echo "Your .vimrc have been backed up in .vimrc.bak"
+        setup_vim
+        ;;
+      [Nn]* ) echo "Vim configuration skipped.";;
+      * ) echo "Please answer yes or no."
+    esac
   done
-  unset $response
-  exit 0
 fi
-
+echo "Vim setup complete"
+return 0

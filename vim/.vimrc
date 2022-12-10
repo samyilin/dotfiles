@@ -25,6 +25,7 @@ set t_u7=
 "dein Scripts-----------------------------
 "if the below dir is empty, download dein installer and install dein,
 "then get rid of installer script.
+
 "remove vi compatibility mode if we are running Vim. Mandatory for
 "dein.
 if &compatible

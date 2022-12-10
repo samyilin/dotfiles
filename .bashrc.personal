@@ -4,8 +4,8 @@
 
 # If not running interactively, don't do anything
 case $- in
-        *i*) ;;
-        *) return;;
+  *i*) ;;
+  *) return;;
 esac
 
 
@@ -18,23 +18,27 @@ esac
 
 # Launch pfetch, if failed, attempt to launch pfetch using nix, then
 # neofetch, then neofetch from nix.
-pfetch 2>/dev/null || $HOME/.nix-profile/bin/pfetch 2>/dev/null|| neofetch || $HOME/.nix-profile/bin/neofetch 2>/dev/null
 
-if [ -f $HOME/.bash_aliases ]; then
-  . $HOME/.bash_aliases
+pfetch 2>/dev/null || $HOME/.nix-profile/bin/pfetch 
+
+if [ -f "$HOME"/.bash_aliases ]; then
+  . "$HOME"/.bash_aliases
 fi
 
 if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+  if [ -r "$HOME"/.dircolors ]; then
+    eval "$(dircolors -b "$HOME"/.dircolors)"
+  else
+    eval "$(dircolors -b)"
+  fi
 fi
 
 # This line is executed upon exiting shell. Currently it tries to kill
 # emacs, be careful though. you may not want this.
-function cleanup {
-  if pgrep -x "emacs" > /dev/null
-  then
-    killall emacs
-  fi
-}
-trap cleanup EXIT
-
+# function cleanup {
+#   if pgrep -x "emacs" > /dev/null
+#   then
+#     killall emacs
+#   fi
+# }
+# trap cleanup EXIT

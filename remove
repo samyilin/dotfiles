@@ -1,16 +1,17 @@
 #!/bin/bash
 # A quick script to remove customizations due to this dotfile.
 # Most are symlinks, only a couple can be tricky.
-rm -f $HOME/.bashrc.personal $HOME/.bash_aliases $HOME/.gitconfig $HOME/.profile.personal
+dir=$(cd -- "$(dirname -- "$0")">>/dev/null 2>&1 && pwd)
+rm -f "$HOME"/.bashrc.personal "$HOME"/.bash_aliases "$HOME"/.gitconfig "$HOME"/.profile.personal
 for i in .bashrc.personal .bash_aliases .profile.personal; do
-  unlink $HOME/$i 2>/dev/null
-  if [ -f $HOME/$i.bak]; then
-    mv $HOME/$i.bak $HOME/$i
+  unlink "$HOME"/"$i" 2>/dev/null
+  if [ -f "$HOME"/"$i".bak ]; then
+    mv "$HOME"/"$i".bak "$HOME"/"$i"
   fi
 done
 for i in vim tmux; do
   cd $i && ./remove && echo "$i config removed, proceeding" && sleep 1
-  cd ->/dev/null
+  cd "$dir" || return 1
 done
 echo "config removal completed, thank you for using this script."
 exec bash

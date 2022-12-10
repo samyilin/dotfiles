@@ -1,6 +1,6 @@
-#!/bin/bash
+#!/bin/sh
 
 # unlink vimrc
-unlink  $HOME/.vimrc 2>/dev/null
+unlink  "$HOME"/.vimrc 2>/dev/null
 # get rid of caches created by dein, our plugin manager
-rm -rf $HOME/.cache/dein
+rm -rf "$HOME"/.cache/dein
