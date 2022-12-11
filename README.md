@@ -15,11 +15,11 @@ This repo has 2 purposes:
    motivate myself to learn more and live ( more or less) in the command
    line when it comes to coding or editing text. 
    
-3. I do realize that [GNU Stow](https://www.gnu.org/software/stow/),
-   [chezmoi](https://www.chezmoi.io/) and the like exists. I can't
-   assume that the platform I'll be using would have those tools. Git
-   and basic shell utilities outside of GNU should be the only things I
-   need. It's not a complicated setup.
+ I do realize that [GNU Stow](https://www.gnu.org/software/stow/),
+ [chezmoi](https://www.chezmoi.io/) and the like exists. I can't assume
+ that the platform I'll be using would have those tools. Git and basic
+ shell utilities outside of GNU should be the only things I need. It's
+ not a complicated setup.
 
 ## Design Principles
 
