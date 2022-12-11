@@ -1,27 +1,23 @@
 #!/bin/bash
-if [ ! -f $HOME/.gitconfig ]; then
+if [ ! -f "$HOME"/.gitconfig ]; then
   echo "Type in your first and last name (no accent or special characters - e.g. 'ç'): "
-  read full_name
+  read -r full_name
 
   echo "Type in your email address (the one used for your work/life git account): "
-  read email
+  read -r email
 
-  editor=""
-  while [  command -v $editor >>/dev/null 2>&1 ]
-  do
+  while true; do
     echo "Which editor would you like to use to edit git commit messages?"
-    read editor
-    if ! command -v $editor &> /dev/null; then
-      printf "Editor %i is not installed in your system, git commit editor is not set up properly" "$editor"
+    read -r edit
+    if ! command -v "$edit" >> /dev/null 2>&1; then
+      echo "Editor $edit is not installed in your system, git commit editor is not set up properly"
     else
-      git config --global core.editor "$editor"
-      exit 0
+      git config --global core.editor "$edit"
+      break
     fi
   done
   git config --global user.email "$email"
   git config --global user.name "$full_name"
-  unset $email
-  unset $full_name
   echo "Basic git setup done, quitting"
 else
   echo "Seems like there's an existing .gitconfig file in your home directory, quitting."
