@@ -44,6 +44,7 @@ call dein#add('tpope/vim-commentary')
 " Tim Pope's plugin to enhance netrw experience. Good enough as a
 " starter kit to file explorer within Vim.
 call dein#add('tpope/vim-vinegar')
+call dein#add('tpope/vim-fugitive')
 " Colorscheme. Try other ones too, but this one works well with me.
 call dein#add('morhetz/gruvbox')
 " Better tagline at bottom. A bit too heavy for my taste, but what the
@@ -51,6 +52,8 @@ call dein#add('morhetz/gruvbox')
 call dein#add('vim-airline/vim-airline')
 " Make airline have gruvbox theme.
 call dein#add('vim-airline/vim-airline-themes')
+
+
 call dein#end()
 " Required:
 filetype plugin indent on
