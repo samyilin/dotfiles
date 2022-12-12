@@ -67,7 +67,7 @@ particular order:
 1. You are running a UNIX-ish system. Any Linux or BSD-like system would
    do, including MacOS, WSL. You don't need this on Windows.
 
-2. At least you have bash shell in /bin/bash.  Try
+2. At least you have bash shell in /bin/bash. Try
 
    ```bash
    exec /bin/bash
@@ -120,7 +120,7 @@ particular order:
 
 ## Goals/Programs configuring in this setup?
 
-Bash, Vim, tmux, SSH, git. A "complete" CLI working environment.
+Bash, Vim, tmux, SSH, git. A "complete" CLI working environment. 
 
 Bash for interactive shell, Vim for text editor, tmux for screen
 multiplexer, ssh and git could work together or separately.
@@ -160,6 +160,9 @@ to configure them later though. No promises here.
 
    2. Manage your expectations of what your tool can do and what tool
       your team expects you to use.
+7. File lock checking, aka race condition. Realistically, user should
+   know better to not execute this program in two different shell
+   sessions.
 
 ## How to Set up and Use
 
@@ -205,7 +208,7 @@ Based on personal priority:
 
 1. ~~Make the master setup script have command line arguments, so that it
    can only setup certain tools instead of others. Will update this
-   document whenever this change has taken effect. ~~
+   document whenever this change has taken effect.~~
 
    Completed, but documention needs to be updated.
 

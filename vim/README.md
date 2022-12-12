@@ -27,7 +27,9 @@ nigh-impossibe. Mininizing dependency on other people's work should be
 your priority unless the package is really good and stable, so I do not
 recommend using huge projects with a complete framework and a lot of
 packages. Depending on other people to do your work for you is never a
-good idea.
+good idea. I've been burned by emacs frameworks before, where M-x
+refuses to work due to breakage in one of the hundreds of packages that
+framework uses.
 
 You CAN pin your package manager to use a specific version of any
 package, but then you'll miss out some new features. There's always a
@@ -75,4 +77,14 @@ exhaustive documentation, see the actual configs.
    the most minimal one, nerdtree is the most popular one, and
    coc-explorer I'm not too familiar with, but it's allegedly very good. 
 
+4. Use [vim-fugitive](https://github.com/tpope/vim-fugitive) as a git
+   wrapper. I've stopped using git from command line altogether because
+   of this.
+
 TODO
+
+## Multiple vimrcs?
+
+Vim allows you to :so YOUR_VIMRC at runtime, so it IS possible to switch
+from a barebone/basic vimrc to a full IDE-like vimrc at runtime.
+Possible feature later on.

@@ -15,10 +15,11 @@ elif [ -f "$HOME"/.tmux.conf ] && [ ! -L "$HOME"/.tmux.conf ]; then
         unset "$response"
         ln -sf "$PWD"/.tmux.conf "$HOME"/.tmux.conf
         ;;
-      [Nn]*) echo "tmux setup interrupted, quitting";;
+      [Nn]*) echo "tmux setup interrupted, quitting"
+        break
+        ;;
       *) echo "Please enter yes or no.";;
     esac
   done
 fi
-echo "tmux setup completed."
-return 1
+exit 1

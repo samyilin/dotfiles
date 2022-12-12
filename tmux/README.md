@@ -24,4 +24,16 @@ good enough insofar that it is NOT what your .tmux.conf will look like.
 
 Therefore it is better to document them here.
 
+
+# Style/colorscheme?
+
+One can tweak tmux to no end, hence I've half-assed it. 
+
+Implemented what is cross-platform from
+[tmux-gruvbox](https://github.com/egel/tmux-gruvbox/blob/main/tmux-gruvbox-dark.conf).
+This requires usage of [Hack
+Font](https://github.com/source-foundry/Hack). If you want to use those
+instead, go ahead. You can use TPM (link provided above) with
+combination as well.
+
 ## TODO

@@ -34,7 +34,6 @@ setup_bash() {
     # Plus, we want this .bashrc to be written to by other programs, so
     # symlinking would lead to master copy (although a placeholder) to be
     # polluted when we commit.
-    # bashrc
     cp "$PWD"/.bashrc.default "$HOME"/.bashrc
   fi
   ln -sf "$PWD/.bashrc.personal" "$HOME/.bashrc.personal"
@@ -45,7 +44,7 @@ setup_bash() {
         echo ".bash_profile already exists and is setup already"
         ;;
       1)
-        echo ". $HOME/.profile" >> "$HOME"/.bash
+        echo ". $HOME/.profile" >> "$HOME"/.bash_profile
         # code if not found
         ;;
       *)
@@ -54,11 +53,11 @@ setup_bash() {
         ;;
     esac
   elif [ ! -f "$HOME"/.bash_profile ]; then
-    cp "$PWD"/.bash_profile "$HOME"/.bash_profile.bak
+    cp "$PWD"/.bash_profile "$HOME"/.bash_profile
+    echo ". $HOME/.profile" >> "$HOME"/.bash_profile
   fi
   echo ".bash_profile is setup."
-  # Sets up .inputrtc used by readline. This is really only necessary
-  # when using bash.
+  # Sets up .inputrtc used by readline. It is only used by GNU Bash. 
   if [ -f "$HOME"/.inputrc ] && [ ! -L "$HOME"/.inputrc ]; then
     mv "$HOME"/.inputrc "$HOME"/.inputrc.bak
     echo "your default .inputrc is backed up at $HOME/.inputrc.bak"
@@ -91,11 +90,11 @@ setup_others() {
       fi
     fi
     cd "$1" && ./setup && echo "$1 setup complete, proceeding to next step" || \
-      echo "$ setup failed."
-    cd "$dir" || return 1
-  else
-    echo "$1 is not installed in the system, setup skipped."
-    return 0
+      echo "$i setup failed."
+          cd "$dir" || return 1
+        else
+          echo "$1 is not installed in the system, setup skipped."
+          return 0
   fi
 }
 
@@ -103,7 +102,7 @@ main() {
   # detects necessary tools used by this setup and quit if these tools
   # haven't been found. If these tools are only present in busybox, then
   # type "alias grep='busybox grep'" into terminal and then re-run this
-  # program.
+  # program. I can further tweak this later on though.
   for i in grep git; do
     if ! has $i; then
       echo "$1 is not installed in the system, setup failed"

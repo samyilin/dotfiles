@@ -44,6 +44,8 @@ call dein#add('tpope/vim-commentary')
 " Tim Pope's plugin to enhance netrw experience. Good enough as a
 " starter kit to file explorer within Vim.
 call dein#add('tpope/vim-vinegar')
+" Tim Pope's git wrapper. Excellent if you don't want to leave Vim to
+" do git maintenance.
 call dein#add('tpope/vim-fugitive')
 " Colorscheme. Try other ones too, but this one works well with me.
 call dein#add('morhetz/gruvbox')
@@ -52,7 +54,6 @@ call dein#add('morhetz/gruvbox')
 call dein#add('vim-airline/vim-airline')
 " Make airline have gruvbox theme.
 call dein#add('vim-airline/vim-airline-themes')
-
 
 call dein#end()
 " Required:
