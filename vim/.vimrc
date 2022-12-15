@@ -47,13 +47,12 @@ call dein#add('tpope/vim-vinegar')
 " Tim Pope's git wrapper. Excellent if you don't want to leave Vim to
 " do git maintenance.
 call dein#add('tpope/vim-fugitive')
-" Colorscheme. Try other ones too, but this one works well with me.
-call dein#add('morhetz/gruvbox')
+" Gruvbox material is silghtly better maintained than the original
+" version.
+call dein#add('sainnhe/gruvbox-material')
 " Better tagline at bottom. A bit too heavy for my taste, but what the
 " heck.
 call dein#add('vim-airline/vim-airline')
-" Make airline have gruvbox theme.
-call dein#add('vim-airline/vim-airline-themes')
 
 call dein#end()
 " Required:
@@ -66,14 +65,17 @@ endif
 "End dein Scripts-------------------------
 
 " Theme Setting(s)
-set background=dark
-autocmd vimenter * ++nested colorscheme gruvbox
-let g:airline_theme='base16_gruvbox_dark_hard'
 if (has("termguicolors"))
         set termguicolors
 endif
+set background=dark
+" gruvbox comes with its own airline, so it doesn't make sense to use
+" airline's themes.
+let g:airline_theme='gruvbox_material'
 
-
+let g:gruvbox_material_background = 'medium'
+let g:gruvbox_material_foreground = "original"
+autocmd vimenter * ++nested colorscheme gruvbox-material
 " disable visual bell (also disable in .inputrc)
 set t_vb=
 
