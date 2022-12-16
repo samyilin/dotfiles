@@ -23,13 +23,10 @@ set t_u7=
 
 "#######################################################################
 "dein Scripts-----------------------------
-"if the below dir is empty, download dein installer and install dein,
-"then get rid of installer script.
-
 "remove vi compatibility mode if we are running Vim. Mandatory for
 "dein.
 if &compatible
-        set nocompatible               " Be iMproved
+  set nocompatible               " Be iMproved
 endif
 " Let dein manage dein
 set runtimepath+=~/.cache/dein/repos/github.com/Shougo/dein.vim
@@ -60,13 +57,14 @@ filetype plugin indent on
 syntax enable
 " If you want to install not installed plugins on startup.
 if dein#check_install()
-        call dein#install()
+  call dein#install()
 endif
 "End dein Scripts-------------------------
 
+"#######################################################################
 " Theme Setting(s)
 if (has("termguicolors"))
-        set termguicolors
+  set termguicolors
 endif
 set background=dark
 " gruvbox comes with its own airline, so it doesn't make sense to use
@@ -76,21 +74,24 @@ let g:airline_theme='gruvbox_material'
 let g:gruvbox_material_background = 'medium'
 let g:gruvbox_material_foreground = "original"
 autocmd vimenter * ++nested colorscheme gruvbox-material
+"#######################################################################
 " disable visual bell (also disable in .inputrc)
 set t_vb=
 
 set smartindent
 set smarttab
+" replace tabs with spaces automatically
+set expandtab
 
 if v:version >= 800
-        " stop vim from silently messing with files that it shouldn't
-        set nofixendofline
+  " stop vim from silently messing with files that it shouldn't
+  set nofixendofline
 
-        " better ascii friendly listchars
-        set listchars=space:*,trail:*,nbsp:*,extends:>,precedes:<,tab:\|>
+  " better ascii friendly listchars
+  set listchars=space:*,trail:*,nbsp:*,extends:>,precedes:<,tab:\|>
 
-        set foldmethod=manual
-        set nofoldenable
+  set foldmethod=manual
+  set nofoldenable
 endif
 
 " mark trailing spaces as errors
@@ -99,8 +100,6 @@ endif
 " enough for line numbers + gutter within 80 standard
 set textwidth=72
 
-" replace tabs with spaces automatically
-set expandtab
 
 " disable line numbers. Line numbers are useful when you need them, not
 " so much globally.
@@ -150,42 +149,34 @@ set wildmenu
 " enable omni-completion
 set omnifunc=syntaxcomplete#Complete
 
-
-"fix bork bash detection
-if has("eval")  " vim-tiny detection
-        fun! s:DetectBash()
-                if getline(1) == '#!/usr/bin/bash' || getline(1) == '#!/bin/bash' || getline(1) == '#!/bin/sh'
-                        set ft=bash
-                        set shiftwidth=2
-                endif
-        endfun
-        autocmd BufNewFile,BufRead * call s:DetectBash()
-endif
-
 " displays all the syntax rules for current position, useful
 " when writing vimscript syntax plugins
 if has("syntax")
-        function! <SID>SynStack()
-                if !exists("*synstack")
-                        return
-                endif
-                echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
-        endfunc
+  function! <SID>SynStack()
+    if !exists("*synstack")
+      return
+    endif
+    echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+  endfunc
 endif
 
 " start at last place you were editing
 autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 
 " functions keys
+" F1 toggles showing line number
 nmap <F1> :set number!<CR>:set relativenumber!<CR>
+" F2 shows syntax of item in vim
 nmap <F2> :call <SID>SynStack()<CR>
-" set pastetoggle=<F3>
+" F3 to Toggle paste mode. Useful for pasting into vim
+set pastetoggle=<F3>
+" F4 to see spaces as "*"
 map <F4> :set list!<CR>
+" F5 to show current line at which our cursor is
 map <F5> :set cursorline!<CR>
+" F7 to toggle spellchecking
 map <F7> :set spell!<CR>
-map <F12> :set fdm=indent<CR>
-
-nmap <leader>2 :set paste<CR>i
+" map <F12> :set fdm=indent<CR>
 
 
 " Search down into subfolders
@@ -193,10 +184,8 @@ nmap <leader>2 :set paste<CR>i
 set path+=**
 " Create the `tags` file (may need to install ctags first)
 command! MakeTags !ctags -R .
+if !empty(expand(glob("~/work.vim")))
+  source ~/work.vim
+endif
 
-if filereadable("~/.vimrc.personal")
-        set rtp^=~/.vimrc.personal
-endif
-if filereadable("~/.vimrc.work")
-        set rtp^=~/.vimrc.work
-endif
+" vim:set sw=2 sts=2:

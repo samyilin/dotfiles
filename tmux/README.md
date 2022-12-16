@@ -9,21 +9,29 @@ customizing tmux to my liking. Oh-my-tmux has a lot of
 prerequisites/dependencies in order to use tmux (awk perl and sed,
 common utilities, but still). [TPM](https://github.com/tmux-plugins/tpm)
 is also an overkill. What do I need [battery
-information](https://github.com/tmux-plugins/list) for?
+information](https://github.com/tmux-plugins/list) for? Many of these
+tools require Python or node, not cross-platform or minimal for my
+taste.
 
 # Documentation
 
-Unlike Emacs or other programs, keymaps are not really dynamically
-displayed when you hit ctrl-b ? (question mark) when in tmux session. So 
+1. A lot of people prefer using Ctrl-a over Ctrl-b as the prefix due to
+   Ctr-a being the default on [GNU
+   Screen](https://www.gnu.org/software/screen/). I don't really care
+   for either, so I've used Ctrl-b as my prefix.
 
-```bash
-tmux show-options -g
-```
-is the only way to know what your settings are, and even that is not
-good enough insofar that it is NOT what your .tmux.conf will look like. 
+2. Default keybinding Ctrl-b ? gives abridged version of list-keys, but
+   I've forced it to print out all the nitty-gritty details of key maps.
 
-Therefore it is better to document them here.
+3. use copy-mode-vi to force vi-like key bindings.
 
+
+
+# Tutorial?
+
+A lot of great tmux tutorials exist out there. One that I like is [tmux
+tutorial](https://protechnotes.com/comprehensive-tmux-tutorial-for-beginners-with-a-cheat-sheet/).
+Not going to write one here.
 
 # Style/colorscheme?
 
