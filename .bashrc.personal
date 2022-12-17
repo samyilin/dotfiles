@@ -19,9 +19,10 @@ esac
 # Launch pfetch, if failed, attempt to launch pfetch using nix, then
 # neofetch, then neofetch from nix.
 
-pfetch 2>/dev/null || $HOME/.nix-profile/bin/pfetch 
+pfetch 2>/dev/null || "$HOME"/.nix-profile/bin/pfetch 2>/dev/null
 
 if [ -f "$HOME"/.bash_aliases ]; then
+  # shellcheck disable=SC1091
   . "$HOME"/.bash_aliases
 fi
 

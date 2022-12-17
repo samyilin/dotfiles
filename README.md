@@ -144,11 +144,12 @@ to configure them later though. No promises here.
 
 3. Zsh or fish.  
 
-4. Emacs. Not now at least. It deserves its own config repo.
+4. Emacs. It deserves its own config repo.
 
-5. Neovim. Someday I will have time to write a separate init.lua for it. Maybe?
+5. Neovim. Maybe one day when we can have neovim without vimscript at
+   all.
 
-6. IDEs/Full programming environment setup
+6. IDEs/Full programming environment setup?
 
    Try IntelliJ suite or VSCode if that tickles your fancy. Or even
    Visual Studio. Usually your workplace will have a preference, weak

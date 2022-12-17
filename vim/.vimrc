@@ -63,6 +63,7 @@ endif
 
 "#######################################################################
 " Theme Setting(s)
+" Turn on truecolor support
 if (has("termguicolors"))
   set termguicolors
 endif
@@ -75,6 +76,7 @@ let g:gruvbox_material_background = 'medium'
 let g:gruvbox_material_foreground = "original"
 autocmd vimenter * ++nested colorscheme gruvbox-material
 "#######################################################################
+" General Settings
 " disable visual bell (also disable in .inputrc)
 set t_vb=
 
@@ -82,6 +84,9 @@ set smartindent
 set smarttab
 " replace tabs with spaces automatically
 set expandtab
+
+set shiftwidth=2 tabstop=2 softtabstop=2 
+autocmd FileType py set shiftwidth=4 tabstop=4 softtabstop=4 
 
 if v:version >= 800
   " stop vim from silently messing with files that it shouldn't
@@ -105,9 +110,6 @@ set textwidth=72
 " so much globally.
 set norelativenumber
 set nonumber
-
-" turn on default spell checking
-"set spell
 
 " disable spellcapcheck
 set spc=
@@ -188,4 +190,3 @@ if !empty(expand(glob("~/work.vim")))
   source ~/work.vim
 endif
 
-" vim:set sw=2 sts=2:
