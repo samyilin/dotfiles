@@ -11,9 +11,9 @@
 
 " prevent repetitive vim profile multiple time(s)
 if get(s:, 'loaded', 0) != 0
-        finish
+  finish
 else
-        let s:loaded = 1
+  let s:loaded = 1
 endif
 
 " Get this file's file directory

@@ -1,4 +1,5 @@
 # README
+
 SSH setup related
 
 ## Introduction
@@ -13,8 +14,8 @@ need to be introduced to write a sane wrapper for SSH.  Pure shell isn't
 going to cut it (shell doesn't parse text very well).  ANSI C maybe?
 Regardless, this is not the place to write that.
 
-One way to have a sane cross-platform solution
-with as little dependencies as possible is:
+One way to have a sane cross-platform solution with as little
+dependencies as possible is:
 
 1. Write a TUI program as the base wrapper to openSSH.
    [ncurses](https://invisible-island.net/ncurses/announce.html) maybe.

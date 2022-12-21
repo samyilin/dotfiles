@@ -27,21 +27,18 @@ taste.
 
 
 
-# Tutorial?
+## Tutorial?
 
 A lot of great tmux tutorials exist out there. One that I like is [tmux
 tutorial](https://protechnotes.com/comprehensive-tmux-tutorial-for-beginners-with-a-cheat-sheet/).
 Not going to write one here.
 
-# Style/colorscheme?
+## Style/colorscheme?
 
 One can tweak tmux to no end, hence I've half-assed it. 
 
-Implemented what is cross-platform from
-[tmux-gruvbox](https://github.com/egel/tmux-gruvbox/blob/main/tmux-gruvbox-dark.conf).
-This requires usage of [Hack
-Font](https://github.com/source-foundry/Hack). If you want to use those
-instead, go ahead. You can use TPM (link provided above) with
-combination as well.
+Colorscheme used here is Gruvbox, I've barely grabbed the palette from
+[Gruvbox](https://github.com/morhetz/gruvbox) itself. Would I write a
+wrapper for it later on? Maybe.  
 
 ## TODO

@@ -16,7 +16,8 @@
 "----------------------------------------------------------------------
 
 " disable vi compatible mode. You ARE using Vi iMproved!
-set nocompatible
+" dup with vim-sensible
+" set nocompatible
 
 " set backspace mode
 " Same with tpope/vim-sensible, hence commenting.
@@ -44,7 +45,8 @@ set nowrap
 " https://unix.stackexchange.com/questions/608142/whats-the-effect-of-escape-time-in-tmux#:~:text=This%20is%20what%20the%20escape,slow%2C%20which%20is%20generally%20pointless.
 " or
 " https://github.com/skywind3000/vim-init/wiki/Setup-terminals-to-support-ALT-and-Backspace-correctly:
-set ttimeout
+" dup with vim-sensible
+" set ttimeout
 
 " function key time out set to 50 milli-seconds. Practically usable on any
 " terminal. vim-sensible set this to 100 milliseconds, so not really
@@ -54,7 +56,8 @@ set ttimeout
 " :help ruler states:
 " Show the line and column number of the cursor position, separated by a
 " comma. 
-set ruler
+" dup with vim-sensible
+" set ruler
 
 
 "----------------------------------------------------------------------
@@ -75,7 +78,7 @@ set smartcase
 
 " highlight searched words
 " vim-sensible have <C-L> set to toggle off hlsearch
-set hlsearch
+" set hlsearch
 
 " incrementally highlight search result upon typing
 " duplicated with vim-sensible
@@ -110,11 +113,12 @@ endif
 
 "----------------------------------------------------------------------
 " syntax highlight settings
+" dup with vim-sensible
 "----------------------------------------------------------------------
-if has('syntax')  
-	syntax enable 
-	syntax on 
-endif
+" if has('syntax')  
+" 	syntax enable 
+" 	syntax on 
+" endif
 
 
 "----------------------------------------------------------------------
@@ -125,7 +129,8 @@ endif
 set showmatch
 
 " show matching brackets for 2 seconds
-set matchtime=2
+" default is 5 seconds, not really necessary to set to 2 seconds?
+" set matchtime=2
 
 " displays last line
 set display+=lastline

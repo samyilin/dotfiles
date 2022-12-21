@@ -1,5 +1,5 @@
-#!/bin/bash
+#!/bin/sh
 
 # only performs unlink. Ensures that physical file won't be inpacted if
 # present.
-unlink $HOME/.tmux.conf 2>/dev/null
+unlink "$HOME"/.tmux.conf 2>/dev/null

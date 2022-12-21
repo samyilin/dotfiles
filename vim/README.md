@@ -9,8 +9,7 @@ This config isn't original at all. No configuration is.
 
 2. Vim configurations are written using vimscript, a custom DSL designed
    to write non-original configurations that vim allows and exposes
-   those APIs for you to configure. Not an easy language to write
-   original code in.
+   those APIs for you to configure. 
 
 I will add their (other people who I took bits of configuration from)
 name and/or git repository links in due time.
@@ -27,16 +26,11 @@ nigh-impossibe. Mininizing dependency on other people's work should be
 your priority unless the package is really good and stable, so I do not
 recommend using huge projects with a complete framework and a lot of
 packages. Depending on other people to do your work for you is never a
-good idea. I've been burned by emacs frameworks before, where M-x
-refuses to work due to breakage in one of the hundreds of packages that
-framework uses.
+good idea. 
 
 You CAN pin your package manager to use a specific version of any
 package, but then you'll miss out some new features. There's always a
 tradeoff.
-
-I have been trying to make my vim configuration to be as modular as
-possible, it has been a work in progress for some time though.
 
 ## Documentation
 
@@ -47,8 +41,7 @@ exhaustive documentation, see the actual configs.
 ### Basic Principles
 
 1. Use a package manager. In a relatively modern vim version, you'll
-   have a built-in package manager. However, it's very primitive and not
-   that far away from either vim-pathogen or vundle (see link below). It
+   have a built-in package manager. However, it's very primitive. It
    doesn't really matter what package manager you use. Try different
    ones.
 
@@ -81,10 +74,30 @@ exhaustive documentation, see the actual configs.
    wrapper. I've stopped using git from command line altogether because
    of this.
 
-TODO
+5. Modularity. Still WIP. Discussed Below.
 
-## Multiple vimrcs?
+### Modularity
 
-Vim allows you to :so YOUR_VIMRC at runtime, so it IS possible to switch
-from a barebone/basic vimrc to a full IDE-like vimrc at runtime.
-Possible feature later on.
+Any vim or Emacs configuration sophisticated enough will turn into a
+modular setup. Question here is, what do I want to do about it? 
+
+When working with Python and Bash codes, I've come to the conclusion
+that 
+
+1. Vimrc will only grow exponentially in size with respect to the amount
+   of language or tools you try to work with.
+
+2. Vim needs to, and have the tools necessary to interop with a lot of
+   other tools and achieve almost native coherence. It just needs to be
+   implemented in the configuration layer. 
+
+   [autopep8](https://github.com/hhatto/autopep8) is a good example, by
+   setting it up with equalprg, it can be a smooth experience. 
+
+   Of course LSP is a different issue, there's too many players in the
+   arena of LSPs for Vim.
+
+3. Many modular setups try to pull all dependencies down at once, which
+   is BAD. You don't know that the user uses all 200 languages you're
+   configuring for, for example. What would be the best way to achieve
+   this? Still thinking about this.
