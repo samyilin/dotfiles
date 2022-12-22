@@ -1,17 +1,6 @@
 #!/bin/sh
 setup_vim() {
   ln -sf "$PWD/.vimrc" "$HOME/.vimrc"
-  if [ ! -d "$HOME"/.cache/dein ]; then
-    echo "Package Manager (dein) is about to be installed."
-    sleep 1
-    curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > "$HOME"/installer.sh
-    chmod +x "$HOME"/installer.sh
-    "$HOME"/installer.sh "$HOME"/.cache/dein --use-vim-config
-    rm -f "$HOME"/installer.sh
-    echo "Enter and quit vim, then type reset on Bash shell to setup vim properly"
-    echo "Keys to press: vim <Enter> <Enter> :q <Enter> reset <Enter> (<Enter> denotes the enter key)."
-    echo "Please wait till every step is finished before pressing new key combos."
-  fi
 }
 if [ ! -f "$HOME"/.vimrc ]; then
   setup_vim
@@ -33,4 +22,4 @@ elif [ -f "$HOME"/.vimrc ] && [ ! -L "$HOME"/.vimrc ]; then
   done
 fi
 echo "Vim setup complete"
-return 0
+exit 0
