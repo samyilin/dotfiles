@@ -7,18 +7,17 @@ case $- in
   *i*) ;;
   *) return;;
 esac
-
-
-# launches emacs in server mode if not already running. Optional code.
-# You would know what I mean here if you've used emacs extensively.
-
-# if command -V emacs &>/dev/null && ! pgrep -x "emacs" > /dev/null ; then
-#      emacs --daemon 2>/dev/null && echo "Emacs running in server mode"
-# fi
-
-# Launch pfetch, if failed, attempt to launch pfetch using nix, then
-# neofetch, then neofetch from nix.
-
+# Append to the history file, don't overwrite it
+shopt -s histappend
+# check the window size after each command and, if necessary, update the
+# values of LINES and COLUMNS
+shopt -s checkwinsize
+# Don't put duplicate lines or lines starting with space in the history
+export HISTCONTROL=ignoreboth
+export HISTSIZE=5000
+export HISTFILESIZE=10000
+# prompt setting. Funny combination of Ubuntu and Fedora.
+PS1='\[\033[01;32m\][\u@\H \w]\[\033[00m\]\\$ '
 pfetch 2>/dev/null || "$HOME"/.nix-profile/bin/pfetch 2>/dev/null
 
 if [ -f "$HOME"/.bash_aliases ]; then
@@ -34,6 +33,15 @@ if [ -x /usr/bin/dircolors ]; then
   fi
 fi
 
+# launches emacs in server mode if not already running. Optional code.
+# You would know what I mean here if you've used emacs extensively.
+
+# if command -V emacs &>/dev/null && ! pgrep -x "emacs" > /dev/null ; then
+#      emacs --daemon 2>/dev/null && echo "Emacs running in server mode"
+# fi
+
+# Launch pfetch, if failed, attempt to launch pfetch using nix, then
+# neofetch, then neofetch from nix.
 # This line is executed upon exiting shell. Currently it tries to kill
 # emacs, be careful though. you may not want this.
 # function cleanup {
@@ -42,4 +50,4 @@ fi
 #     killall emacs
 #   fi
 # }
-# trap cleanup EXIT
+# trap cleanup exit
