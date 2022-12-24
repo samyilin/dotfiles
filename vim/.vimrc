@@ -206,4 +206,5 @@ command! MakeTags !ctags -R .
 if !empty(expand(glob("~/work.vim")))
   source ~/work.vim
 endif
-
+" python setting
+autocmd FileType py if executable("black")| setlocal equalprg=black\ -q\ -| endif

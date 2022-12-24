@@ -4,3 +4,22 @@
 
 set colored-stats on
 set colored-completion-prefix on
+# Readline causes the terminal to echo ^C after Ctrl+C is pressed. 
+# If you don't want that, then uncomment the following line
+# set echo-control-characters off
+
+# vi-mode for Bash
+set editing-mode vi
+$if mode=vi
+set keymap vi-command
+j: history-search-forward
+k: history-search-backward
+"\e[A": history-search-backward
+"\e[B": history-search-forward
+set keymap vi-insert
+# these are for vi-insert mode
+"\C-j": history-search-forward
+"\C-k": history-search-backward
+"\e[A": history-search-backward
+"\e[B": history-search-forward
+$endif
