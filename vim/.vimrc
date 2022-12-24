@@ -103,7 +103,6 @@ set smarttab
 set expandtab
 
 set shiftwidth=2 tabstop=2 softtabstop=2 
-autocmd FileType py set shiftwidth=4 tabstop=4 softtabstop=4 
 
 if v:version >= 800
   " stop vim from silently messing with files that it shouldn't
@@ -207,4 +206,4 @@ if !empty(expand(glob("~/work.vim")))
   source ~/work.vim
 endif
 " python setting
-autocmd FileType py if executable("black")| setlocal equalprg=black\ -q\ -| endif
+autocmd FileType python if executable('black')| setlocal equalprg=black\ -q\ -| endif
