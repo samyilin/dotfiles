@@ -4,22 +4,8 @@ if [ ! -f "$HOME"/.tmux.conf ]; then
   echo "tmux config done,quitting"
   exit 0
 elif [ -f "$HOME"/.tmux.conf ] && [ ! -L "$HOME"/.tmux.conf ]; then
-  while true; do
-    echo "It seems that .tmux.conf is in place already."
-    echo "Do you want to preserve yours and try mine?[yes|no]"
-    read -r response
-    case $response in 
-      [Yy]*)
-        mv "$HOME"/.tmux.conf "$HOME"/.tmux.conf.bak
-        echo "Your .tmux.conf have been saved to .tmux.conf.bak"
-        unset "$response"
-        ln -sf "$PWD"/.tmux.conf "$HOME"/.tmux.conf
-        ;;
-      [Nn]*) echo "tmux setup interrupted, quitting"
-        break
-        ;;
-      *) echo "Please enter yes or no.";;
-    esac
-  done
+  mv "$HOME"/.tmux.conf "$HOME"/.tmux.conf.bak
+  echo "Your .tmux.conf have been saved to .tmux.conf.bak"
+  ln -sf "$PWD"/.tmux.conf "$HOME"/.tmux.conf
 fi
-exit 1
+exit 0

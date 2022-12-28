@@ -2,8 +2,7 @@
 # A quick script to remove customizations due to this dotfile.
 # Most are symlinks, only a couple can be tricky.
 dir=$(cd -- "$(dirname -- "$0")">>/dev/null 2>&1 && pwd)
-rm -f "$HOME"/.bashrc.personal "$HOME"/.bash_aliases "$HOME"/.gitconfig "$HOME"/.profile.personal
-for i in .bashrc.personal .bash_aliases .profile .inputrc; do
+for i in .bash_aliases .inputrc; do
   unlink "$HOME"/"$i" 2>/dev/null
   if [ -f "$HOME"/"$i".bak ]; then
     mv "$HOME"/"$i".bak "$HOME"/"$i"

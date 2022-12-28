@@ -20,6 +20,4 @@ set keymap vi-insert
 # these are for vi-insert mode
 "\C-j": history-search-forward
 "\C-k": history-search-backward
-"\e[A": history-search-backward
-"\e[B": history-search-forward
 $endif

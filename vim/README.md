@@ -99,5 +99,5 @@ that
 
 3. Many modular setups try to pull all dependencies down at once, which
    is BAD. You don't know that the user uses all 200 languages you're
-   configuring for, for example. What would be the best way to achieve
-   this? Still thinking about this.
+   configuring for, for example, and it CAN lead to dependency hell and
+   it will.

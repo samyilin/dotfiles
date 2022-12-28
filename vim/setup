@@ -1,25 +1,14 @@
 #!/bin/sh
 setup_vim() {
   ln -sf "$PWD/.vimrc" "$HOME/.vimrc"
+  test -d "$HOME"/.cache && mkdir "$HOME"/.cache
 }
 if [ ! -f "$HOME"/.vimrc ]; then
   setup_vim
 elif [ -f "$HOME"/.vimrc ] && [ ! -L "$HOME"/.vimrc ]; then
-  while true; do
-    echo "It seems that .vimrc is in place already."
-    echo "My setup uses dein as plugin manager."
-    echo "Do you want to preserve yours and try mine?[yes|no]"
-    read -r response
-    case $response in
-      [Yy]* )
-        mv  "$HOME"/.vimrc "$HOME"/.vimrc.bak
-        echo "Your .vimrc have been backed up in .vimrc.bak"
-        setup_vim
-        ;;
-      [Nn]* ) echo "Vim configuration skipped.";;
-      * ) echo "Please answer yes or no."
-    esac
-  done
+  mv  "$HOME"/.vimrc "$HOME"/.vimrc.bak
+  echo "Your .vimrc have been backed up in .vimrc.bak"
+  setup_vim
 fi
 echo "Vim setup complete"
 exit 0
