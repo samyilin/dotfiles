@@ -11,7 +11,7 @@ if [ "$1" -eq 0 ]; then
     printf "Your current SSH config file is printed below:\n"
     cat "$HOME"/.ssh/config
   else
-    printf"It seems that you do not have an SSH config file at the moment.\n"
+    printf "It seems that you do not have an SSH config file at the moment.\n"
   fi
   printf "Warning: This script uses ed25519 algorithm by default, which is the recommended\n"
   printf "\tSSH algorithm at the time of writing. If your git provider recommend another\n"
