@@ -13,7 +13,7 @@ has() {
 setup_bash() {
   # quit if bash is not installed
   if ! has bash; then
-    echo "Bash is not installed or not present in /bin/bash, skipping bash setup"
+    printf "Bash is not installed or not present in /bin/bash, skipping bash setup\N"
     return 1
   fi
   if [ -f "$HOME"/.bashrc ] && [ ! -L "$HOME"/.bashrc ]; then
@@ -29,12 +29,12 @@ setup_bash() {
         echo "Unknown error, check if grep is installed."
         ;;
     esac
-  elif [ ! -f "$HOME"/.bashrc ]; then
     # if no bashrc exists right now,  copy and paste .bashrc.default to
     # .bashrc. This .bashrc is a placeholder, so no symlink is necessary.
     # Plus, we want this .bashrc to be written to by other programs, so
-    # symlinking would lead to master copy (although a placeholder) to be
-    # polluted when we commit.
+    # symlinking would lead to master copy  to be polluted when we
+    # commit.
+  elif [ ! -f "$HOME"/.bashrc ]; then
     cp "$PWD"/.bashrc "$HOME"/.bashrc
     echo "test -f $dir/.bashrc.custom && . $dir/.bashrc.custom" >> "$HOME"/.bashrc
   fi
@@ -67,10 +67,9 @@ setup_bash() {
       echo "your default $i is backed up at $HOME/$i.bak"
     fi
     ln -sf "$PWD"/"$i" "$HOME"/"$i"
+    printf "%s setup completed" "$i"
   done
-
 }
-
 # setup .profile. Chances are, you would at least want to set up
 # .profile. Most of the times, even a container would include a .profile
 # somewhere. But some distros use .bash_profile and not .profile, in
@@ -82,67 +81,129 @@ setup_profile() {
     cp "$PWD/.profile.default" "$HOME/.profile"
   fi
 }
-
-# Other setups exist in their own folders. This is just a wrapper to
-# call other setup scripts.
+# Other setups exist in their own folders. This script checks for
+# existence of the program to be installed before calling the
+# appropriate scripts.
 setup_others() {
-  echo "Initializing $1 setup"
-  sleep 1
   if has "$1"; then
     # special logic to handle vim full version detection. Vim without
-    # full version cannot use .vimrc, or cannot leverage its true
-    # potential
+    # full version cannot  cannot leverage its true potential
     if [ "$1" = vim ]; then
       if ! has vimtutor; then
         echo "Full vim is not installed, quitting vim setup"
         return 1
       fi
     fi
-    cd "$1" && ./setup "$2" && echo "$1 setup complete" || echo "$i setup failed."
+    echo "Initializing $1 setup"
+    cd "$1" && ./setup "$2" && printf "%s setup complete" "$1" || printf "%s setup failed." "$1"
     cd "$dir" || return 1
   else
-    echo "$1 is not installed in the system, setup skipped."
+    printf "%s is not installed in the system, setup skipped." "$1"
     return 0
   fi
 }
-
+setup_user() {
+  printf "Script detected that you are running as root,\n"
+  printf "trying to set up your username and password.\n"
+  printf "This script will set your user as an administrator.\n"
+  printf "and help you setup password.\n"
+  printf "WARNING: If you use Podman and/or try to use host SSH config,\n"
+  printf "\tthis setup won't work very well."
+  name="you"
+  printf "Preferred User Name (%s): \n" "${name}"
+  printf "Please use alphanumerical characters and no whitespace.\n"
+  while true; do
+    read -r val
+    case "$val" in 
+      *\ *) printf "Username cannot contain space, try again.\n" ;;
+      "") printf "No input was given, please try again.\n";;
+      **) break;;
+    esac
+  done
+  test -n "${val}" && name="${val}"
+  unset "$val"
+  unset "$name"
+  shell="/bin/sh"
+  printf "Preferred shell to be used: \n"
+  printf "Installed shells are:\n\n"
+  cat /etc/shells
+  while true; do
+    read -r val
+    case $(grep -Fx "$val" "/etc/shells" >/dev/null; echo $?) in
+      0) shell="$val";break;;
+      1) echo "$val is not an available shell. Please type shell's full path.";;
+      *) echo "Invalid response, please try again.";;
+    esac
+  done
+  test -n "${val}" && shell="${val}"
+  # dirty way to set admin priviledge to user. Don't like it, but will
+  # have to optimize later.
+  if has useradd; then
+    useradd -G wheel "$name" -s "$shell" >/dev/null 2>&1 || useradd -G sudo "$name" -s "$shell" >/dev/null 2>&1 
+  else
+    adduser -G wheel "$name" -s "$shell" >/dev/null 2>&1 || adduser -G sudo "$name" -s "$shell" >/dev/null 2>&1 
+  fi
+  until passwd "$name"; do :; done
+  test -d "/home/$name" || mkdir "/home/$name"
+  case "$(uname -r)" in 
+    *microsoft*) printf "\n[user]\ndefault = %s\n" "$name" >> /etc/wsl.conf;;
+  esac
+  HOME=/home/"$name"
+  chown -R "${name}:wheel" "/home/$name" >/dev/null 2>&1 || chown -R "${name}:sudo" "/home/$name" >/dev/null 2>&1
+}
+print_help () {
+  echo "Usage: ./setup [options] [programs to set up]"
+  echo "Available options:"
+  echo "  -h: prints this help document"
+  echo "  -d: default mode. Do not prompt user for input."
+  echo "      Useful for default or non-interactive setup."
+  echo "Available programs to set up:"
+  echo "if no argument given, all programs will be set up."
+  echo "  bash: Basic customization for Bash interactive shell"
+  echo "  profile: basic shell startup"
+  echo "  vim: Command Line Interface Editor"
+  echo "  git: Modern VCS Tool for Programmers"
+  echo "  tmux: Terminal/CLI Multiplexer"
+  return 0
+}
 main() {
   # detects necessary tools used by this setup and quit if these tools
-  # haven't been found. If these tools are only present in busybox, then
-  # type "alias grep='busybox grep'" into terminal and then re-run this
-  # program. I can further tweak this later on though.
-  cd "$dir" || exit 0
-  if [ "$(id -u )" -eq 0 ]; then 
-    if has useradd && has passwd; then
-      setup_user
-    else
-      echo "You are running as root but your setup doesn't have useradd or passwd."
-      echo "Configs will be set to /root directory for now."
-      case $default in 
-        0) exit 0;;
-        1) exec /bin/bash;;
-        *) exit 1;;
-      esac
-    fi
-  fi
+  # haven't been found. I have set preliminary support for grep here,
+  # but fallback is still in place to fail.
   for i in grep git; do
     if ! has $i; then
+      if (! has grep) && has busybox; do
+        alias grep='busybox grep'
+        printf "\nalias grep='busybox grep'" >>"$dir"/.inputrc
+      fi
       echo "$1 is not installed in the system, setup failed."
-      echo "If you have busybox and grep is not detected, then"
-      echo "alias grep='busybox grep'" 
-      echo "woudld fix this dependency."
+      exec $SHELL
     fi
   done
   while getopts "hd" opt; do
     case "$opt" in 
-      h) help; exit 0;;
+      h) print_help; exit 0;;
       d) default=1;;
-      *) help; exit 1;;
+      *) print_help; exit 1;;
     esac
     shift
   done
   name=${name-"$USER"}
   default=${default-0}
+  cd "$dir" || exit 0
+  if [ "$(id -u )" -eq 0 ] && [ $default -eq 0 ]; then 
+    if ( has useradd || has adduser ) && has passwd; then
+      setup_user
+    else
+      echo "You are running as root but your setup doesn't have useradd/adduser or passwd."
+      echo "Configs will be set to /root directory for now."
+      case $default in 
+        0) break;;
+        1) break;;
+        *) exit 1;;
+      esac
+    fi
+  fi
   if [ $# -eq 0 ]; then
     setup_bash $default 
     setup_profile $default 
@@ -177,65 +238,4 @@ main() {
     *) exit 1;;
   esac
 }
-setup_user() {
-  printf "Script detected that you are running as root,\n"
-  printf "trying to set up your username and password.\n"
-  printf "This script will set your user as an administrator.\n"
-  printf "and help you setup password.\n"
-
-  name="you"
-  printf "Preferred User Name (%s): \n" "${name}"
-  printf "Please use alphanumerical characters and no whitespace.\n"
-  while true; do
-    read -r val
-    case "$val" in 
-      *\ *) printf "Username cannot contain space, try again.\n" ;;
-      "") printf "No input was given, please try again.\n";;
-      **) break;;
-    esac
-  done
-  test -n "${val}" && name="${val}"
-  unset "$val"
-  unset "$name"
-  shell="/bin/sh"
-  printf "Preferred shell to be used: \n"
-  printf "Installed shells are:\n"
-  cat /etc/shells
-  while true; do
-    read -r val
-    case $(grep -Fx "$val" "/etc/shells" >/dev/null; echo $?) in
-      0) shell="$val";break;;
-      1) echo "$val is not an available shell. Please type shell's full path.";;
-      *) echo "Invalid response, please try again.";;
-    esac
-  done
-
-  test -n "${val}" && shell="${val}"
-  # dirty way to set admin priviledge to user. Don't like it, but will
-  # have to optimize later.
-  useradd -G wheel "$name" -s "$shell" >/dev/null 2>&1 || useradd -G sudo "$name" -s "$shell" >/dev/null 2>&1 
-  until passwd $name; do :; done
-  test -d "/home/$name" || mkdir "/home/$name"
-  case "$(uname -r)" in 
-    *microsoft*) printf "\n[user]\ndefault = %s\n" "$name" >> /etc/wsl.conf;;
-  esac
-  HOME=/home/"$name"
-  chown -R "${name}:wheel" "/home/$name" >/dev/null 2>&1 || chown -R "${name}:sudo" "/home/$name" >/dev/null 2>&1
-}
-help () {
-  echo "Usage: ./setup [options] [programs to set up]"
-  echo "Available options:"
-  echo "  -h: prints this help document"
-  echo "  -d: default mode. Do not prompt user for input."
-  echo "      Useful for default or non-interactive setup."
-  echo "Available programs to set up:"
-  echo "if no argument given, all programs will be set up."
-  echo "  bash: Basic customization for Bash interactive shell"
-  echo "  profile: basic shell startup"
-  echo "  vim: Command Line Interface Editor"
-  echo "  git: Modern VCS Tool for Programmers"
-  echo "  tmux: Terminal/CLI Multiplexer"
-  return 0
-}
-
 main "$@"
