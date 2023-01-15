@@ -1,7 +1,7 @@
 #!/bin/sh
 main(){
   if [ ! -f "$HOME"/.tmux.conf ]; then
-    ln  "$PWD"/.tmux.conf "$HOME"/.tmux.conf
+    ln -sf "$PWD"/.tmux.conf "$HOME"/.tmux.conf
     echo "tmux config done,quitting"
     exit 0
   elif [ -f "$HOME"/.tmux.conf ] && [ ! -L "$HOME"/.tmux.conf ]; then

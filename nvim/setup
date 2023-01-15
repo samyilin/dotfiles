@@ -1,6 +1,6 @@
 #!/bin/sh
-
-cd "$HOME" && git clone https://github.com/nvim-lua/kickstart.nvim ||
-printf "git is not installed, quitting nvim setup\n"
-mkdir "$HOME"/.config && mkdir "$HOME"/.config/nvim
-cp kickstart.nvim/init.lua "$HOME"/.config/nvim/init.lua
+if [ ! -f "$HOME"/kickstart.nvim ]; then
+  cd "$HOME" && git clone https://github.com/nvim-lua/kickstart.nvim || printf "git is not installed, quitting nvim setup\n"
+  mkdir "$HOME"/.config && mkdir "$HOME"/.config/nvim
+  cp kickstart.nvim/init.lua "$HOME"/.config/nvim/init.lua
+fi

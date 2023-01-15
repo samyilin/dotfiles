@@ -7,7 +7,7 @@ has() {
   # if it is not an executable, then search in aliases to see if it's an
   # alias. If it's an alias, then it can be configured.
   var="alias"
-  case "$(type "$1")" in 
+  case "$(type "$1" >>/dev/null 2>&1)" in 
     *"$var"*) return 0;;
     *) ;;
   esac
@@ -33,6 +33,9 @@ setup() {
           return 1
         fi
       fi
+    else
+      printf "%s is not installed in your system, quitting...\n" "$1"
+      return 1
     fi
     # special check for nix. 
     printf "Initializing %s setup.\n" "$1"
