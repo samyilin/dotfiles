@@ -67,7 +67,14 @@ call dein#add('sainnhe/gruvbox-material')
 " Better tagline at bottom. A bit too heavy for my taste, but what the
 " heck.
 call dein#add('vim-airline/vim-airline')
-
+" Tim Pope's plugin to automatically set tab size.
+call dein#add('tpope/vim-sleuth')
+" Tim Pope's plugin to edit 'surrounds'
+call dein#add('tpope/vim-surround')
+" Tim Pope's plugin for command ga to work with Unicode
+call dein#add('tpope/vim-characterize')
+" Tim Pope's plugin for supporting tmux
+call dein#add('tpope/vim-tbone')
 call dein#end()
 " Required:
 filetype plugin indent on

@@ -9,6 +9,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN yes | unminimize && \
     apt-get -y --no-install-recommends upgrade && \
     apt-get install -y \
+        xz-utils \
         man-db \
         curl \
         sudo \
@@ -19,7 +20,6 @@ RUN yes | unminimize && \
         shellcheck \
         busybox \
         iputils-ping \
-        bash-completion \
         wget \
         less \
         && \
@@ -28,4 +28,4 @@ RUN yes | unminimize && \
         cat /dev/null > /var/log/dmesg
 
 COPY . /usr/share/workspace
-ENTRYPOINT ["sh","/usr/share/workspace/setup","-d"]
+ENTRYPOINT ["sh","/usr/share/workspace/setup","-d","&&","source","/root/bashrc"]

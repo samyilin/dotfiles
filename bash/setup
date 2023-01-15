@@ -1,0 +1,56 @@
+#!/bin/sh
+# function to setup bash.
+# There's a lot of room for improvement here. Potentially, we can update
+# this function and wrap case-ifs into a function and call that with
+# arguments.
+main(){
+  dir=$(cd -- "$(dirname -- "$0")">>/dev/null 2>&1 && pwd)
+  if [ -f "$HOME"/.bashrc ] && [ ! -L "$HOME"/.bashrc ]; then
+    # add the sourcing line to default .bashrc if not there already
+    while IFS= read -r line; do
+      if [ "$line" = "$(printf "test -f %s/.bashrc.custom && source %s/.bashrc.custom" "$dir" "$dir")" ]; then
+        added=1
+        printf "bashrc already exists and is set up.\n"
+      fi
+    done < "$HOME/.bashrc"
+    if  [ ${added-0} -eq 0 ]; then
+      printf "\ntest -f %s/.bashrc.custom && source %s/.bashrc.custom\n" "$dir" "$dir" | tee -a "$HOME"/.bashrc >/dev/null
+    fi
+    # if no bashrc exists right now,  copy and paste .bashrc.default to
+    # .bashrc. This .bashrc is a placeholder, so no symlink is necessary.
+    # Plus, we want this .bashrc to be written to by other programs, so
+    # symlinking would lead to master copy  to be polluted when we
+    # commit.
+  elif [ ! -f "$HOME"/.bashrc ]; then
+    cp "$dir"/.bashrc "$HOME"/.bashrc
+    printf "test -f %s/.bashrc.custom && source %s/.bashrc.custom" "$dir" "$dir" >> "$HOME"/.bashrc
+  fi
+  printf ".bashrc setup complete.\n"
+  # force .bash_profile to read .profile. Avoids dup code and avoids
+  # .profile not being read.
+  if [ -f "$HOME"/.bash_profile ] && [ ! -L "$HOME"/.bash_profile ]; then
+    while IFS= read -r line; do
+      if [ "$line" = ". $HOME/.profile" ]; then
+        added=1
+        printf ".bash_profile already exists and is set up.\n"
+      fi
+    done < "$HOME/.bash_profile"
+    if  [ ${added-0} -eq 0 ]; then
+      printf "\n. %s/.profile\n" "$HOME" >> "$HOME"/.bash_profile
+    fi
+  elif [ ! -f "$HOME"/.bash_profile ]; then
+    cp "$dir"/.bash_profile "$HOME"/.bash_profile
+    printf ". %s/.profile" "$HOME" >> "$HOME"/.bash_profile
+  fi
+  printf ".bash_profile is setup.\n"
+  # Sets up .inputrc and .bash_aliases. They are only used by GNU Bash. 
+  for i in .inputrc .bash_aliases; do
+    if [ -f "$HOME"/$i ] && [ ! -L "$HOME"/$i ]; then
+      mv "$HOME"/"$i" "$HOME"/"$i".bak
+      printf "your default %s is backed up at %s/%s.bak\n" "$i" "$HOME" "$i"
+    fi
+    ln -sf "$dir"/"$i" "$HOME"/"$i"
+    printf "%s setup complete.\n" "$i"
+  done
+}
+main "$@"

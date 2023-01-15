@@ -2,7 +2,7 @@
 
 SSH setup related
 
-## Introduction
+## Introduction, or what this script is NOT about
 
 SSH is complicated. SSH is an entire network protocol. What makes it
 more complicated is that openSSH uses file ~/.ssh/config instead of any
@@ -56,7 +56,7 @@ Instead, SSH related cheatsheet/tutorial will be documented in my
 [cheatsheet](https:///github.com/samyilin/cheatsheets) when I have the
 time to do some writing.
 
-## What about this script?
+## What is this script about then?
 
 This is just a wrapper for a ssh+git workflow. This script is
 self-explanatory already. I will add more documentation here if needed.

@@ -1,0 +1,38 @@
+FROM fedora:rawhide
+
+LABEL maintainer="samsu42@yahoo.ca"
+
+LABEL DESCRIPTION "Self-contained Vim/Tmux based Workspace"
+
+RUN grep -v nodocs /etc/dnf/dnf.conf | sudo tee /etc/dnf/dnf.conf
+
+RUN dnf -y update && dnf -y reinstall "*" && \
+    dnf -y install man \
+                man-pages \
+                info \
+                procps-ng \
+                iputils \
+                iproute \
+                vim \
+                git \
+                busybox \
+                tmux \
+                ShellCheck \
+                wget \
+                curl \
+                less \
+                xz \
+                neovim \
+                wget \
+                ctags \
+                ripgrep \
+                fd-find \
+                gcc-c++ \
+                npm \
+                && \
+    dnf -y groupinstall "Development Tools" "Development Libraries" \
+                && \
+    dnf clean all && \
+    /usr/bin/python3 -m pip install pynvim
+COPY . /usr/share/workspace
+ENTRYPOINT ["sh","/usr/share/workspace/setup","-d"]

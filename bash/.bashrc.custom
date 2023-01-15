@@ -4,7 +4,7 @@
 
 # If not running interactively, don't do anything
 case $- in
-  *i*) ;;
+  *i*) test -f "$HOME"/.inputrc && bind -f "$HOME"/.inputrc;;
   *) return;;
 esac
 # Append to the history file, don't overwrite it
@@ -17,7 +17,8 @@ export HISTCONTROL=ignoreboth
 export HISTSIZE=5000
 export HISTFILESIZE=10000
 # prompt setting. Funny combination of Ubuntu and Fedora.
-# Can be jus too long on certain systems. Consider changing this later.
+# Can be just too long on certain systems. Consider changing this later.
+#
 PS1='\[\033[01;32m\][\u@\H \w]\[\033[00m\]\\$ '
 # tries to run pfetch if it's installed
 pfetch 2>/dev/null || "$HOME"/.nix-profile/bin/pfetch 2>/dev/null

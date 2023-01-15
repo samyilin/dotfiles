@@ -1,0 +1,8 @@
+#!/bin/sh
+#
+# Migrated .bash_aliases here for better compatibility.
+for i in grep vi; do
+  if [ ! -x "$i" ] && [ -x busybox ]; then
+    alias '$i'='busybox $i'
+  fi
+done

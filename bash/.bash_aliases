@@ -3,7 +3,11 @@
 #
 # emacs is set so that any displayed emacs window we see are actually
 # client, so that they could load faster.
-alias emacs='emacsclient -c -e "(fancy-startup-screen)"'
+# optional, but can be enabled if you are using emacs
+
+# if [ -x emacs ] && pgrep emacs >/dev/null; then 
+#   alias emacs='emacsclient -c -e "(fancy-startup-screen)"'
+# fi
 
 # Use pure vi from busybox. Just good for exercise.
-alias vi="busybox vi"
+

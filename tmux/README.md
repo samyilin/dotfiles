@@ -1,5 +1,7 @@
 # README
 
+Tmux config. Unstable ATM.
+
 # Introduction/Clarification
 
 This is not a thorough setup like

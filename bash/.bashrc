@@ -7,8 +7,8 @@ esac
 
 # This bashrc does one thing only, referencing the actual bashrc config
 if [ -f $HOME/.bashrc.personal ]; then
-  . $HOME/.bashrc.personal
+  source $HOME/.bashrc.personal
 fi
 if [ -f $HOME/.bash_aliases ]; then
-  . $HOME/.bash_aliases
+  source $HOME/.bash_aliases
 fi

@@ -3,6 +3,16 @@
 This is my dotfile. Usable both as a standalone Git repository or work
 in a Docker environment.
 
+What is a dotfile? By tradition, on Unix systems (Linux, BSDs, Mac, etc.)
+configurations per application are stored in user's home directory and
+typically started with a ".", which operating systems set these as hidden
+by convention. If you use ls in your home directory, you won't see these
+files unless you use flags that would show hidden files as well.  Later
+on we started to have XDG Base Directory specification (more on this
+below), which mostly used "." at the beginning of the configuration
+files. So dotfiles are user customization per application for Unix
+users.
+
 ## Why?
 
 This repo has 3 purposes:
@@ -11,7 +21,7 @@ This repo has 3 purposes:
    as distro/OS-agnostic as possible though, so opinionated setups will
    be of a less priority here.
 
-2. To force myself to learn bash programming, tmux configuration and so
+2. To force myself to learn shell programming, tmux configuration and so
    much more. I had a less than perfect config before, so I use this
    project to motivate myself to learn more and live ( more or less) in
    the command line when it comes to coding or editing text. 
@@ -43,33 +53,29 @@ not a complicated setup.
 
    3. Programs have already spewed lines to .bashrc or .bash_profile.
 
-2. Leave shell config to the local programs to abuse.
+
+2. Leave shell config for the local programs to abuse. These are copied
+   to home directory rather than linked.
 
 3. Whenever possible, use links for customizations that are not related
    to application abuse.
 
-
-3. Make sure it (this config) is easy to delete. You get rid of my setup
-   and use your own when you understand it all without having to think
-   twice.
+4. Make sure it (this config) is easy to delete. 
 
    Keep in mind that removing this config won't help you uninstall
    packages such as vim, emacs, etc. This is the job of your package
    manager. 
 
-4. Make it modular. Installation for each program's config should be
-   separate to make maintenance easy. 
+5. Make it modular. scripts/configs for each program should be
+   separated by folder to make maintenance easy. 
 
-5. Make it so that using setup script(s) repeatedly will skip the parts
-   that's already been set up. This way, there's a global entry to setup
-   everything. 
+6. Make it so that using setup script(s) repeatedly will skip the parts
+   that's already been set up.  
 
-6. Make it as simple and cross-platform as possible. Certain programs
-   make it way too hard to be configured in this repo.
+7. Make it as simple and cross-platform as possible. It is for this
+   reason that POSIX shell scripts are preferred over Bash scripts.
 
-7. Stay away from GNU coreutils.  GNU coreutils is good, but not
-   cross-platform enough. Grep is a POSIX complaint tool if you use it
-   carefully.
+8. Stay away from GNU coreutils. Not cross-platform enough. 
 
 ## Assumptions
 
@@ -81,46 +87,41 @@ particular order:
 
 2. At least you have a POSIX shell in /bin/sh. Try
 
+
    ```bash
    exec /bin/sh
    ```
-   
-   If it does something instead of throwing an error, then you have
-   shell in /bin/sh. It's very likely that it's not actually sh, but
-   another shell symlinked as sh.  Executing
+
+
+   It's very likely another shell symlinked as sh. Executing
    
 
    ```bash 
    readlink /proc/$$/exe 
    ```
    
+
    would tell you what your current interactive shell is. I think it
    works on modern MacOS as well.
 
 
 3. You would prefer to have more than 1 ssh setup if needed.
 
-
    For example, you have multiple git instances or multiple VMs/docker
-   instanes that you would need to constantly ssh into. It is generally
+   instances that you would need to constantly ssh into. It is generally
    preferred that you use a set of public+private SSH keys for different
    accounts/connections. This way, if one ssh key gets compromised, you
    don't risk compromising all your ssh connections' safety. 
 
 
-4. You are using two system package managers maximum: Your system
-   package manager and nix. Nix local install path is only checked if
-   your PATH doesn't have the program I'm looking for. I use it
-   sporadically.
-
-5. You would follow [XDG Base
+4. You would follow [XDG Base
    Directory](https://wiki.archlinux.org/title/XDG_Base_Directory)
    standards. Linked is not the XDG Base Directory Specification, but
    practical places of where you SHOULD place your configurations. 
 
-6. At least you have Busybox utils or similar minimal environment. This
-   means a grep, some minimal shell (ash or dash) and other utility
-   programs should be present. 
+5. At least you have Busybox or similar minimal environment. This
+   means some minimal shell (ash or dash) and other utility programs
+   should be present. 
 
 ## Non-assumptions
 
@@ -129,6 +130,7 @@ particular order:
 
 2. You have bash as your interactive shell. If you don't have bash in
    your system, then .profile is loaded only. If you do use bash, then:
+
    1. .bash_profile is loaded, and it will load .profile.
    2. .profile does what it's supposed to do, and load in .bashrc.
 
@@ -138,18 +140,25 @@ particular order:
 
 Bash, Vim, tmux, SSH, git. A "complete" CLI working environment. 
 
+This script also helps you set up your user name and password. Good for
+initializing things on WSL or other root systems.On WSL it will help you
+do a few more things. If you have systemd installed, it will enable 
+systemd on functionality. STILL TESTING.
+
 Bash for interactive shell, Vim for text editor, tmux for screen
 multiplexer, ssh and git could work together or separately.
 
-Note: I will only configure Bash as an interactive shell for you. Zsh or
-fish is not going to be configured here, and there isn't much to
-configure for ash or dash or other non-interactive shells. I might try
-to configure them later though. No promises here.
+SSH setup script here is a wrapper to allow users to set up git and SSH
+so we can SSH into git repos easier, and nothing else. More in the SSH
+folder.
+
+I've configured a simple PS1 prompt for shells other than bash, but
+that's it. 
 
 ## Non-goals/Programs Not Configuring in this setup?
 
 1. dircolors. I realize they exist, I just don't care about them enough
-   to write one.  
+   to write one. There're lots of good ones out there.
 
    Most terminal emulators have customization capabilities that are good
    enough to get a working color scheme in terminals anyways, and fine
@@ -162,8 +171,7 @@ to configure them later though. No promises here.
 
 4. Emacs. It deserves its own config repo. Someday?
 
-5. Neovim. I have a tiny install script for neovim here if you want to
-   give it a shot, though. NOT TESTED AT THE MOMENT.
+5. Neovim. One day.
 
 6. IDEs/Full programming environment setup?
 
@@ -174,43 +182,65 @@ to configure them later though. No promises here.
    
    1. IDEs are better at being IDEs than editors, and vice versa. 
 
-   2. Manage your expectations of what your tool can do and what tool
+   2. Manage your expectation of what your tool can do and what tool
       your team expects you to use.
 
 7. File lock checking, aka race condition. Realistically, user should
    know better to not execute this program in two different shell
    sessions.
 
+8. Being able to curl/wget/download a setup file and go about installing
+   config. Such a functionality is trivial to implement. Check the
+   parent folder to see if there is a .git folder. If not, then we are
+   not in a git repo so we must git clone the repo and execute the setup
+   file from the git repo. However, I don't see how much value it
+   brings. See how we still need to call git? Git is still a dependency
+   anyways, so it's better for this dependency to be very explicit. If
+   being up to date is required, which it is for any config, then git is
+   still needed anyways, so such a setup do not decrease dependency but
+   just make dependency less explicit.
+
+
 ## How to Set up and Use
+
+I try to be very explicit here. If it's not explicit enough, let me
+know.
 
 There's 2 flavours to setting up this config.
 
 1. Using this dotfile on an existing install. In other words, not a
    container setup.
 
-   To pull this repo to your setup:
+   To pull this repo to your OS:
+
+
    ```bash
    cd $HOME
-   git clone https://github.com/samyilin/dotfiles
+   git clone https://github.com/samyilin/dotfiles.git
    ```
+
 
    To set up everything:
 
+
    ```bash
    cd $HOME/dotfiles 
-   ./setup
+   ./setup && . "$HOME"/.profile
    ```
+
 
    To setup additional programs after initial setup, i.e. your initial
    setup did not install vim but now it does, do 
 
+
    ```bash
    cd $HOME/dotfiles
-   ./setup 
-
+   ./setup YOUR_PROGRAM 
    ```
+
+
    Design principles above will make sure no repeated install would
-   happen. It'll skip over bits already configured.
+   happen. 
 
    To get the latest from this setup, do
 
@@ -218,25 +248,38 @@ There's 2 flavours to setting up this config.
    cd $HOME/dotfiles
    git pull
    ```
+
+
    If you want to remove this config, then
+
 
    ```bash
    cd $HOME/dotfiles
-   ./remove
-
+   ./remove && . "$HOME"/.profile
    ```
-   will do it. Re-running terminal emulator instance, logging out and then
-   logging out or restarting your machine will reset your bash setup. If
-   you wish to delete this git repo from your hard drive altogether, then
-   do
+
+
+   If you want to remove config for a certain program, i.e.
+   vim, then
+
+   ```bash
+   cd $HOME/dotfiles
+   ./remove YOUR_PROGRAM
+   ```
+
+   To remove this repo from your setup altogether, do
 
    ```bash
    rm -rf $HOME/dotfiles
    ```
+   
 
-   Default/non-interactive mode. Skips over interactive mode that the
-   user need to intervene. This is the default on Docker setup. More
-   about this below. 
+   Additional mode:
+
+   Docker/default mode. Skips over interactive mode that the user need to
+   intervene, i.e. setting up username/password, git and ssh.  This is
+   the default on Docker setup. More about this below. 
+
 
    To install using non-interactive mode, use
 
@@ -246,20 +289,24 @@ There's 2 flavours to setting up this config.
    ./setup -d 
    ```
 
-
 2. Using this dotfile to setup a docker/podman image. This is good for
    developing in a container and avoid "dependency hell."
 
    To use this method, you would need to install docker or podman on
    your setup. I would suggest podman.
 
-   The below code would generate a docker image
+   I have 2 Dockerfile here, one Ubuntu based (more stable-ish) and
+   one Fedora rawhide based (really cutting-edge, good for testing
+   latest software). Might get an Arch Dockerfile together one day.
+
+   Using the appropriate Dockerfile name, the below code would generate
+   a docker image
 
    ```bash
    cd $HOME
    git clone https://github.com/samyilin/dotfiles
    cd dotfiles
-   docker build -f Dockerfile -t IMAGE_NAME
+   docker build -f Dockerfile.DISTRO -t IMAGE_NAME
    ```
    Podman requires using buildah to build image, so:
 
@@ -268,7 +315,7 @@ There's 2 flavours to setting up this config.
    cd $HOME
    git clone https://github.com/samyilin/dotfiles
    cd dotfiles
-   buildah build -f Dockerfile -t IMAGE_NAME
+   buildah build -f Dockerfile.DISTRO -t IMAGE_NAME
    ```
 
 
@@ -290,15 +337,30 @@ There's 2 flavours to setting up this config.
 
    Default container/docker install would not help you set up ssh and
    git. These belong in your host system so you don't have to reset your
-   ssh every time you spin up a container. To mount host's ssh and git,
-   use something like 
+   ssh every time you spin up a container. To mount host's ssh and git
+   configurations, use something like 
+
 
    ```bash
-   docker run -it --rm -v $HOME/.ssh:$HOME/.ssh -v $HOME/.gitconfig
-   $HOME/.gitconfig localhost/IMAGE_NAME
+   docker run -it --rm -v $HOME/.ssh:$HOME/.ssh \
+      -v $HOME/.gitconfig $HOME/.gitconfig \
+      localhost/IMAGE_NAME
 
    ```
 
+   You can use a similar process to mount your git repo to the container
+   so you don't have to keep copying your repo over.
+
+
+## Systems tested on
+
+
+I've tested this setup in Alpine, Arch, Ubuntu and Fedora Linux
+containers. I would try this in VMs one day.
+
+I don't have a Mac, can't test in Mac.
+
+Will try to test this on BSDs one day. 
 
 ## TODO
 
@@ -306,17 +368,22 @@ Based on personal priority:
 
 
 1. Write a pre-commit hook that is ran every time a commit happens to
-   make sure shellcheck passes before I commit.
+   make sure shellcheck passes before I commit. May try to use Gitlab
+   Runner or other systems. 
    
 
-2. Overhaul tmux keybindings and/or other settings or configs. 
-
-
-3. Overhaul Vim experience. Use some plugins to enable LSP or other
+2. Overhaul Vim experience. Use some plugins to enable LSP or other
    IDE-like features. Make modular vim setup. Might use Neovim? Who
    knows?
 
-4. Proof-read READMEs. LOL
 
-5. Fine-tune remove scripts. Not a priority at the moment, as I'm
+3. Proof-read READMEs. LOL
+
+
+4. Fine-tune remove scripts. Not a priority at the moment, as I'm
    actively tuning setup scripts.
+
+
+5. More testing on different platforms/containers.
+
+6. Test this on a WSL bare-metal install.
