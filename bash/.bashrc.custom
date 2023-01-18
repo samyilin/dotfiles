@@ -7,6 +7,7 @@ case $- in
   *i*) test -f "$HOME"/.inputrc && bind -f "$HOME"/.inputrc;;
   *) return;;
 esac
+set -o vi
 # Append to the history file, don't overwrite it
 shopt -s histappend
 # check the window size after each command and, if necessary, update the
@@ -18,10 +19,10 @@ export HISTSIZE=5000
 export HISTFILESIZE=10000
 # prompt setting. Funny combination of Ubuntu and Fedora.
 # Can be just too long on certain systems. Consider changing this later.
-#
 PS1='\[\033[01;32m\][\u@\H \w]\[\033[00m\]\\$ '
 # tries to run pfetch if it's installed
 pfetch 2>/dev/null || "$HOME"/.nix-profile/bin/pfetch 2>/dev/null
+
 if [ -f "$HOME"/.bash_aliases ]; then
   # I know this should exist, so disabling this shellcheck here
   # shellcheck disable=SC1091

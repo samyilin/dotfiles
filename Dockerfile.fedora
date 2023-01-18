@@ -1,11 +1,12 @@
+# use rawhide
 FROM fedora:rawhide
 
 LABEL maintainer="samsu42@yahoo.ca"
 
 LABEL DESCRIPTION "Self-contained Vim/Tmux based Workspace"
-
+# Get some manuals going
 RUN grep -v nodocs /etc/dnf/dnf.conf | sudo tee /etc/dnf/dnf.conf
-
+# reinstall packages so we can have manpages
 RUN dnf -y update && dnf -y reinstall "*" && \
     dnf -y install man \
                 man-pages \
@@ -21,8 +22,9 @@ RUN dnf -y update && dnf -y reinstall "*" && \
                 wget \
                 curl \
                 less \
-                xz \
-                neovim \
+                xz
+# neovim prerequisites. Sign.
+RUN dnf -y install neovim \
                 wget \
                 ctags \
                 ripgrep \
@@ -30,9 +32,9 @@ RUN dnf -y update && dnf -y reinstall "*" && \
                 gcc-c++ \
                 npm \
                 && \
-    dnf -y groupinstall "Development Tools" "Development Libraries" \
-                && \
-    dnf clean all && \
-    /usr/bin/python3 -m pip install pynvim
+    dnf -y groupinstall "Development Tools" "Development Libraries" && \
+    /usr/bin/python3 -m pip install pynvim && \
+    npm install -g neovim
+RUN dnf clean all   
 COPY . /usr/share/workspace
 ENTRYPOINT ["sh","/usr/share/workspace/setup","-d"]
