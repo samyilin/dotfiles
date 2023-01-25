@@ -1,0 +1,25 @@
+FROM archlinux:latest
+
+LABEL maintainer="samsu42@yahoo.ca"
+
+LABEL DESCRIPTION "Self-contained Vim/Tmux based Workspace"
+
+Run /misc/arch/docker-bootstrap
+RUN yes | pacman -Syu && pacman -Qqn | pacman -S -
+RUN yes | pacman -S man-db \
+        texinfo \
+        curl \
+        vim \
+        tmux \
+        shellcheck
+RUN yes | pacman -S neovim \
+        python-pynvim \
+        npm \
+        neovim-lspconfig \
+        neovim-nvim-treesitter \
+        wget
+RUN yes | pacman -S emacs-nativecomp \
+        fg \
+        ripgrep
+
+

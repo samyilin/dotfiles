@@ -1,0 +1,13 @@
+#!/bin//sh
+
+printf "\nen_US.UTF-8 UTF-8\n" >> /etc/locale.gen && locale-gen
+
+while IFS= read -r line; do
+  case "$line" in
+    NoExtract*) ;;
+    *) printf "%s\n" "$line";;
+  esac
+done </etc/pacman.conf > o
+mv o /etc/pacman.conf
+
+

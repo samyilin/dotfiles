@@ -5,7 +5,7 @@ if [ $# -eq 0 ]; then
   for i in "$dir"/*; do 
     i="${i%*/}"
     i="${i##*/}"
-    if [ -d "$i" ] && case "$i" in *misc*) false;; *install*) false;; *) true;; esac; then
+    if [ -d "$i" ] && case "$i" in misc*) false;; install*) false;; config*) false;;  *) true;; esac; then
       cd "$i" && ./remove && echo "$i config removed, proceeding" && sleep 1
       cd "$dir" || return 1
     fi
