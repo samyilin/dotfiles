@@ -4,9 +4,12 @@ if [ ! -d "$HOME"/kickstart.nvim ]; then
   test -d "$HOME"/.config/nvim || mkdir -p "$HOME"/.config/nvim
   git clone https://github.com/nvim-lua/kickstart.nvim "$HOME"/kickstart.nvim
   ln -sf "$HOME"/kickstart.nvim/init.lua "$HOME"/.config/nvim/init.lua
+else
+  cd "$HOME"/kickstart.nvim && git pull && cd "$dir" || exit 1
 fi
 for i in lua after; do
   if [ ! -d "$HOME"/.config/nvim/"$i" ]; then
     ln -sf "$dir"/"$i" "$HOME"/.config/nvim/"$i"
   fi
 done
+exit 0

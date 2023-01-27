@@ -10,11 +10,6 @@ return function(use)
     end
   }
   use {
-    'nvim-lualine/lualine.nvim',
-    config = function()
-    end
-  }
-  use {
     'tpope/vim-commentary',
     config = function()
     end

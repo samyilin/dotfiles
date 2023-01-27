@@ -1,4 +1,4 @@
-# use rawhide
+# use rawhide for latest packages
 FROM fedora:rawhide
 
 LABEL maintainer="samsu42@yahoo.ca"

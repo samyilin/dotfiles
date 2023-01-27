@@ -1,5 +1,7 @@
 #!/bin//sh
-
+# Script used in Dockerfile.archlinux to set up 2 things:
+# 1. Fix locale issues
+# 2. Fix no manpage issues
 printf "\nen_US.UTF-8 UTF-8\n" >> /etc/locale.gen && locale-gen
 
 while IFS= read -r line; do
@@ -9,5 +11,3 @@ while IFS= read -r line; do
   esac
 done </etc/pacman.conf > o
 mv o /etc/pacman.conf
-
-

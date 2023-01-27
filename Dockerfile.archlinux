@@ -4,22 +4,36 @@ LABEL maintainer="samsu42@yahoo.ca"
 
 LABEL DESCRIPTION "Self-contained Vim/Tmux based Workspace"
 
-Run /misc/arch/docker-bootstrap
-RUN yes | pacman -Syu && pacman -Qqn | pacman -S -
-RUN yes | pacman -S man-db \
+COPY . /usr/share/workspace
+# fix man-pages plus locale, see misc/arch/docker-bootstrap
+Run /usr/share/workspace/misc/arch/docker-bootstrap
+# Update packages and reinstall packes to ensure man-page
+RUN yes | pacman -Syu && pacman -Qqn | pacman -S --noconfirm -
+# Basic terminal system setup
+RUN  pacman -S --noconfirm \
+        man-db \
         texinfo \
         curl \
         vim \
+        neovim \
         tmux \
-        shellcheck
-RUN yes | pacman -S neovim \
+        shellcheck \
+        git
+# Neovim plus kickstart.nvim requirements
+RUN  pacman -S --noconfirm neovim \
         python-pynvim \
         npm \
         neovim-lspconfig \
         neovim-nvim-treesitter \
-        wget
-RUN yes | pacman -S emacs-nativecomp \
-        fg \
-        ripgrep
+        wget \
+        unzip \
+        base-devel \
+        fd \
+        ripgrep && \
+        npm install -g neovim
+# emacs
+RUN yes | pacman -S emacs-nativecomp
+# delete pacman cache to save space
+RUN yes | pacman -Scc
 
-
+ENTRYPOINT ["sh","/usr/share/workspace/setup","-d"]

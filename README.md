@@ -4,14 +4,11 @@ This is my dotfile. Usable both as a standalone Git repository or work
 in a Docker environment.
 
 What is a dotfile? By tradition, on Unix systems (Linux, BSDs, Mac, etc.)
-configurations per application are stored in user's home directory and
-typically started with a ".", which operating systems set these as hidden
-by convention. If you use ls in your home directory, you won't see these
-files unless you use flags that would show hidden files as well.  Later
-on we started to have XDG Base Directory specification (more on this
-below), which mostly used "." at the beginning of the configuration
-files. So dotfiles are user customization per application for Unix
-users.
+configurations per application are stored in user's home directory and typically
+started with a ".", which operating systems set these as hidden by convention.
+If you use ls in your home directory, you won't see these files unless you use
+flags that would show hidden files as well. So dotfiles are user customization
+per application for Unix users.
 
 ## Why?
 
@@ -29,10 +26,9 @@ This repo has 3 purposes:
 
 3. To have a containerized development environment. I want to try out
    projects or programming setups/tools without "polluting" my base
-   setup and lead to "dependency hell". The hope is that this will serve
+   setup and lead to dependency hell. The hope is that this will serve
    as the base for future containerized development environments.
    
-
 I do realize that [GNU Stow](https://www.gnu.org/software/stow/),
 [chezmoi](https://www.chezmoi.io/) and the like exists. I can't assume
 that the platform I'll be using would have those tools. Git and basic
@@ -53,12 +49,10 @@ not a complicated setup.
 
    3. Programs have already spewed lines to .bashrc or .bash_profile.
 
-
 2. Leave shell config for the local programs to abuse. These are copied
    to home directory rather than linked.
 
-3. Whenever possible, use links for customizations that are not related
-   to application abuse.
+3. Use links for customizations that are not related to application abuse.
 
 4. Make sure it (this config) is easy to delete. 
 
@@ -83,27 +77,9 @@ There're very few assumptions here, but here are them, not in any
 particular order:
 
 1. You are running a UNIX-ish system. Any Linux or BSD-like system would
-   do, including MacOS, WSL. You don't need this on Windows.
+   do. You don't need this on Windows.
 
-2. At least you have a POSIX shell in /bin/sh. Try
-
-
-   ```bash
-   exec /bin/sh
-   ```
-
-
-   It's very likely another shell symlinked as sh. Executing
-   
-
-   ```bash 
-   readlink /proc/$$/exe 
-   ```
-   
-
-   would tell you what your current interactive shell is. I think it
-   works on modern MacOS as well.
-
+2. At least you have a POSIX shell in /bin/sh. Very safe assumption on UNIXes.
 
 3. You would prefer to have more than 1 ssh setup if needed.
 
@@ -114,10 +90,7 @@ particular order:
    don't risk compromising all your ssh connections' safety. 
 
 
-4. You would follow [XDG Base
-   Directory](https://wiki.archlinux.org/title/XDG_Base_Directory)
-   standards. Linked is not the XDG Base Directory Specification, but
-   practical places of where you SHOULD place your configurations. 
+4. You would follow XDG Base Directory standards. 
 
 5. At least you have Busybox or similar minimal environment. This
    means some minimal shell (ash or dash) and other utility programs
@@ -125,8 +98,7 @@ particular order:
 
 ## Non-assumptions
 
-1. You are running GNU/Linux. I try to use programs that are not
-   GNU-specific. Tested on Busybox ash.
+1. You are running GNU/Linux. Tested on Busybox ash.
 
 2. You have bash as your interactive shell. If you don't have bash in
    your system, then .profile is loaded only. If you do use bash, then:
@@ -138,68 +110,55 @@ particular order:
 
 ## Goals/Programs configuring in this setup?
 
-Bash, Vim, tmux, SSH, git. A "complete" CLI working environment. 
+Bash, Vim, Neovim, tmux, SSH, git. A "complete" CLI working environment. 
 
 This script also helps you set up your user name and password. Good for
 initializing things on WSL or other root systems.On WSL it will help you
 do a few more things. If you have systemd installed, it will enable 
-systemd on functionality. STILL TESTING.
+systemd on functionality. STILL TESTING WSL FEATURES.
 
-Bash for interactive shell, Vim for text editor, tmux for screen
+Bash for interactive shell, Vim/Neovim for text editor, tmux for screen
 multiplexer, ssh and git could work together or separately.
 
 SSH setup script here is a wrapper to allow users to set up git and SSH
 so we can SSH into git repos easier, and nothing else. More in the SSH
 folder.
 
-I've configured a simple PS1 prompt for shells other than bash, but
-that's it. 
+I've also configured a simple PS1 prompt for shells other than bash 
 
 ## Non-goals/Programs Not Configuring in this setup?
 
 1. dircolors. I realize they exist, I just don't care about them enough
-   to write one. There're lots of good ones out there.
+   to write one. 
 
    Most terminal emulators have customization capabilities that are good
    enough to get a working color scheme in terminals anyways, and fine
    tuning that is a non-goal at the moment. 
 
-2. Terminal emulator. They are easy enough to customize, mostly, and I
-   don't customize them extensively beyond color schemes at this point.
+2. Zsh or fish.  
 
-3. Zsh or fish.  
+3. Emacs. It deserves its own config repo. Someday?
 
-4. Emacs. It deserves its own config repo. Someday?
-
-5. Neovim. One day.
-
-6. IDEs/Full programming environment setup?
+4. IDEs/Full programming environment setup?
 
    Try IntelliJ suite or VSCode if that tickles your fancy. Or even
    Visual Studio. Usually your workplace will have a preference.
 
-   My opinion on which IDE/editor to use? 
+   My opinion:
    
    1. IDEs are better at being IDEs than editors, and vice versa. 
 
-   2. Manage your expectation of what your tool can do and what tool
-      your team expects you to use.
+   2. Manage your expectation of what your tool can do and what tool your team
+      expects you to use.
 
 7. File lock checking, aka race condition. Realistically, user should
    know better to not execute this program in two different shell
    sessions.
 
-8. Being able to curl/wget/download a setup file and go about installing
-   config. Such a functionality is trivial to implement. Check the
-   parent folder to see if there is a .git folder. If not, then we are
-   not in a git repo so we must git clone the repo and execute the setup
-   file from the git repo. However, I don't see how much value it
-   brings. See how we still need to call git? Git is still a dependency
-   anyways, so it's better for this dependency to be very explicit. If
-   being up to date is required, which it is for any config, then git is
-   still needed anyways, so such a setup do not decrease dependency but
-   just make dependency less explicit.
-
+8. Being able to curl/wget/download a setup file and go about installing config.
+   I don't see its value though. If being up to date is required, which it is
+   for any config, then git is still needed regardless, so such a setup do not
+   reduce dependency but just make dependency less explicit.
 
 ## How to Set up and Use
 
@@ -273,7 +232,6 @@ There's 2 flavours to setting up this config.
    rm -rf $HOME/dotfiles
    ```
    
-
    Additional mode:
 
    Docker/default mode. Skips over interactive mode that the user need to
@@ -295,12 +253,14 @@ There's 2 flavours to setting up this config.
    To use this method, you would need to install docker or podman on
    your setup. I would suggest podman.
 
-   I have 2 Dockerfile here, one Ubuntu based (more stable-ish) and
-   one Fedora rawhide based (really cutting-edge, good for testing
-   latest software). Might get an Arch Dockerfile together one day.
+   I have 3 Dockerfile here, one Ubuntu based (more stable-ish, although I use
+   the latest Ubuntu release), one Fedora rawhide based (cutting-edge, good for
+   testing latest software) and one Archlinux based (bleeding-edge, good for
+   testing development software)
 
-   Using the appropriate Dockerfile name, the below code would generate
-   a docker image
+   Using the appropriate Dockerfile name, the below code would generate a docker
+   image:
+
 
    ```bash
    cd $HOME
@@ -308,6 +268,7 @@ There's 2 flavours to setting up this config.
    cd dotfiles
    docker build -f Dockerfile.DISTRO -t IMAGE_NAME
    ```
+
    Podman requires using buildah to build image, so:
 
 
@@ -349,10 +310,10 @@ There's 2 flavours to setting up this config.
    ```
 
    You can use a similar process to mount your git repo to the container
-   so you don't have to keep copying your repo over.
+   so you don't have to keep copying your repo over. Writing a basic Bash script
+   for this is trivial and won't be covered here.
 
-
-## Systems tested on
+## Systems Tested
 
 
 I've tested this setup in Alpine, Arch, Ubuntu and Fedora Linux
@@ -360,30 +321,14 @@ containers. I would try this in VMs one day.
 
 I don't have a Mac, can't test in Mac.
 
-Will try to test this on BSDs one day. 
+Will try to test this on BSD VMs one day. 
 
 ## TODO
 
 Based on personal priority:
 
-
 1. Write a pre-commit hook that is ran every time a commit happens to
    make sure shellcheck passes before I commit. May try to use Gitlab
    Runner or other systems. 
-   
 
-2. Overhaul Vim experience. Use some plugins to enable LSP or other
-   IDE-like features. Make modular vim setup. Might use Neovim? Who
-   knows?
-
-
-3. Proof-read READMEs. LOL
-
-
-4. Fine-tune remove scripts. Not a priority at the moment, as I'm
-   actively tuning setup scripts.
-
-
-5. More testing on different platforms/containers.
-
-6. Test this on a WSL bare-metal install.
+2. Test this on a WSL bare-metal install.

@@ -1,3 +1,4 @@
+# Use rolling Ubuntu for latest release, still not bleeding-edge though.
 FROM ubuntu:rolling
 
 LABEL MAINTAINER "Sam Su samsu42@yahoo.ca"
