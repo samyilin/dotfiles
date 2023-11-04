@@ -75,6 +75,8 @@ call dein#add('tpope/vim-surround')
 call dein#add('tpope/vim-characterize')
 " Tim Pope's plugin for supporting tmux
 call dein#add('tpope/vim-tbone')
+call dein#add('goerz/jupytext.vim')
+call dein#add('makerj/vim-pdf')
 call dein#end()
 " Required:
 filetype plugin indent on
