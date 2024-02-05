@@ -22,70 +22,60 @@ set showmode
 set t_u7=
 
 "#######################################################################
-"dein Scripts-----------------------------
-"remove vi compatibility mode if we are running Vim. Mandatory for
-"dein.
+"vim-plug Scripts-----------------------------
 if &compatible
   set nocompatible               " Be iMproved
 endif
 
-" Install dein according to dein's specification
-let $CACHE = expand('~/.cache')
-if !isdirectory($CACHE)
-  call mkdir($CACHE, 'p')
+let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
+if empty(glob(data_dir . '/autoload/plug.vim'))
+  execute '!git clone https://github.com/junegunn/vim-plug' data_dir.'/autoload/'
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
-if &runtimepath !~# '/dein.vim'
-  let s:dein_dir = fnamemodify('dein.vim', ':p')
-  if !isdirectory(s:dein_dir)
-    let s:dein_dir = $CACHE . '/dein/repos/github.com/Shougo/dein.vim'
-    if !isdirectory(s:dein_dir)
-      execute '!git clone https://github.com/Shougo/dein.vim' s:dein_dir
-    endif
-  endif
-  execute 'set runtimepath^=' . substitute(
-        \ fnamemodify(s:dein_dir, ':p') , '[/\\]$', '', '')
-endif
-" Let dein manage dein
-set runtimepath+=~/.cache/dein/repos/github.com/Shougo/dein.vim
-call dein#begin('~/.cache/dein')
+call plug#begin()
+" The default plugin directory will be as follows:
+"   - Vim (Linux/macOS): '~/.vim/plugged'
+"   - Vim (Windows): '~/vimfiles/plugged'
+"   - Neovim (Linux/macOS/Windows): stdpath('data') . '/plugged'
+" You can specify a custom plugin directory by passing it as the argument
+"   - e.g. `call plug#begin('~/.vim/plugged')`
+"   - Avoid using standard Vim directory names like 'plugin'
+Plug 'junegunn/vim-plug'
 " Tim Pope's sensible default. A lot of code can be avoided by using
 " this. Battle-tested, good default.
-call dein#add('tpope/vim-sensible')
+Plug 'tpope/vim-sensible'
 " Tim Pope's plugin to quickly comment and uncomment based on file
 " type. Wonderous piece of work. press gcc to comment, or [x]gcc to
 " comment x number of lines. use gcgc to uncomment.
-call dein#add('tpope/vim-commentary')
+Plug 'tpope/vim-commentary'
 " Tim Pope's plugin to enhance netrw experience. Good enough as a
 " starter kit to file explorer within Vim.
-call dein#add('tpope/vim-vinegar')
+Plug 'tpope/vim-vinegar'
 " Tim Pope's git wrapper. Excellent if you don't want to leave Vim to
 " do git maintenance.
-call dein#add('tpope/vim-fugitive')
+Plug 'tpope/vim-fugitive'
 " Gruvbox material is silghtly better maintained than the original
 " version.
-call dein#add('sainnhe/gruvbox-material')
+Plug 'sainnhe/gruvbox-material'
 " Better tagline at bottom. A bit too heavy for my taste, but what the
 " heck.
-call dein#add('vim-airline/vim-airline')
+Plug 'vim-airline/vim-airline'
 " Tim Pope's plugin to automatically set tab size.
-call dein#add('tpope/vim-sleuth')
+Plug 'tpope/vim-sleuth'
 " Tim Pope's plugin to edit 'surrounds'
-call dein#add('tpope/vim-surround')
+Plug 'tpope/vim-surround'
 " Tim Pope's plugin for command ga to work with Unicode
-call dein#add('tpope/vim-characterize')
+Plug 'tpope/vim-characterize'
 " Tim Pope's plugin for supporting tmux
-call dein#add('tpope/vim-tbone')
-call dein#add('goerz/jupytext.vim')
-call dein#add('makerj/vim-pdf')
-call dein#end()
-" Required:
-filetype plugin indent on
-syntax enable
-" If you want to install not installed plugins on startup.
-if dein#check_install()
-  call dein#install()
-endif
-"End dein Scripts-------------------------
+Plug 'tpope/vim-tbone'
+Plug 'goerz/jupytext.vim'
+Plug 'makerj/vim-pdf'
+" Initialize plugin system
+" - Automatically executes `filetype plugin indent on` and `syntax enable`.
+PlugInstall|PlugUpgrade|PlugUpdate|:q
+call plug#end()
+
+"End vim-plug Scripts-------------------------
 
 "#######################################################################
 " Theme Setting(s)
