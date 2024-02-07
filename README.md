@@ -317,9 +317,8 @@ There's 2 flavours to setting up this config.
 
 
 I've tested this setup in Alpine, Arch, Ubuntu and Fedora Linux
-containers. I would try this in VMs one day.
+containers. I would try this in VMs one day. Tested this on MacOS.
 
-I don't have a Mac, can't test in Mac.
 
 Will try to test this on BSD VMs one day. 
 
@@ -330,5 +329,3 @@ Based on personal priority:
 1. Write a pre-commit hook that is ran every time a commit happens to
    make sure shellcheck passes before I commit. May try to use Gitlab
    Runner or other systems. 
-
-2. Test this on a WSL bare-metal install.

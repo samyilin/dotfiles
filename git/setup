@@ -20,6 +20,7 @@ main(){
       done
       git config --global user.email "$email"
       git config --global user.name "$full_name"
+      # Default to merge instead of rebase when pulling from master.
       git config --global pull.rebase false
       echo "Basic git setup done, quitting"
     else

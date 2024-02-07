@@ -18,20 +18,23 @@ has() {
 # existence of the program to be installed before calling the
 # appropriate scripts.
 setup() {
-  if [ "$1" != profile ] && [ "$1" != nix ]; then
+  if [ "$1" != profile ]; then
     if  has "$1"; then
       # special logic to handle vim full version detection. Vim without
       # full version cannot  cannot leverage its true potential.
-      # Dein.vim also needs git to function. 
+      # vim-plug.vim also needs git to function. 
       if [ "$1" = vim ] ; then
-        if  ! has vimtutor ; then
+        if ! has vimtutor ; then
           printf "Full vim is not installed, quitting vim setup.\n"
           printf "Vim won't be installed by nix to avoid name collision.\n"
           return 1
-        elif  ! has git; then
+        elif ! has git; then
           printf "git is required for vim install, quitting"
           return 1
         fi
+      elif [ "$1" = alacritty ] && ! has git; then
+        printf "git is required for alacritty theme install, quitting"
+        return 1
       fi
     else
       printf "%s is not installed in your system, quitting...\n" "$1"
@@ -39,14 +42,6 @@ setup() {
     fi
     # special check for nix. 
     printf "Initializing %s setup.\n" "$1"
-  elif [ "$1" = nix ] && ! have nix-env; then
-    if ! has curl ; then
-      printf "Curl is required for nix install, qutting nix install.\n"
-      return 1
-    elif ! has xz ; then 
-      printf "xz is required for nix install, quitting nix install.\n"
-      return 1
-    fi
   fi
   # set up config for programs.
   cd "$1" && ./setup "$2" && printf "%s setup complete.\n" "$1" || printf "%s setup failed.\n" "$1"
@@ -139,7 +134,7 @@ main() {
   dir=$(cd -- "$(dirname -- "$0")">>/dev/null 2>&1 && pwd)
   cd "$dir" || exit 0
   # non-default mode logic.
-  if [ $default -eq 0 ]; then
+  if [ "$default" -eq 0 ]; then
     # in non-default mode, if user is running as root, help user set up 
     if [ "$(id -u )" -eq 0 ]; then 
       if ( has useradd || has adduser ) && has passwd; then
@@ -168,7 +163,7 @@ main() {
       case "$1" in 
         *)
           if [ -d "$dir"/"$1" ]; then
-            setup "$1" $default
+            setup "$1" "$default"
           else
             printf "%s cannot be configured using this script." "$1"
             exit 1

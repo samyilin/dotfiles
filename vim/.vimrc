@@ -31,6 +31,7 @@ let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
 if empty(glob(data_dir . '/autoload/plug.vim'))
   execute '!git clone https://github.com/junegunn/vim-plug' data_dir.'/autoload/'
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+  autocmd VimEnter * PlugUpdate | source $MYVIMRC
 endif
 call plug#begin()
 " The default plugin directory will be as follows:
@@ -72,9 +73,9 @@ Plug 'goerz/jupytext.vim'
 Plug 'makerj/vim-pdf'
 " Initialize plugin system
 " - Automatically executes `filetype plugin indent on` and `syntax enable`.
-PlugInstall|PlugUpgrade|PlugUpdate|:q
 call plug#end()
 
+autocmd VimEnter * PlugUpdate | source $MYVIMRC | :q
 "End vim-plug Scripts-------------------------
 
 "#######################################################################
