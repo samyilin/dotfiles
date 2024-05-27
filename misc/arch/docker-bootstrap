@@ -2,12 +2,12 @@
 # Script used in Dockerfile.archlinux to set up 2 things:
 # 1. Fix locale issues
 # 2. Fix no manpage issues
-printf "\nen_US.UTF-8 UTF-8\n" >> /etc/locale.gen && locale-gen
+printf "\nen_US.UTF-8 UTF-8\n" >>/etc/locale.gen && locale-gen
 
 while IFS= read -r line; do
-  case "$line" in
-    NoExtract*) ;;
-    *) printf "%s\n" "$line";;
-  esac
-done </etc/pacman.conf > o
+	case "$line" in
+	NoExtract*) ;;
+	*) printf "%s\n" "$line" ;;
+	esac
+done </etc/pacman.conf >o
 mv o /etc/pacman.conf

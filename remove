@@ -1,28 +1,28 @@
 #!/bin/bash
 # A quick script to remove customizations due to this dotfile.
-dir=$(cd -- "$(dirname -- "$0")">>/dev/null 2>&1 && pwd)
+dir=$(cd -- "$(dirname -- "$0")" >>/dev/null 2>&1 && pwd)
 if [ $# -eq 0 ]; then
-  for i in "$dir"/*; do 
-    i="${i%*/}"
-    i="${i##*/}"
-    if [ -d "$i" ] && case "$i" in misc*) false;; install*) false;; config*) false;;  *) true;; esac; then
-      cd "$i" && ./remove && echo "$i config removed, proceeding" && sleep 1
-      cd "$dir" || return 1
-    fi
-  done
+	for i in "$dir"/*; do
+		i="${i%*/}"
+		i="${i##*/}"
+		if [ -d "$i" ] && case "$i" in misc*) false ;; install*) false ;; config*) false ;; *) true ;; esac then
+			cd "$i" && ./remove && echo "$i config removed, proceeding" && sleep 1
+			cd "$dir" || return 1
+		fi
+	done
 else
-  while [ $# -gt 0 ]; do
-    case $1 in 
-      *)
-        if [ -d "$dir"/"$1" ]; then
-          cd "$i" && ./remove && echo "$i config removed, proceeding" && sleep 1
-        else
-          printf "Invalid %s command line argument given." "$1"
-          exit 1
-        fi
-        ;;
-    esac
-    shift
-  done
+	while [ $# -gt 0 ]; do
+		case $1 in
+		*)
+			if [ -d "$dir"/"$1" ]; then
+				cd "$i" && ./remove && echo "$i config removed, proceeding" && sleep 1
+			else
+				printf "Invalid %s command line argument given." "$1"
+				exit 1
+			fi
+			;;
+		esac
+		shift
+	done
 fi
 echo "config removal completed, thank you for using this script."

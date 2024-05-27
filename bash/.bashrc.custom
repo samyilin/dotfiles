@@ -4,8 +4,8 @@
 
 # If not running interactively, don't do anything
 case $- in
-  *i*) test -f "$HOME"/.inputrc && bind -f "$HOME"/.inputrc;;
-  *) return;;
+*i*) test -f "$HOME"/.inputrc && bind -f "$HOME"/.inputrc ;;
+*) return ;;
 esac
 set -o vi
 # Append to the history file, don't overwrite it
@@ -25,17 +25,17 @@ PS1='\[\033[01;32m\][\u@\H \w]\[\033[00m\]\\$ '
 pfetch 2>/dev/null || "$HOME"/.nix-profile/bin/pfetch 2>/dev/null
 
 if [ -f "$HOME"/.bash_aliases ]; then
-  # I know this should exist, so disabling this shellcheck here
-  # shellcheck disable=SC1091
-  . "$HOME"/.bash_aliases
+	# I know this should exist, so disabling this shellcheck here
+	# shellcheck disable=SC1091
+	. "$HOME"/.bash_aliases
 fi
 
 if [ -x /usr/bin/dircolors ]; then
-  if [ -r "$HOME"/.dircolors ]; then
-    eval "$(dircolors -b "$HOME"/.dircolors)"
-  else
-    eval "$(dircolors -b)"
-  fi
+	if [ -r "$HOME"/.dircolors ]; then
+		eval "$(dircolors -b "$HOME"/.dircolors)"
+	else
+		eval "$(dircolors -b)"
+	fi
 fi
 
 # launches emacs in server mode if not already running. Optional code.

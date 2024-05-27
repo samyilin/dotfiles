@@ -2,7 +2,7 @@
 
 Tmux config. Unstable ATM.
 
-# Introduction/Clarification
+## Introduction/Clarification
 
 This is not a thorough setup like
 [oh-my-tmux](https://github.com/gpakosz/.tmux). This is a very
@@ -15,7 +15,7 @@ information](https://github.com/tmux-plugins/list) for? Many of these
 tools require Python or node, not cross-platform or minimal for my
 taste.
 
-# Documentation
+## Documentation
 
 1. A lot of people prefer using Ctrl-a over Ctrl-b as the prefix due to
    Ctr-a being the default on [GNU
@@ -27,8 +27,6 @@ taste.
 
 3. use copy-mode-vi to force vi-like key bindings.
 
-
-
 ## Tutorial?
 
 A lot of great tmux tutorials exist out there. One that I like is [tmux
@@ -37,7 +35,7 @@ Not going to write one here.
 
 ## Style/colorscheme?
 
-One can tweak tmux to no end, hence I've half-assed it. 
+One can tweak tmux to no end, hence I've half-assed it.
 
 Colorscheme used here is Gruvbox, I've barely grabbed the palette from
 [Gruvbox](https://github.com/morhetz/gruvbox) itself. Would I write a

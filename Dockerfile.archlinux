@@ -11,26 +11,26 @@ Run /usr/share/workspace/misc/arch/docker-bootstrap
 RUN yes | pacman -Syu && pacman -Qqn | pacman -S --noconfirm -
 # Basic terminal system setup
 RUN  pacman -S --noconfirm \
-        man-db \
-        texinfo \
-        curl \
-        vim \
-        neovim \
-        tmux \
-        shellcheck \
-        git
+  man-db \
+  texinfo \
+  curl \
+  vim \
+  neovim \
+  tmux \
+  shellcheck \
+  git
 # Neovim plus kickstart.nvim requirements
 RUN  pacman -S --noconfirm neovim \
-        python-pynvim \
-        npm \
-        neovim-lspconfig \
-        neovim-nvim-treesitter \
-        wget \
-        unzip \
-        base-devel \
-        fd \
-        ripgrep && \
-        npm install -g neovim
+  python-pynvim \
+  npm \
+  neovim-lspconfig \
+  neovim-nvim-treesitter \
+  wget \
+  unzip \
+  base-devel \
+  fd \
+  ripgrep && \
+  npm install -g neovim
 # emacs
 RUN yes | pacman -S emacs-nativecomp
 # delete pacman cache to save space

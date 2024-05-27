@@ -1,5 +1,5 @@
 #!/bin/sh
-# Short script to get rid of nix install altogether. 
+# Short script to get rid of nix install altogether.
 # Warning: This will remove all locally installed packages!
 sudo rm -rf /nix
 

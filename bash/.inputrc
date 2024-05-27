@@ -11,13 +11,13 @@ set colored-completion-prefix on
 # vi-mode for Bash
 set editing-mode vi
 $if mode=vi
-set keymap vi-command
-j: history-search-forward
-k: history-search-backward
-"\e[A": history-search-backward
-"\e[B": history-search-forward
-set keymap vi-insert
-# these are for vi-insert mode
-"\C-j": history-search-forward
-"\C-k": history-search-backward
+  set keymap vi-command
+  j: history-search-forward
+  k: history-search-backward
+  "\e[A": history-search-backward
+  "\e[B": history-search-forward
+  set keymap vi-insert
+  # these are for vi-insert mode
+  "\C-j": history-search-forward
+  "\C-k": history-search-backward
 $endif
