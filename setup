@@ -41,6 +41,7 @@ setup() {
 			return 1
 		fi
 		# special check for nix.
+		printf "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
 		printf "Initializing %s setup.\n" "$1"
 	fi
 	# set up config for programs.
