@@ -22,4 +22,20 @@ return {
   {
     "linux-cultist/venv-selector.nvim",
   },
+  {
+    "williamboman/mason.nvim",
+    opts = {
+      ensure_installed = {
+        "sqlls",
+        "ruff-lsp",
+        "dockerfile-language-server",
+        "json-lsp",
+        "marksman",
+        "docker-compose-language-service",
+        "markdownlint",
+        "markdownlint-cli2",
+        "hadolint",
+      },
+    },
+  },
 }
