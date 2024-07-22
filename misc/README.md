@@ -1,6 +1,7 @@
 # What is this?
 
-Code to install must-have / optional programs for different systems (Linux distros,WSL or Mac).
+Code to install must-have / optional programs for different systems (Linux
+distros,WSL or Mac).
 
 I will eventually turn some of them into specific purpose Dockerfiles.
 

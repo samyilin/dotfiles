@@ -1,87 +1,87 @@
 #!/bin/sh
 main() {
-	if [ "$1" -eq 0 ]; then
-		if [ ! -d "$HOME"/.ssh ]; then
-			mkdir "$HOME"/.ssh
-		fi
-		printf "\nWould you like to generate new SSH keys for git usage?\n"
-		printf "\nWarning: This script doens't help you check prior config to avoid naming collision.\n"
-		printf "\tThis is only a wrapper to speed up ssh config for git.\n"
-		if [ -f "$HOME"/.ssh/config ]; then
-			printf "Your current SSH config file is printed below:\n"
-			cat "$HOME"/.ssh/config
-		else
-			printf "It seems that you do not have an SSH config file at the moment.\n"
-		fi
-		printf "Warning: This script uses ed25519 algorithm by default, which is the recommended\n"
-		printf "\tSSH algorithm at the time of writing. If your git provider recommend another\n"
-		printf "\tSSH algorithm, changing the script below regarding ssh-keygen would work.\n"
-		printf "Warning: This script sets up SSH key without password. It is designed for single-user mode.\n"
-		while true; do
-			read -r response
-			case "$response" in
-			[Yy]*) break ;;
-			[Nn]*) return 2>/dev/null || exit ;;
-			*) printf "Invalid response, please try again\n" ;;
-			esac
-		done
-		unset "$response"
-		touch "$HOME"/.ssh/config
-		printf "Which git provider would you like to connect to(domain name)?\n"
-		printf "Example git domain names are github.com, gitlab.com or gitlab.YOURCOMPANY.com\n"
-		while true; do
-			read -r provider
-			if [ "$provider" = "" ]; then
-				printf "No response given, please enter git domain name\n"
-			else
-				break
-			fi
-		done
-		printf "Would you like to set up an alias for this host?\n"
-		printf "\tIf you use multiple account account for the same git provider for work and life,\n"
-		printf "\tthen you can alias 1 connection as 'work' and another one as 'hobby'\n"
-		printf "\tso you can connect to work repos as git@work:PROJECT_NAME/REPO_NAME.git\n"
-		printf "\tand connect to hobby repos as git@hobby:PROJECT_NAME/REPO_NAME.git\n"
-		while true; do
-			read -r response
-			case "$response" in
-			[Yy]*)
-				printf "What would you like your alias to be?\n"
-				while true; do
-					read -r git_alias
-					if [ "$git_alias" = "" ]; then
-						printf "No response, please try again\n"
-					else
-						break
-					fi
-				done
-				break
-				;;
-			[Nn]*) break ;;
-			*) printf "Invalid response, please try agai\nn" ;;
-			esac
-		done
-		printf "\nWhich file, in ~/.ssh, would you like to store your public/private key?\n"
-		while true; do
-			read -r keyfile
-			if [ "$keyfile" = "" ]; then
-				printf "No response given, please enter key file name\n"
-			else
-				break
-			fi
-		done
-		yes | ssh-keygen -q -t ed25519 -N '' -f ~/.ssh/"$keyfile" >/dev/null 2>&1
-		printf "\n Host %s\n\t\tHostName %s \n\t\tuser git\n\t\tIdentityFile %s/.ssh/%s\n" "${git_alias-$provider}" "$provider" "$HOME" "$keyfile" >>"$HOME"/.ssh/config
-		printf "\nYour public key is:\n"
-		cat "$HOME"/.ssh/"$keyfile".pub
-		printf "\nPlease copy and paste the above line into your git provider's appropriate setting, probably SSH Keys.\n"
-		printf "This will ensure that the git provider recognize your identity.\n"
-		printf "Your current SSH config file is printed below:\n"
-		cat "$HOME"/.ssh/config
-		printf "\nTo clone a repository from git provider using this configuration, please type\n"
-		printf "git clone git@%s:PROJECT_NAME/REPO_NAME.git\n" "$git_alias"
-	else
-		printf "SSH setup is skipped in non-interactive mode\n"
-	fi
+  if [ "$1" -eq 0 ]; then
+    if [ ! -d "$HOME"/.ssh ]; then
+      mkdir "$HOME"/.ssh
+    fi
+    printf "\nWould you like to generate new SSH keys for git usage?\n"
+    printf "\nWarning: This script doens't help you check prior config to avoid naming collision.\n"
+    printf "\tThis is only a wrapper to speed up ssh config for git.\n"
+    if [ -f "$HOME"/.ssh/config ]; then
+      printf "Your current SSH config file is printed below:\n"
+      cat "$HOME"/.ssh/config
+    else
+      printf "It seems that you do not have an SSH config file at the moment.\n"
+    fi
+    printf "Warning: This script uses ed25519 algorithm by default, which is the recommended\n"
+    printf "\tSSH algorithm at the time of writing. If your git provider recommend another\n"
+    printf "\tSSH algorithm, changing the script below regarding ssh-keygen would work.\n"
+    printf "Warning: This script sets up SSH key without password. It is designed for single-user mode.\n"
+    while true; do
+      read -r response
+      case "$response" in
+      [Yy]*) break ;;
+      [Nn]*) return 2>/dev/null ;;
+      *) printf "Invalid response, please try again\n" ;;
+      esac
+    done
+    unset "$response"
+    touch "$HOME"/.ssh/config
+    printf "Which git provider would you like to connect to(domain name)?\n"
+    printf "Example git domain names are github.com, gitlab.com or gitlab.YOURCOMPANY.com\n"
+    while true; do
+      read -r provider
+      if [ "$provider" = "" ]; then
+        printf "No response given, please enter git domain name\n"
+      else
+        break
+      fi
+    done
+    printf "Would you like to set up an alias for this host?\n"
+    printf "\tIf you use multiple account account for the same git provider for work and life,\n"
+    printf "\tthen you can alias 1 connection as 'work' and another one as 'hobby'\n"
+    printf "\tso you can connect to work repos as git@work:PROJECT_NAME/REPO_NAME.git\n"
+    printf "\tand connect to hobby repos as git@hobby:PROJECT_NAME/REPO_NAME.git\n"
+    while true; do
+      read -r response
+      case "$response" in
+      [Yy]*)
+        printf "What would you like your alias to be?\n"
+        while true; do
+          read -r git_alias
+          if [ "$git_alias" = "" ]; then
+            printf "No response, please try again\n"
+          else
+            break
+          fi
+        done
+        break
+        ;;
+      [Nn]*) break ;;
+      *) printf "Invalid response, please try agai\nn" ;;
+      esac
+    done
+    printf "\nWhich file, in ~/.ssh, would you like to store your public/private key?\n"
+    while true; do
+      read -r keyfile
+      if [ "$keyfile" = "" ]; then
+        printf "No response given, please enter key file name\n"
+      else
+        break
+      fi
+    done
+    yes | ssh-keygen -q -t ed25519 -N '' -f ~/.ssh/"$keyfile" >/dev/null 2>&1
+    printf "\n Host %s\n\t\tHostName %s \n\t\tuser git\n\t\tIdentityFile %s/.ssh/%s\n" "${git_alias-$provider}" "$provider" "$HOME" "$keyfile" >>"$HOME"/.ssh/config
+    printf "\nYour public key is:\n"
+    cat "$HOME"/.ssh/"$keyfile".pub
+    printf "\nPlease copy and paste the above line into your git provider's appropriate setting, probably SSH Keys.\n"
+    printf "This will ensure that the git provider recognize your identity.\n"
+    printf "Your current SSH config file is printed below:\n"
+    cat "$HOME"/.ssh/config
+    printf "\nTo clone a repository from git provider using this configuration, please type\n"
+    printf "git clone git@%s:PROJECT_NAME/REPO_NAME.git\n" "$git_alias"
+  else
+    printf "SSH setup is skipped in non-interactive mode\n"
+  fi
 }
 main "$@"

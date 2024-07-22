@@ -1,7 +1,17 @@
-#!/bin/bash
+#!/bin/sh
 
 # We use Alacritty's default Linux config directory as our storage location here.
-dir=$(cd -- "$(dirname -- "$0")">>/dev/null 2>&1 && pwd)
-mkdir -p ~/.config/alacritty/themes
-git clone https://github.com/alacritty/alacritty-theme ~/.config/alacritty/themes
-cp "$dir"/"alacritty.toml" "$HOME"/".config/alacritty/alacritty.toml"
+main() {
+  if [ ! -f "$HOME"/.config/alacritty/alacritty.toml ]; then
+    mkdir -p "$HOME"/.config/alacritty/themes
+    git clone https://github.com/alacritty/alacritty-theme "$HOME"/.config/alacritty/themes
+    ln -sf "$PWD"/"alacritty.toml" "$HOME"/".config/alacritty/alacritty.toml"
+  elif [ -f "$HOME"/.config/alacritty/alacritty.toml ] && [ ! -L "$HOME"/.config/alacritty/alacritty.toml ]; then
+    mv "$HOME"/.config/alacritty/alacritty.toml "$HOME/.config/alacritty/alacritty.toml.bak"
+    printf "Your default alacritty.toml has been saved to alacritty.toml.bak\n"
+  else
+    printf "Alacritty has been installed already, quitting\n"
+  fi
+  exit 0
+}
+main "$@"

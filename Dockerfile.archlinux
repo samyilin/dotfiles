@@ -6,7 +6,7 @@ LABEL DESCRIPTION "Self-contained Vim/Tmux based Workspace"
 
 COPY . /usr/share/workspace
 # fix man-pages plus locale, see misc/arch/docker-bootstrap
-Run /usr/share/workspace/misc/arch/docker-bootstrap
+RUN /usr/share/workspace/misc/arch/docker-bootstrap
 # Update packages and reinstall packes to ensure man-page
 RUN yes | pacman -Syu && pacman -Qqn | pacman -S --noconfirm -
 # Basic terminal system setup

@@ -1,15 +1,18 @@
 #!/bin/sh
-dir=$(cd -- "$(dirname -- "$0")">>/dev/null 2>&1 && pwd)
-if [ ! -d "$HOME"/kickstart.nvim ]; then
-  test -d "$HOME"/.config/nvim || mkdir -p "$HOME"/.config/nvim
-  git clone https://github.com/nvim-lua/kickstart.nvim "$HOME"/kickstart.nvim
-  ln -sf "$HOME"/kickstart.nvim/init.lua "$HOME"/.config/nvim/init.lua
-else
-  cd "$HOME"/kickstart.nvim && git pull && cd "$dir" || exit 1
-fi
-for i in lua after; do
-  if [ ! -d "$HOME"/.config/nvim/"$i" ]; then
-    ln -sf "$dir"/"$i" "$HOME"/.config/nvim/"$i"
+setup_nvim() {
+  test -d "$HOME"/.config || mkdir -p "$HOME"/.config
+  ln -sf "$PWD/nvim" "$HOME/.config"
+}
+main() {
+  if [ ! -d "$HOME"/.config/nvim ]; then
+    setup_nvim
+  elif [ -d "$HOME"/.config/nvim ] && [ ! -L "$HOME"/.config/nvim ]; then
+    mv "$HOME"/.config/nvim "$HOME"/.config/nvim.bak
+    printf "Your Neovim config have been backed up in nvim.bak.\n"
+    setup_nvim
+  else
+    printf "Neovim is already setup, quitting\n"
   fi
-done
-exit 0
+  exit 0
+}
+main "$@"

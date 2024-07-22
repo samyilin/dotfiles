@@ -1,0 +1,7 @@
+#!/bin/sh
+rm -rf "$HOME"/.config/alacritty/themes
+rm -rf "$HOME"/.config/alacritty/alacritty.toml
+if [ -f "$HOME"/.config/alacritty/alacritty.toml.bak ]; then
+  mv "$HOME"/.config/alacritty/alacritty.toml.bak "$HOME"/.config/alacritty/alacritty.toml
+  printf "Your alacritty configuration has been restored, quitting"
+fi

@@ -1,3 +1,7 @@
 #!/bin/sh
-
 rm -rf "$HOME"/.config/nvim && exit 0 || exit 1
+printf "Neovim configuration has been removed\n"
+if [ -f "$HOME"/.config/nvim.bak ]; then
+  mv "$HOME"/.config/nvim.bak "$HOME"/.config/nvim
+  printf "Your Neovim configuration has been restored.\n"
+fi
