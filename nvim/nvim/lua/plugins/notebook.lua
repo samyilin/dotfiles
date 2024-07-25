@@ -12,24 +12,9 @@ return {
     build = ":UpdateRemotePlugins",
     dependencies = {
       "nvim-treesitter/nvim-treesitter",
-      "3rd/image.nvim",
+      "willothy/wezterm.nvim",
     },
     config = function()
-      require("image").setup({
-        -- image nvim options table. Pass to `require('image').setup`
-        backend = "ueberzug", -- Kitty will provide the best experience, but you need a compatible terminal
-        kitty_method = "unicode-placeholders",
-        integrations = {},
-        -- max_width = 100, -- tweak to preference
-        -- max_height = 12, -- ^
-        max_height_window_percentage = math.huge, -- this is necessary for a good experience
-        max_width_window_percentage = math.huge,
-        window_overlap_clear_enabled = true,
-        window_overlap_clear_ft_ignore = { "cmp_menu", "cmp_docs", "" },
-      })
-      -- MacOS annoyance
-      -- package.path = package.path .. ";" .. vim.fn.expand("$HOME") .. "/.luarocks/share/lua/5.1/?/init.lua"
-      -- package.path = package.path .. ";" .. vim.fn.expand("$HOME") .. "/.luarocks/share/lua/5.1/?.lua"
       require("lspconfig")["pyright"].setup({
         on_attach = on_attach,
         capabilities = capabilities,
@@ -43,9 +28,10 @@ return {
           },
         },
       })
-      vim.g.molten_auto_open_output = true
+      vim.g.molten_auto_open_output = false
       vim.g.molten_output_show_more = true
-      vim.g.molten_image_provider = "image.nvim"
+      vim.g.molten_image_provider = "wezterm"
+      vim.g.molten_split_direction = "right"
       vim.g.molten_output_virt_lines = true
       -- vim.g.molten_split_direction = "right" --direction of the output window, options are "right", "left", "top", "bottom"
       vim.g.molten_wrap_output = true
