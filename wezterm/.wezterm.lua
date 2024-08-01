@@ -1,18 +1,26 @@
 -- Pull in the wezterm API
 local wezterm = require("wezterm")
+local mux = wezterm.mux
 
 -- This will hold the configuration.
 local config = wezterm.config_builder()
 
--- This is where you actually apply your config choices
-
--- For example, changing the color scheme:
 config.color_scheme = "tokyonight"
 config.font = wezterm.font_with_fallback({
 	"JetBrains Mono",
 	{ family = "Symbols Nerd Font Mono", scale = 0.75 },
 })
-config.hide_tab_bar_if_only_one_tab = true
+-- MacOS fullscreen defaults to not-so-fullscreen, so this
+if wezterm.target_triple == "x86_64-apple-darwin" or wezterm.target_triple == "x86_64-pc-windows-msvc" then
+	config.native_macos_fullscreen_mode = true
+	config.front_end = "WebGpu"
+end
+wezterm.on("gui-startup", function()
+	local _, _, window = mux.spawn_window({})
+	window:gui_window():toggle_fullscreen()
+end)
+
+-- config.hide_tab_bar_if_only_one_tab = true
 config.window_frame = {
 	inactive_titlebar_bg = "#353535",
 	active_titlebar_bg = "#2b2042",

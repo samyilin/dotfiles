@@ -1,5 +1,8 @@
 #!/bin/sh
-rm -rf "$HOME"/.config/nvim && exit 0 || exit 1
+rm -rf "$HOME"/.config/nvim
+pyenv uninstall neovim
+rm -rf "$HOME"/.local/share/nvim
+
 printf "Neovim configuration has been removed\n"
 if [ -f "$HOME"/.config/nvim.bak ]; then
   mv "$HOME"/.config/nvim.bak "$HOME"/.config/nvim

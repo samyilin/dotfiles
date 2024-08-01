@@ -1,11 +1,3 @@
--- Check if pyenv and the neovim venv exists before doing anything else
-local venv_path = "~/.pyenv/versions/neovim/bin/python"
-if vim.fn.executable("pyenv") == 1 and vim.fn.filereadable(venv_path) and vim.fn.executable("python") == 1 then
-  vim.g.python3_host_prog = vim.fn.expand(venv_path)
-else
-  return
-end
-
 return {
   {
     "benlubas/molten-nvim",
@@ -159,8 +151,5 @@ return {
     "vhyrro/luarocks.nvim",
     priority = 1000, -- Very high priority is required, luarocks.nvim should run as the first plugin in your config.
     config = true,
-    opts = {
-      rocks = { "magick" },
-    },
   },
 }
