@@ -18,6 +18,6 @@ if [ -d /proc ]; then
   "*microsoft*")
     alias network="sudo chattr -i /etc/resolv.conf && sudo vim /etc/resolv.conf && sudo chattr +i /etc/resolv.conf"
     ;;
-  **) break ;;
+  **) ;;
   esac
 fi
