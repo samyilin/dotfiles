@@ -12,3 +12,12 @@ if [ -f "$HOME"/.pyenv/versions/poetry/bin/poetry ]; then
   alias poetry="/Users/yilinwu/.pyenv/versions/poetry/bin/poetry"
 fi
 # Use pure vi from busybox. Just good for exercise.
+if [ -d /proc ]; then
+  version="$(cat /proc/version)"
+  case "$version" in
+  "*microsoft*")
+    alias network="sudo chattr -i /etc/resolv.conf && sudo vim /etc/resolv.conf && sudo chattr +i /etc/resolv.conf"
+    ;;
+  **) break ;;
+  esac
+fi
