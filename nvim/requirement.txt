@@ -9,3 +9,4 @@ pyperclip
 nbformat
 pillow
 jupytext
+pylatexenc

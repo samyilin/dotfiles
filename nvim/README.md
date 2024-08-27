@@ -20,8 +20,8 @@ these tools very well.
 
 ## Why LazyVim though? You don't use a distribution for Vim
 
-But Vim and Neovim are different in another way. Vim has been around longer,
-so tpope's plugins will not be deprecated anytime soon, for example. Also, Vim
+Vim and Neovim are different in another way. Vim has been around longer, so
+tpope's plugins will not be deprecated anytime soon, for example. Also, Vim
 plugins, LSP shenanigans aside, don't need a huge amount of glue code for
 cohesiveness. On the contrary, Neovim packages get deprecated very quickly
 (relatively speaking, most are here to stay for a while) and I don't have time

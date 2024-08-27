@@ -10,6 +10,20 @@ return {
   -- disable trouble
   { "nvim-neo-tree/neo-tree.nvim", enabled = false },
   {
-    "williamboman/mason.nvim",
+    "telescope.nvim",
+    dependencies = {
+      {
+        "nvim-telescope/telescope-live-grep-args.nvim",
+        event = "VeryLazy",
+        config = function(_, _)
+          require("lazyvim.util").on_load("telescope.nvim", function()
+            require("telescope").load_extension("live_grep_args")
+          end)
+        end,
+        keys = {
+          { "<leader>sg", ":Telescope live_grep_args<CR>", desc = "Live Grep" },
+        },
+      },
+    },
   },
 }

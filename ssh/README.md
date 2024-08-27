@@ -52,10 +52,6 @@ There's a lot involved here, and a lot of testing is needed to make sure
 that this works on different architectures and Operating Systems. So
 really, this deserves its own repo, whenever I have time to do so.
 
-Instead, SSH related cheatsheet/tutorial will be documented in my
-[cheatsheet](https:///github.com/samyilin/cheatsheets) when I have the
-time to do some writing.
-
 ## What is this script about then?
 
 This is just a wrapper for a ssh+git workflow. This script is
