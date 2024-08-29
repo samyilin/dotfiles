@@ -21,10 +21,33 @@ return {
           end)
         end,
         keys = {
-          { "<leader>sg", ":Telescope live_grep_args<CR>", desc = "Live Grep" },
+          { "<leader>sL", ":Telescope live_grep_args<CR>", desc = "Live Grep" },
         },
       },
     },
+    config = function()
+      local telescope = require("telescope")
+      local actions = require("telescope.actions")
+      local lga_actions = require("telescope-live-grep-args.actions")
+      telescope.setup({
+        defaults = {
+          path_display = {
+            "filename_first",
+          },
+        },
+        extensions = {
+          live_grep_args = {
+            mappings = {
+              i = {
+                ["<S-j>"] = actions.cycle_history_next,
+                ["<S-k>"] = actions.cycle_history_prev,
+              },
+            },
+          },
+        },
+      })
+      telescope.load_extension("live_grep_args")
+    end,
   },
   {
     "linux-cultist/venv-selector.nvim",
