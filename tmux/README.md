@@ -6,11 +6,7 @@ Tmux configuration.
 
 This is not a thorough setup like
 [oh-my-tmux](https://github.com/gpakosz/.tmux).
-[TPM](https://github.com/tmux-plugins/tpm) is also an overkill. I use tmux in
-a minimal fashion, and I don't like all the extra eyecandy.
-
-Besides, tmux doesn't come with good configuration layer. It is not really
-meant to be heavily configured.
+[TPM](https://github.com/tmux-plugins/tpm) is also an overkill.
 
 ## Documentation
 
@@ -38,4 +34,6 @@ Colorscheme used here is Gruvbox, I've barely grabbed the palette from
 
 ## [Zellij](https://zellij.dev/)?
 
-Meh. It's on my radar though.
+TBH I don't even use tmux that often, so no.
+
+These days I use Wezterm's local functionalities most of the time anyways.
