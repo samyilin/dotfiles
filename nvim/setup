@@ -4,28 +4,29 @@ setup_nvim() {
   ln -sf "$PWD/nvim" "$HOME/.config"
 }
 setup_python_virtualenv() {
-  if [ -d "$HOME"/.pyenv ] && [ ! -f "$HOME"/.pyenv/versions/neovim/bin/python ]; then
-    pyenv install 3.12
-    pyenv virtualenv 3.12 neovim
-    pyenv global neovim
-    eval "$(pyenv init --path)"
-    eval "$(pyenv init -)"
-    eval "$(pyenv virtualenv-init -)"
-    pyenv activate neovim
-    pip install -r "$HOME"/dotfiles/nvim/requirement.txt
-  fi
+  pyenv install 3.12
+  pyenv virtualenv 3.12 neovim
+  pyenv global neovim
+  eval "$(pyenv init --path)"
+  eval "$(pyenv init -)"
+  eval "$(pyenv virtualenv-init -)"
+  pyenv activate neovim
+  pip install -r "$HOME"/dotfiles/nvim/requirement.txt
+  pyenv deactivate
+  pyenv global neovim
 }
 main() {
   if [ ! -d "$HOME"/.config/nvim ]; then
     setup_nvim
-    setup_python_virtualenv
   elif [ -d "$HOME"/.config/nvim ] && [ ! -L "$HOME"/.config/nvim ]; then
     mv "$HOME"/.config/nvim "$HOME"/.config/nvim.bak
     printf "Your Neovim config have been backed up in nvim.bak.\n"
     setup_nvim
-    setup_python_virtualenv
   else
     printf "Neovim is already setup, quitting\n"
+  fi
+  if [ -d "$HOME"/.pyenv ] && [ ! -f "$HOME"/.pyenv/versions/neovim/bin/python ]; then
+    setup_python_virtualenv
   fi
   exit 0
 }

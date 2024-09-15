@@ -8,6 +8,13 @@ I've started to use
 [LazyVim](https://github.com/LazyVim/LazyVim), a Neovim setup powered by
 Lazy.nvim.
 
+For system requirement from Lazyvim, read their [front page](https://www.lazyvim.org/).
+
+For markdown-preview.nvim to work, some annoyance need to be sorted out. In
+particluar, you'd need to run ":Lazy activate markdown-preview.nvim" followed by
+":Lazy build markdown-preview.nvim". This is in upstream but not in stable
+branch yet.
+
 ## Why Neovim AND Vim?
 
 I'm still maintaining my Vim configuration minimally, and Vim/Neovim serves
