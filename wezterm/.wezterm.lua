@@ -10,13 +10,13 @@ config.font = wezterm.font_with_fallback({
 	"JetBrains Mono",
 	{ family = "Symbols Nerd Font Mono", scale = 0.75 },
 })
-config.front_end = "WebGpu"
 -- MacOS fullscreen defaults to not-so-fullscreen, so this
 wezterm.on("gui-startup", function()
 	local _, _, window = mux.spawn_window({})
 	window:gui_window():toggle_fullscreen()
 	if wezterm.target_triple == "x86_64-apple-darwin" then
 		config.native_macos_fullscreen_mode = true
+		config.front_end = "WebGpu"
 	end
 end)
 
