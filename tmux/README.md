@@ -18,7 +18,7 @@ This is not a thorough setup like
    forced it to print out all the nitty-gritty details of key maps.
 
 3. use copy-mode-vi to force vi-like key bindings. Does it matter? Meh. I don't
-   use bash's vi-like keybindings either even though I have set up them.
+   use bash's vi-like keybindings either even though I have set them up.
 
 ## Tutorial?
 
@@ -26,8 +26,6 @@ A lot of great tmux tutorials exist out there. One that I like is [tmux
 tutorial](https://protechnotes.com/comprehensive-tmux-tutorial-for-beginners-with-a-cheat-sheet/).
 
 ## Style/colorscheme?
-
-One can tweak tmux to no end, hence I've half-assed it.
 
 Colorscheme used here is Gruvbox, I've barely grabbed the palette from
 [Gruvbox](https://github.com/morhetz/gruvbox) itself.

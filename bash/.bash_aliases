@@ -11,11 +11,11 @@
 if [ -f "$HOME"/.pyenv/versions/poetry/bin/poetry ]; then
   alias poetry="/Users/yilinwu/.pyenv/versions/poetry/bin/poetry"
 fi
-# Use pure vi from busybox. Just good for exercise.
+# Add this for WSL corporate desktop. There's annoyance on corporate Windows.
 if [ -d /proc ]; then
   version="$(cat /proc/version)"
   case "$version" in
-  "*microsoft*")
+  *microsoft*)
     alias network="sudo chattr -i /etc/resolv.conf && sudo vim /etc/resolv.conf && sudo chattr +i /etc/resolv.conf"
     ;;
   **) ;;
