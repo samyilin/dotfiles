@@ -7,7 +7,7 @@ else
   vim.print("Pyenv is unavailable.")
 end
 return {
-  -- disable trouble
+  -- disable neotree
   { "nvim-neo-tree/neo-tree.nvim", enabled = false },
   {
     "telescope.nvim",
@@ -106,4 +106,5 @@ return {
       })
     end,
   },
+  { "echasnovski/mini.map", version = "*" },
 }
