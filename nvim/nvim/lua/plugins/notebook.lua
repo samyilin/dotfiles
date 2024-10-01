@@ -1,4 +1,4 @@
-if vim.uv.os_uname().sysname ~= "windows" then
+if vim.uv.os_uname().sysname ~= "Windows_NT" then
   return {
     {
       "benlubas/molten-nvim",
