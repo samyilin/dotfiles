@@ -53,4 +53,6 @@ if vim.uv.os_uname().sysname ~= "Windows_NT" then
       end,
     },
   }
+else
+  return {}
 end

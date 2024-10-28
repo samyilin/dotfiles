@@ -2,9 +2,18 @@
 " As suggested, these bits can be used within .exrc for editing using
 " vi. I don't use vi extensively, but these bits are helpful if you do
 " need them.
+if has("eval")                               " vim-tiny lacks 'eval'
+  let skip_defaults_vim = 1
+endif
 
 " automatically indent new lines
 set autoindent
+
+" replace tabs with spaces automatically
+set expandtab
+
+" number of spaces to replace a tab with when expandtab
+set tabstop=2
 
 " automatically write files when changing when multiple files open
 set autowrite
@@ -26,81 +35,81 @@ set t_u7=
 if &compatible
   set nocompatible               " Be iMproved
 endif
+if !has('nvim')
+  let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
+  if empty(glob(data_dir . '/autoload/plug.vim'))
+    execute '!git clone https://github.com/junegunn/vim-plug' data_dir.'/autoload/'
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+    autocmd VimEnter * PlugUpdate | source $MYVIMRC
+  endif
+  call plug#begin()
+  " The default plugin directory will be as follows:
+  "   - Vim (Linux/macOS): '~/.vim/plugged'
+  "   - Vim (Windows): '~/vimfiles/plugged'
+  "   - Neovim (Linux/macOS/Windows): stdpath('data') . '/plugged'
+  " You can specify a custom plugin directory by passing it as the argument
+  "   - e.g. `call plug#begin('~/.vim/plugged')`
+  "   - Avoid using standard Vim directory names like 'plugin'
+  Plug 'junegunn/vim-plug'
+  " Tim Pope's sensible default. A lot of code can be avoided by using
+  " this. Battle-tested, good default.
+  Plug 'tpope/vim-sensible'
+  " Tim Pope's plugin to quickly comment and uncomment based on file
+  " type. Wonderous piece of work. press gcc to comment, or [x]gcc to
+  " comment x number of lines. use gcgc to uncomment.
+  Plug 'tpope/vim-commentary'
+  " Tim Pope's plugin to enhance netrw experience. Good enough as a
+  " starter kit to file explorer within Vim.
+  Plug 'tpope/vim-vinegar'
+  " Tim Pope's git wrapper. Excellent if you don't want to leave Vim to
+  " do git maintenance.
+  Plug 'tpope/vim-fugitive'
+  " Gruvbox material is silghtly better maintained than the original
+  " version.
+  Plug 'sainnhe/gruvbox-material'
+  " Better tagline at bottom. A bit too heavy for my taste, but what the
+  " heck.
+  Plug 'vim-airline/vim-airline'
+  " Tim Pope's plugin to automatically set tab size.
+  Plug 'tpope/vim-sleuth'
+  " Tim Pope's plugin to edit 'surrounds'
+  Plug 'tpope/vim-surround'
+  " Tim Pope's plugin for command ga to work with Unicode
+  Plug 'tpope/vim-characterize'
+  " Tim Pope's plugin for supporting tmux
+  Plug 'tpope/vim-tbone'
+  Plug 'goerz/jupytext.vim'
+  Plug 'makerj/vim-pdf'
+  " Initialize plugin system
+  " - Automatically executes `filetype plugin indent on` and `syntax enable`.
+  call plug#end()
 
-let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
-if empty(glob(data_dir . '/autoload/plug.vim'))
-  execute '!git clone https://github.com/junegunn/vim-plug' data_dir.'/autoload/'
-  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-  autocmd VimEnter * PlugUpdate | source $MYVIMRC
+  autocmd VimEnter * PlugUpdate | source $MYVIMRC | :q
+  "End vim-plug Scripts-------------------------
 endif
-call plug#begin()
-" The default plugin directory will be as follows:
-"   - Vim (Linux/macOS): '~/.vim/plugged'
-"   - Vim (Windows): '~/vimfiles/plugged'
-"   - Neovim (Linux/macOS/Windows): stdpath('data') . '/plugged'
-" You can specify a custom plugin directory by passing it as the argument
-"   - e.g. `call plug#begin('~/.vim/plugged')`
-"   - Avoid using standard Vim directory names like 'plugin'
-Plug 'junegunn/vim-plug'
-" Tim Pope's sensible default. A lot of code can be avoided by using
-" this. Battle-tested, good default.
-Plug 'tpope/vim-sensible'
-" Tim Pope's plugin to quickly comment and uncomment based on file
-" type. Wonderous piece of work. press gcc to comment, or [x]gcc to
-" comment x number of lines. use gcgc to uncomment.
-Plug 'tpope/vim-commentary'
-" Tim Pope's plugin to enhance netrw experience. Good enough as a
-" starter kit to file explorer within Vim.
-Plug 'tpope/vim-vinegar'
-" Tim Pope's git wrapper. Excellent if you don't want to leave Vim to
-" do git maintenance.
-Plug 'tpope/vim-fugitive'
-" Gruvbox material is silghtly better maintained than the original
-" version.
-Plug 'sainnhe/gruvbox-material'
-" Better tagline at bottom. A bit too heavy for my taste, but what the
-" heck.
-Plug 'vim-airline/vim-airline'
-" Tim Pope's plugin to automatically set tab size.
-Plug 'tpope/vim-sleuth'
-" Tim Pope's plugin to edit 'surrounds'
-Plug 'tpope/vim-surround'
-" Tim Pope's plugin for command ga to work with Unicode
-Plug 'tpope/vim-characterize'
-" Tim Pope's plugin for supporting tmux
-Plug 'tpope/vim-tbone'
-Plug 'goerz/jupytext.vim'
-Plug 'makerj/vim-pdf'
-" Initialize plugin system
-" - Automatically executes `filetype plugin indent on` and `syntax enable`.
-call plug#end()
-
-autocmd VimEnter * PlugUpdate | source $MYVIMRC | :q
-"End vim-plug Scripts-------------------------
-
 "#######################################################################
-" Theme Setting(s)
-" Turn on truecolor support
-if (has("termguicolors"))
-  set termguicolors
-endif
-set background=dark
-" gruvbox comes with its own airline, so it doesn't make sense to use
-" airline's themes.
-let g:airline_theme='gruvbox_material'
+if !has("nvim")
+  " Theme Setting(s)
+  " Turn on truecolor support
+  if (has("termguicolors"))
+    set termguicolors
+  endif
+  set background=dark
+  " gruvbox comes with its own airline, so it doesn't make sense to use
+  " airline's themes.
+  let g:airline_theme='gruvbox_material'
 
-let g:gruvbox_material_background = 'medium'
-let g:gruvbox_material_foreground = "original"
-autocmd vimenter * ++nested colorscheme gruvbox-material
+  let g:gruvbox_material_background = 'medium'
+  let g:gruvbox_material_foreground = "original"
+  autocmd vimenter * ++nested colorscheme gruvbox-material
+endif
 "#######################################################################
 " General Settings
 " disable visual bell (also disable in .inputrc)
-set t_vb=
+set vb t_vb=
 
 set smartindent
 set smarttab
-" replace tabs with spaces automatically
-set expandtab
 
 set shiftwidth=2 tabstop=2 softtabstop=2 
 
@@ -109,7 +118,8 @@ if v:version >= 800
   set nofixendofline
 
   " better ascii friendly listchars
-  set listchars=space:*,trail:*,nbsp:*,extends:>,precedes:<,tab:\|>
+  " set listchars=space:*,trail:*,nbsp:*,extends:>,precedes:<,tab:\|>
+  set listchars=trail:*,nbsp:*,extends:>,precedes:<,tab:\|>
 
   set foldmethod=manual
   set nofoldenable
@@ -208,4 +218,6 @@ if !empty(expand(glob("~/work.vim")))
   source ~/work.vim
 endif
 " python setting
-autocmd FileType python if executable('black')| setlocal equalprg=black\ -q\ -| endif
+if !has("nvim")
+  autocmd FileType python if executable('black')| setlocal equalprg=black\ -q\ -| endif
+endif

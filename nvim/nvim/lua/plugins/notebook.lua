@@ -165,4 +165,6 @@ if vim.uv.os_uname().sysname ~= "Windows_NT" then
       config = true,
     },
   }
+else
+  return {}
 end
