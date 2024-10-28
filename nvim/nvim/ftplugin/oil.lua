@@ -9,7 +9,7 @@ else
   vim.keymap.set(
     "n",
     "<leader>C",
-    "<CMD>exec printf('cd %s',expand('%')[7:].gsub('/','\\')<CR>",
+    "<CMD>exec printf('cd %s',substitute(substitute(expand('%')[7:],'/','\\','g'),'\\',':\\','')<CR>",
     { desc = "Set Oil dir as cwd", buffer = 0 }
   )
 end
