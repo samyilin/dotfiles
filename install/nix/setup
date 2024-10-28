@@ -1,6 +1,5 @@
 #!/bin/sh
 # Short script to install package manager.
-
 if [ ! -d "$HOME"/.nix-profile ]; then
   tempfile=$(mktemp) &&
     curl -o "$tempfile" https://nixos.org/nix/install &&

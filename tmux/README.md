@@ -34,4 +34,4 @@ Colorscheme used here is Gruvbox, I've barely grabbed the palette from
 
 TBH I don't even use tmux that often, so no.
 
-These days I use Wezterm's local functionalities most of the time anyways.
+These days I use Wezterm/Kitty's local functionalities most of the time anyways.

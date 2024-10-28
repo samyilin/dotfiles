@@ -1,10 +1,10 @@
 #!/bin/sh
 dir=$(cd -- "$(dirname -- "$0")" >>/dev/null 2>&1 && pwd)
 if [ -f "$HOME"/.profile ]; then
-	while IFS= read -r line; do
-		if [ ! "$line" = "$(printf "test -f %s/alias && . %s/alias" "$dir" "$dir")" ]; then
-			printf "%s\n" "$line"
-		fi
-	done <"$HOME"/.profile >o
-	mv o "$HOME"/.profile
+  while IFS= read -r line; do
+    if [ ! "$line" = "$(printf "test -f %s/alias && . %s/alias" "$dir" "$dir")" ]; then
+      printf "%s\n" "$line"
+    fi
+  done <"$HOME"/.profile >o
+  mv o "$HOME"/.profile
 fi

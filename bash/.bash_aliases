@@ -21,3 +21,7 @@ if [ -d /proc ]; then
   **) ;;
   esac
 fi
+# Try to use homebrew's vim if available. Mac's Vim is stuck at 9.0
+if [ -f /opt/homebrew/bin/vim ]; then
+  alias vim="/opt/homebrew/bin/vim"
+fi
