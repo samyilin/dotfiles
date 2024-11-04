@@ -1,4 +1,4 @@
-if vim.uv.os_uname().sysname ~= "Windows_NT" then
+if vim.uv.os_uname().sysname ~= "Windows_NT" and vim.fn.stridx(vim.uv.os_uname().release, "microsoft") >= 0 then
   return {
     {
       "3rd/image.nvim",
@@ -6,18 +6,11 @@ if vim.uv.os_uname().sysname ~= "Windows_NT" then
       dependencies = {
         "leafo/magick",
         "nvim-treesitter/nvim-treesitter",
-        {
-          "vhyrro/luarocks.nvim",
-          opts = {
-            rocks = {
-              hererocks = true,
-            },
-          },
-        },
       },
       config = function()
         require("image").setup({
           backend = "kitty",
+          processor = "magick_cli",
           integrations = {
             markdown = {
               enabled = true,

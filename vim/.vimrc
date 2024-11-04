@@ -208,7 +208,6 @@ map <F5> :set cursorline!<CR>
 map <F7> :set spell!<CR>
 " map <F12> :set fdm=indent<CR>
 
-
 " Search down into subfolders
 " Provides tab-completion for all file-related tasks
 set path+=**
