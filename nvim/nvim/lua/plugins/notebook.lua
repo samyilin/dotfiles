@@ -1,4 +1,4 @@
-if vim.uv.os_uname().sysname ~= "Windows_NT" then
+if vim.uv.os_uname().sysname ~= "Windows_NT" and vim.fn.stridx(vim.uv.os_uname().release, "microsoft") < 0 then
   return {
     {
       "benlubas/molten-nvim",

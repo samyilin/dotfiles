@@ -54,7 +54,7 @@ return {
     ft = { "python", "quarto" },
     keys = { { "<leader>cv", "<cmd>:VenvSelect<cr>", desc = "Select VirtualEnv", ft = { "python", "quarto" } } },
   },
-  { "echasnovski/mini.map", version = "*" },
   { "tpope/vim-sensible" },
+  { "dstein64/nvim-scrollview" },
   { "tpope/vim-fugitive" },
 }

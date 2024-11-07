@@ -17,7 +17,6 @@ return {
       { "EdenEast/nightfox.nvim" },
       { "luisiacc/gruvbox-baby" },
       { "folke/tokyonight.nvim" },
-      { "ntk148v/habamax.nvim", dependencies = { "rktjmp/lush.nvim" } },
     },
     ---@class RandomColorscheme.UserConfig
     opts = {
