@@ -11,7 +11,7 @@ main() {
     echo "Your .vimrc have been backed up in .vimrc.bak"
     setup_vim
   else
-    printf "Vim is already set up, quitting"
+    printf "Vim is already set up, quitting\n"
   fi
   exit 0
 }

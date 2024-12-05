@@ -35,8 +35,8 @@ setup() {
         return 1
       # Setup vim alongside nvim, because our nvim config is back
       # compatible with vim
-      elif ["$1" = nvim]; then
-        cd vim && ./setup "$2" && printf "%s setup complete.\n" "vim" || printf "%s setup failed.\n" "vim"
+      elif [ "$1" = nvim ]; then
+        cd vim && ./setup "$2" && printf "%s setup complete.\n" "vim" && cd "$dir" || printf "%s setup complete.\n" "vim"
       fi
     else
       printf "%s is not installed in your system, quitting...\n" "$1"
