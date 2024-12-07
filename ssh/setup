@@ -4,9 +4,9 @@ main() {
     if [ ! -d "$HOME"/.ssh ]; then
       mkdir "$HOME"/.ssh
     fi
-    printf "\nWould you like to generate new SSH keys for git usage?\n"
-    printf "\nWarning: This script doens't help you check prior config to avoid naming collision.\n"
-    printf "\tThis is only a wrapper to speed up ssh config for git.\n"
+    printf "Would you like to generate new SSH keys for git usage?\n"
+    printf "Warning: This script doens't help you check prior config to avoid naming collision.\n"
+    printf "This is only a wrapper to speed up ssh config for git.\n"
     if [ -f "$HOME"/.ssh/config ]; then
       printf "Your current SSH config file is printed below:\n"
       cat "$HOME"/.ssh/config
@@ -14,8 +14,8 @@ main() {
       printf "It seems that you do not have an SSH config file at the moment.\n"
     fi
     printf "Warning: This script uses ed25519 algorithm by default, which is the recommended\n"
-    printf "\tSSH algorithm at the time of writing. If your git provider recommend another\n"
-    printf "\tSSH algorithm, changing the script below regarding ssh-keygen would work.\n"
+    printf "SSH algorithm at the time of writing. If your git provider recommend another\n"
+    printf "SSH algorithm, changing the script below regarding ssh-keygen would work.\n"
     printf "Warning: This script sets up SSH key without password. It is designed for single-user mode.\n"
     while true; do
       read -r response
@@ -38,10 +38,10 @@ main() {
       fi
     done
     printf "Would you like to set up an alias for this host?\n"
-    printf "\tIf you use multiple account account for the same git provider for work and life,\n"
-    printf "\tthen you can alias 1 connection as 'work' and another one as 'hobby'\n"
-    printf "\tso you can connect to work repos as git@work:PROJECT_NAME/REPO_NAME.git\n"
-    printf "\tand connect to hobby repos as git@hobby:PROJECT_NAME/REPO_NAME.git\n"
+    printf "If you use multiple account account for the same git provider for work and life,\n"
+    printf "then you can alias 1 connection as 'work' and another one as 'hobby'\n"
+    printf "so you can connect to work repos as work:PROJECT_NAME/REPO_NAME.git\n"
+    printf "and connect to hobby repos as hobby:PROJECT_NAME/REPO_NAME.git\n"
     while true; do
       read -r response
       case "$response" in
@@ -61,7 +61,7 @@ main() {
       *) printf "Invalid response, please try agai\nn" ;;
       esac
     done
-    printf "\nWhich file, in ~/.ssh, would you like to store your public/private key?\n"
+    printf "Which file, in ~/.ssh, would you like to store your public/private key?\n"
     while true; do
       read -r keyfile
       if [ "$keyfile" = "" ]; then
@@ -79,7 +79,7 @@ main() {
     printf "Your current SSH config file is printed below:\n"
     cat "$HOME"/.ssh/config
     printf "\nTo clone a repository from git provider using this configuration, please type\n"
-    printf "git clone git@%s:PROJECT_NAME/REPO_NAME.git\n" "$git_alias"
+    printf "git clone %s:PROJECT_NAME/REPO_NAME.git\n" "$git_alias"
   else
     printf "SSH setup is skipped in non-interactive mode\n"
   fi

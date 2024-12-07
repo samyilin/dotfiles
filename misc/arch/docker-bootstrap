@@ -1,4 +1,4 @@
-#!/bin//sh
+#!/bin/sh
 # Script used in Dockerfile.archlinux to set up 2 things:
 # 1. Fix locale issues
 # 2. Fix no manpage issues
