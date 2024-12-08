@@ -34,14 +34,10 @@ return {
           path_display = {
             "filename_first",
           },
-        },
-        extensions = {
-          live_grep_args = {
-            mappings = {
-              i = {
-                ["<C-j>"] = actions.cycle_history_next,
-                ["<C-k>"] = actions.cycle_history_prev,
-              },
+          mappings = {
+            i = {
+              ["<C-j>"] = actions.cycle_history_next,
+              ["<C-k>"] = actions.cycle_history_prev,
             },
           },
         },
