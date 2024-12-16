@@ -1,18 +1,12 @@
-if
-  (vim.uv.os_uname().sysname ~= "Windows_NT" and vim.fn.stridx(vim.uv.os_uname().release, "microsoft") < 0)
-  or os.getenv("TERM") == "xterm-kitty"
-then
+if os.getenv("TERM") == "xterm-kitty" then
   return {
     {
       "3rd/image.nvim",
-      -- default config
-      dependencies = {
-        "leafo/magick",
-        "nvim-treesitter/nvim-treesitter",
-      },
+      build = false,
       config = function()
         require("image").setup({
           backend = "kitty",
+          kitty_method = "normal",
           processor = "magick_cli",
           integrations = {
             markdown = {

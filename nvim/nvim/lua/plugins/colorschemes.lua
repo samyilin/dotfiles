@@ -1,6 +1,3 @@
-local colors = vim.fn.getcompletion("", "color")
-local i = math.random(os.time()) % #colors
-i = i == 0 and #colors or i
 return {
   { "LazyVim/LazyVim", opts = { colorscheme = "tokyonight" } },
   {
@@ -24,7 +21,7 @@ return {
     },
     keys = {
       {
-        "<leader>cc",
+        "<leader>rc",
         function()
           require("random-colorscheme").set()
         end,
