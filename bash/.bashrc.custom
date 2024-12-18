@@ -7,6 +7,13 @@ case $- in
 *i*) test -f "$HOME"/.inputrc && bind -f "$HOME"/.inputrc ;;
 *) return ;;
 esac
+
+# This bashrc does one thing only, referencing the actual bashrc config
+if [ -f "$HOME"/.bash_aliases ]; then
+  source "$HOME"/.bash_aliases
+fi
+
+# vi mode
 set -o vi
 # Append to the history file, don't overwrite it
 shopt -s histappend
@@ -23,12 +30,6 @@ export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMNMAND"
 PS1='\[\033[01;32m\][\u@\H \w]\[\033[00m\]\\$ '
 # tries to run pfetch if it's installed
 fastfetch 2>/dev/null || "$HOME"/.nix-profile/bin/fastfetch 2>/dev/null
-
-if [ -f "$HOME"/.bash_aliases ]; then
-  # I know this should exist, so disabling this shellcheck here
-  # shellcheck disable=SC1091
-  . "$HOME"/.bash_aliases
-fi
 
 if [ -x /usr/bin/dircolors ]; then
   if [ -r "$HOME"/.dircolors ]; then

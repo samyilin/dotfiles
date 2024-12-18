@@ -8,6 +8,11 @@
 # if [ -x emacs ] && pgrep emacs >/dev/null; then
 #   alias emacs='emacsclient -c -e "(fancy-startup-screen)"'
 # fi
+#
+# Traditional alias for ls + grep
+alias ls='ls --color=auto'
+alias grep='grep --color=auto'
+
 if [ -f "$HOME"/.pyenv/versions/poetry/bin/poetry ]; then
   alias poetry="/Users/yilinwu/.pyenv/versions/poetry/bin/poetry"
 fi

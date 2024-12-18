@@ -8,7 +8,18 @@ main() {
   if [ ! -f "$HOME"/.bashrc ]; then
     cp "$dir"/.bashrc "$HOME"/.bashrc
   fi
-  printf ".bashrc setup complete.\n"
+  if [ -f "$HOME/.bashrc" ] && [ ! -L "$HOME"/.bashrc ]; then
+    while IFS= read -r line; do
+      if [ "$line" = ". "$dir"/.bashrc.custom" ]; then
+        added=1
+        printf "custom .bashrc already exists and is set up.\n"
+      fi
+    done <"$HOME/.bashrc"
+    if [ "${added-0}" -eq 0 ]; then
+      printf "\n. %s/.bashrc.custom\n" "$dir" >>"$HOME"/.bashrc
+    fi
+    printf ".bashrc setup complete.\n"
+  fi
   # force .bash_profile to read .profile. Avoids dup code and avoids
   # .profile not being read.
   if [ -f "$HOME"/.bash_profile ] && [ ! -L "$HOME"/.bash_profile ]; then

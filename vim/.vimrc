@@ -111,7 +111,7 @@ set vb t_vb=
 set smartindent
 set smarttab
 
-set shiftwidth=2 tabstop=2 softtabstop=2 
+set shiftwidth=2 tabstop=2 softtabstop=2
 
 if v:version >= 800
   " stop vim from silently messing with files that it shouldn't
@@ -161,7 +161,7 @@ set viminfo='20,<1000,s1000
 " wrap around when searching
 set wrapscan
 
-" stop complaints about switching buffer with changes. 
+" stop complaints about switching buffer with changes.
 set hidden
 
 " command history
