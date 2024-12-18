@@ -161,11 +161,29 @@ then
         })
       end,
     },
-    -- { "jbyuki/nabla.nvim" },
     {
-      "vhyrro/luarocks.nvim",
-      priority = 1000, -- Very high priority is required, luarocks.nvim should run as the first plugin in your config.
-      config = true,
+      {
+        "jbyuki/nabla.nvim",
+        event = "VeryLazy",
+        config = function()
+          require("nabla").enable_virt({ autogen = true })
+        end,
+      },
+      {
+        "render-markdown.nvim",
+        config = function()
+          require("render-markdown").setup({
+            file_types = { "markdown" },
+            latex = { enabled = false },
+            win_options = {
+              conceallevel = {
+                default = vim.api.nvim_get_option_value("conceallevel", {}),
+                rendered = 2, -- <- especially this, so that both plugins play nice
+              },
+            },
+          })
+        end,
+      },
     },
   }
 else
