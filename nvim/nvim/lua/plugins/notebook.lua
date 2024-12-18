@@ -5,6 +5,7 @@ then
   return {
     {
       "benlubas/molten-nvim",
+      lazy = true,
       build = ":UpdateRemotePlugins",
       dependencies = {
         "nvim-treesitter/nvim-treesitter",
@@ -85,6 +86,7 @@ then
     { -- requires plugins in lua/plugins/treesitter.lua and lua/plugins/lsp.lua
       -- for complete functionality (language features)
       "quarto-dev/quarto-nvim",
+      lazy = true,
       dev = false,
       dependencies = {
         -- for language features in code cells
@@ -141,6 +143,7 @@ then
     },
     {
       "GCBallesteros/jupytext.nvim",
+      lazy = true,
       config = function()
         require("jupytext").setup({
           style = "markdown",
@@ -162,28 +165,28 @@ then
       end,
     },
     {
-      {
-        "jbyuki/nabla.nvim",
-        event = "VeryLazy",
-        config = function()
-          require("nabla").enable_virt({ autogen = true })
-        end,
-      },
-      {
-        "render-markdown.nvim",
-        config = function()
-          require("render-markdown").setup({
-            file_types = { "markdown" },
-            latex = { enabled = false },
-            win_options = {
-              conceallevel = {
-                default = vim.api.nvim_get_option_value("conceallevel", {}),
-                rendered = 2, -- <- especially this, so that both plugins play nice
-              },
+      "jbyuki/nabla.nvim",
+      lazy = true,
+      event = "VeryLazy",
+      config = function()
+        require("nabla").enable_virt({ autogen = true })
+      end,
+    },
+    {
+      "render-markdown.nvim",
+      lazy = true,
+      config = function()
+        require("render-markdown").setup({
+          file_types = { "markdown" },
+          latex = { enabled = false },
+          win_options = {
+            conceallevel = {
+              default = vim.api.nvim_get_option_value("conceallevel", {}),
+              rendered = 2, -- <- especially this, so that both plugins play nice
             },
-          })
-        end,
-      },
+          },
+        })
+      end,
     },
   }
 else

@@ -3,6 +3,7 @@ if os.getenv("TERM") == "xterm-kitty" then
     {
       "3rd/image.nvim",
       build = false,
+      lazy = true,
       config = function()
         require("image").setup({
           backend = "kitty",
@@ -14,7 +15,7 @@ if os.getenv("TERM") == "xterm-kitty" then
               clear_in_insert_mode = false,
               download_remote_images = true,
               only_render_image_at_cursor = false,
-              filetypes = { "markdown", "vimwiki" }, -- markdown extensions (ie. quarto) can go here
+              filetypes = { "markdown", "vimwiki", "quarto" }, -- markdown extensions (ie. quarto) can go here
             },
             neorg = {
               enabled = true,

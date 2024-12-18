@@ -2,7 +2,7 @@ return {
   { "LazyVim/LazyVim", opts = { colorscheme = "tokyonight" } },
   {
     "tetzng/random-colorscheme.nvim",
-    lazy = false,
+    lazy = true,
     dependencies = {
       { "marko-cerovac/material.nvim" },
       { "rebelot/kanagawa.nvim" },
