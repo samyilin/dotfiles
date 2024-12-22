@@ -15,4 +15,16 @@ return {
   { "tpope/vim-sensible" },
   { "dstein64/nvim-scrollview" },
   { "lualine.nvim", extensions = { "oil" } },
+  {
+    "folke/snacks.nvim",
+    optional = true,
+    opts = function(_, opts)
+      table.insert(opts.dashboard.preset.keys, 3, {
+        action = ":Mason",
+        desc = "Mason",
+        icon = "󰣪 ",
+        key = "m",
+      })
+    end,
+  },
 }
