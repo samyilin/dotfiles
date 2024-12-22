@@ -13,8 +13,8 @@ then
       },
       config = function()
         require("lspconfig")["pyright"].setup({
-          on_attach = on_attach,
-          capabilities = capabilities,
+          -- on_attach = on_attach,
+          -- capabilities = capabilities,
           settings = {
             python = {
               analysis = {
@@ -160,32 +160,6 @@ then
               style = "quarto",
               force_ft = "quarto",
             },
-          },
-        })
-      end,
-    },
-    {
-      "jbyuki/nabla.nvim",
-      event = "VeryLazy",
-      ft = { "markdown" },
-      -- config = function()
-      --   require("nabla").enable_virt({ autogen = true })
-      -- end,
-    },
-    {
-      "render-markdown.nvim",
-      config = function()
-        require("render-markdown").setup({
-          latex = { enabled = false },
-          win_options = {
-            conceallevel = {
-              rendered = 2, -- <- especially this, so that both plugins play nice
-            },
-          },
-          on = {
-            attach = function()
-              require("nabla").enable_virt({ autogen = true })
-            end,
           },
         })
       end,

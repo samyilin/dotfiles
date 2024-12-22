@@ -12,7 +12,6 @@ return {
       { "rose-pine/neovim" },
       { "catppuccin/nvim" },
       { "EdenEast/nightfox.nvim" },
-      { "luisiacc/gruvbox-baby" },
       { "folke/tokyonight.nvim" },
     },
     ---@class RandomColorscheme.UserConfig
