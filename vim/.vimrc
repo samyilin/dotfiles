@@ -7,35 +7,37 @@ if has("eval")                               " vim-tiny lacks 'eval'
 endif
 
 " automatically indent new lines
-set autoindent
+if !has('nvim')
+  set autoindent
+endif
 
 " replace tabs with spaces automatically
 set expandtab
 
-" number of spaces to replace a tab with when expandtab
-set tabstop=2
 
 " automatically write files when changing when multiple files open
 set autowrite
 
-" deactivate line numbers
-set nonumber
 
 " turn col and row position on in bottom right
 set ruler " see ruf for formatting
 
 " show command and insert mode
-set showmode
+if !has('nvim')
+  set showmode
+endif
 
 " inhibits errors when running Alacritty on Windows
-set t_u7=
+if !has('nvim')
+  set t_u7=
+endif
 
 "#######################################################################
 "vim-plug Scripts-----------------------------
-if &compatible
-  set nocompatible               " Be iMproved
-endif
 if !has('nvim')
+  if &compatible
+    set nocompatible               " Be iMproved
+  endif
   let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
   if empty(glob(data_dir . '/autoload/plug.vim'))
     execute '!git clone https://github.com/junegunn/vim-plug' data_dir.'/autoload/'
@@ -106,7 +108,9 @@ endif
 "#######################################################################
 " General Settings
 " disable visual bell (also disable in .inputrc)
-set vb t_vb=
+if !has('nvim')
+  set vb t_vb=
+endif
 
 set smartindent
 set smarttab
@@ -132,10 +136,6 @@ endif
 set textwidth=72
 
 
-" disable line numbers. Line numbers are useful when you need them, not
-" so much globally.
-set norelativenumber
-set nonumber
 
 " disable spellcapcheck
 set spc=
@@ -191,28 +191,32 @@ if has("syntax")
 endif
 
 " start at last place you were editing
-autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+if !has('nvim')
+  autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+endif
 
 " functions keys
 " F1 toggles showing line number
 nmap <F1> :set number!<CR>:set relativenumber!<CR>
-" F2 shows syntax of item in vim
-nmap <F2> :call <SID>SynStack()<CR>
-" F3 to Toggle paste mode. Useful for pasting into vim
-set pastetoggle=<F3>
-" F4 to see spaces as "*"
-map <F4> :set list!<CR>
-" F5 to show current line at which our cursor is
+" " F2 shows syntax of item in vim
+" nmap <F2> :call <SID>SynStack()<CR>
+" " F3 to Toggle paste mode. Useful for pasting into vim
+" set pastetoggle=<F3>
+" " F4 to see spaces as "*"
+" map <F4> :set list!<CR>
+" " F5 to show current line at which our cursor is
 map <F5> :set cursorline!<CR>
 " F7 to toggle spellchecking
-map <F7> :set spell!<CR>
+" map <F7> :set spell!<CR>
 " map <F12> :set fdm=indent<CR>
 
 " Search down into subfolders
 " Provides tab-completion for all file-related tasks
 set path+=**
 " Create the `tags` file (may need to install ctags first)
-command! MakeTags !ctags -R .
+if executable('ctags')
+  command! MakeTags !ctags -R .
+endif
 if !empty(expand(glob("~/work.vim")))
   source ~/work.vim
 endif
