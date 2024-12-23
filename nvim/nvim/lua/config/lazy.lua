@@ -21,6 +21,8 @@ require("lazy").setup({
     -- { import = "lazyvim.plugins.extras.coding.mini-comment" },
     { import = "lazyvim.plugins.extras.editor.outline" },
     { import = "lazyvim.plugins.extras.editor.telescope" },
+    { import = "lazyvim.plugins.extras.editor.aerial" },
+    { import = "lazyvim.plugins.extras.editor.navic" },
     { import = "lazyvim.plugins.extras.ui.treesitter-context" },
     { import = "plugins" },
   },
