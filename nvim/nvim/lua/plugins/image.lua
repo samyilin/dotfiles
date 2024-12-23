@@ -3,7 +3,7 @@ if os.getenv("TERM") == "xterm-kitty" then
     {
       "3rd/image.nvim",
       build = false,
-      lazy = true,
+      lazy = false,
       config = function()
         require("image").setup({
           backend = "kitty",

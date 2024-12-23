@@ -25,6 +25,31 @@ return {
         icon = "󰣪 ",
         key = "m",
       })
+      table.insert(opts.dashboard.preset.keys, 4, {
+        action = "<leaer>gg",
+        desc = "Lazygit",
+        icon = " ",
+        key = "G",
+      })
+    end,
+  },
+  {
+    "nvim-neo-tree/neo-tree.nvim",
+    config = function()
+      require("neo-tree").setup({
+        filesystem = {
+          filtered_items = {
+            visible = true,
+            hide_dotfiles = false,
+            hide_gitignores = true,
+          },
+        },
+        window = {
+          mappings = {
+            ["-"] = "navigate_up",
+          },
+        },
+      })
     end,
   },
 }
