@@ -7,9 +7,7 @@ if has("eval")                               " vim-tiny lacks 'eval'
 endif
 
 " automatically indent new lines
-if !has('nvim')
-  set autoindent
-endif
+set autoindent
 
 " replace tabs with spaces automatically
 set expandtab
@@ -23,14 +21,10 @@ set autowrite
 set ruler " see ruf for formatting
 
 " show command and insert mode
-if !has('nvim')
-  set showmode
-endif
+set showmode
 
 " inhibits errors when running Alacritty on Windows
-if !has('nvim')
-  set t_u7=
-endif
+set t_u7=
 
 "#######################################################################
 "vim-plug Scripts-----------------------------
@@ -171,11 +165,14 @@ set formatoptions-=t
 
 " faster scrolling. If you are ont SSHing into a slow remote connection,
 " this will be good. 
-set ttyfast
+if !has('nvim')
+  set ttyfast
+endif
 
 " better command-line completion
-set wildmenu
-
+if !has('nvim')
+  set wildmenu
+endif
 " enable omni-completion
 set omnifunc=syntaxcomplete#Complete
 
@@ -196,18 +193,18 @@ if !has('nvim')
 endif
 
 " functions keys
-" F1 toggles showing line number
+" F0 toggles showing line number
 nmap <F1> :set number!<CR>:set relativenumber!<CR>
 " " F2 shows syntax of item in vim
 " nmap <F2> :call <SID>SynStack()<CR>
-" " F3 to Toggle paste mode. Useful for pasting into vim
+" " F2 to Toggle paste mode. Useful for pasting into vim
 " set pastetoggle=<F3>
 " " F4 to see spaces as "*"
 " map <F4> :set list!<CR>
 " " F5 to show current line at which our cursor is
 map <F5> :set cursorline!<CR>
 " F7 to toggle spellchecking
-" map <F7> :set spell!<CR>
+" map <F6> :set spell!<CR>
 " map <F12> :set fdm=indent<CR>
 
 " Search down into subfolders
