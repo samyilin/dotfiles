@@ -26,7 +26,7 @@ return {
         key = "m",
       })
       table.insert(opts.dashboard.preset.keys, 4, {
-        action = "<leaer>gg",
+        action = "<leader>gg",
         desc = "Lazygit",
         icon = " ",
         key = "G",
