@@ -4,3 +4,4 @@ package-lock.json
 **/lazyvim.json
 .vscode
 **/kitty-conf.bak
+kitty/kitty/kitty.conf.bak
