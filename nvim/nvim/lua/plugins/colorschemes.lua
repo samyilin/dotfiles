@@ -1,5 +1,5 @@
 return {
-  { "LazyVim/LazyVim", opts = { colorscheme = "tokyonight" } },
+  { "LazyVim/LazyVim", opts = { colorscheme = "monokai-pro" } },
   {
     "tetzng/random-colorscheme.nvim",
     lazy = true,
@@ -13,6 +13,7 @@ return {
       { "catppuccin/nvim" },
       { "EdenEast/nightfox.nvim" },
       { "folke/tokyonight.nvim" },
+      { "loctvl842/monokai-pro.nvim" },
     },
     ---@class RandomColorscheme.UserConfig
     opts = {
