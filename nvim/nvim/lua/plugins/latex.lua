@@ -4,6 +4,7 @@ return {
     event = "VeryLazy",
     ft = { "markdown" },
   },
+  { "nvim-treesitter/nvim-treesitter", opts = { ensure_installed = { "latex" } } },
   {
     "render-markdown.nvim",
     config = function()

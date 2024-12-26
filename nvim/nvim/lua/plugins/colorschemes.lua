@@ -1,5 +1,5 @@
 return {
-  { "LazyVim/LazyVim", opts = { colorscheme = "monokai-pro" } },
+  { "LazyVim/LazyVim", opts = { colorscheme = "gruvbox" } },
   {
     "tetzng/random-colorscheme.nvim",
     lazy = true,
