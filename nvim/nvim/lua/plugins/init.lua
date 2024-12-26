@@ -31,6 +31,12 @@ return {
         icon = " ",
         key = "G",
       })
+      table.insert(opts.dashboard.preset.keys, 4, {
+        action = ":Themery",
+        desc = "Themery",
+        icon = "󰋴 ",
+        key = "t",
+      })
     end,
   },
   {
