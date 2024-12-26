@@ -19,15 +19,6 @@ return {
     "zaldih/themery.nvim",
     lazy = false,
     priority = 900,
-    -- keys = {
-    --   {
-    --     "<leader>rc",
-    --     function()
-    --       vim.fn.execute("Themery", "silent")
-    --     end,
-    --     desc = "Set Random Colorscheme",
-    --   },
-    -- },
     config = function()
       local available_colorschemes = vim.fn.getcompletion("", "color")
       local runtime_colors = vim.uv.os_uname().sysname == "Windows_NT" and os.getenv("VIMRUNTIME") .. "\\colors\\"
