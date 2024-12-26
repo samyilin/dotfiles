@@ -1,5 +1,5 @@
 return {
-  { "LazyVim/LazyVim", opts = { colorscheme = "gruvbox" } },
+  -- { "LazyVim/LazyVim", opts = { colorscheme = "gruvbox" } },
   {
     -- "tetzng/random-colorscheme.nvim",
     -- lazy = true,
@@ -18,28 +18,47 @@ return {
     ---},
     "zaldih/themery.nvim",
     lazy = false,
+    priority = 900,
+    -- keys = {
+    --   {
+    --     "<leader>rc",
+    --     function()
+    --       vim.fn.execute("Themery", "silent")
+    --     end,
+    --     desc = "Set Random Colorscheme",
+    --   },
+    -- },
     config = function()
       local available_colorschemes = vim.fn.getcompletion("", "color")
+      local runtime_colors = vim.uv.os_uname().sysname == "Windows_NT" and os.getenv("VIMRUNTIME") .. "\\colors\\"
+        or os.getenv("VIMRUNTIME") .. "/colors/"
+      local color_files = vim.fn.glob(runtime_colors .. "*", false, true)
       local colorschemes = {}
       for _, colorscheme in ipairs(available_colorschemes) do
-        table.insert(colorschemes, colorscheme)
+        colorschemes[colorscheme] = true
       end
+      for _, file in ipairs(color_files) do
+        colorschemes[string.sub(vim.fs.basename(file), 1, -5)] = nil
+      end
+      local package_colorschemes = {}
+      for color, _ in pairs(colorschemes) do
+        table.insert(package_colorschemes, color)
+      end
+      table.sort(package_colorschemes)
 
       require("themery").setup({
-        themes = colorschemes,
+        themes = package_colorschemes,
       })
     end,
-    dependencies = {
-      { "marko-cerovac/material.nvim" },
-      { "rebelot/kanagawa.nvim" },
-      { "Mofiqul/dracula.nvim" },
-      { "olimorris/onedarkpro.nvim" },
-      { "ellisonleao/gruvbox.nvim" },
-      { "rose-pine/neovim" },
-      { "catppuccin/nvim" },
-      { "EdenEast/nightfox.nvim" },
-      { "folke/tokyonight.nvim" },
-      { "loctvl842/monokai-pro.nvim" },
-    },
   },
+  { "marko-cerovac/material.nvim", lazy = false, priority = 1000 },
+  { "rebelot/kanagawa.nvim", lazy = false, priority = 1000 },
+  { "Mofiqul/dracula.nvim", lazy = false, priority = 1000 },
+  { "olimorris/onedarkpro.nvim", lazy = false, priority = 1000 },
+  { "ellisonleao/gruvbox.nvim", lazy = false, priority = 1000 },
+  { "rose-pine/neovim", lazy = false, priority = 1000 },
+  { "catppuccin/nvim", lazy = false, priority = 1000 },
+  { "EdenEast/nightfox.nvim", lazy = false, priority = 1000 },
+  { "folke/tokyonight.nvim", lazy = false, priority = 1000 },
+  { "loctvl842/monokai-pro.nvim", lazy = false, priority = 1000 },
 }
