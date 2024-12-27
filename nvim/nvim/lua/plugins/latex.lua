@@ -1,8 +1,11 @@
 return {
   {
     "jbyuki/nabla.nvim",
-    event = "VeryLazy",
-    ft = { "markdown" },
+    lazy = true,
+    init = function()
+      vim.api.nvim_create_user_command("Nabla", 'lua require("nabla").enable_virt({autogen = true})', {})
+      vim.api.nvim_create_user_command("NablaPopup", 'lua require("nabla").popup()', {})
+    end,
   },
   { "nvim-treesitter/nvim-treesitter", opts = { ensure_installed = { "latex" } } },
   {
