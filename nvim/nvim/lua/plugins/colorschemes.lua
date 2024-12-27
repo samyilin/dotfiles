@@ -35,7 +35,11 @@ return {
       for color, _ in pairs(colorschemes) do
         table.insert(package_colorschemes, color)
       end
-      table.sort(package_colorschemes)
+      if table.maxn(package_colorschemes) > 0 then
+        table.sort(package_colorschemes)
+      else
+        package_colorschemes = available_colorschemes
+      end
 
       require("themery").setup({
         themes = package_colorschemes,
