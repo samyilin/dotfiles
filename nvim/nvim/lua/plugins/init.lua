@@ -14,7 +14,7 @@ return {
   },
   { "tpope/vim-sensible" },
   { "dstein64/nvim-scrollview" },
-  { "lualine.nvim", extensions = { "oil" } },
+  { "lualine.nvim",            extensions = { "oil" } },
   {
     "folke/snacks.nvim",
     optional = true,

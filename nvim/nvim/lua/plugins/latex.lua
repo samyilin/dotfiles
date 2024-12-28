@@ -20,7 +20,8 @@ return {
         },
         on = {
           attach = function()
-            require("nabla").enable_virt({ autogen = true })
+            vim.api.nvim_create_user_command("Nabla", 'lua require("nabla").enable_virt({autogen = true})', {})
+            vim.api.nvim_create_user_command("NablaPopup", 'lua require("nabla").popup()', {})
           end,
         },
       })
