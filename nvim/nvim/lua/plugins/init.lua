@@ -13,7 +13,54 @@ return {
     keys = { { "<leader>cv", "<cmd>:VenvSelect<cr>", desc = "Select VirtualEnv", ft = { "python", "quarto" } } },
   },
   { "tpope/vim-sensible" },
-  { "dstein64/nvim-scrollview" },
+  {
+    "echasnovski/mini.map",
+    version = false,
+    lazy = false,
+    config = function()
+      local map = require("mini.map")
+      map.setup({
+        integrations = {
+          map.gen_integration.builtin_search(),
+          map.gen_integration.gitsigns(),
+          map.gen_integration.diagnostic(),
+        },
+        window = {
+          show_integration_count = false,
+          -- default to scrollbar only
+          width = 1,
+        },
+      })
+      local wk = require("which-key")
+      wk.add({
+        { "<leader>m", group = "Mini.Map" },
+        -- { "<Leader>mc", MiniMap.close, desc = "Close Mini.Map", mode = "n" },
+        { "<Leader>mf", MiniMap.toggle_focus, desc = "Toggle Mini.Map focus", mode = "n" },
+        -- { "<Leader>mo", MiniMap.open, desc = "Open Mini.Map", mode = "n" },
+        { "<Leader>mr", MiniMap.refresh, desc = "Refresh Mini.Map", mode = "n" },
+        -- { "<Leader>ms", MiniMap.toggle_side, desc = "Toggle Mini.Map Side", mode = "n" },
+        { "<Leader>mt", MiniMap.toggle, desc = "toggle MiniMap", mode = "n" },
+        {
+          "<Leader>mb",
+          function()
+            if MiniMap.config.window.width == 10 then
+              require("mini.map").setup({
+                window = { width = 1 },
+              })
+            else
+              require("mini.map").setup({
+                window = { width = 10 },
+              })
+            end
+            require("mini.map").close()
+            require("mini.map").open()
+          end,
+          desc = "toggle MiniMap",
+          mode = "n",
+        },
+      })
+    end,
+  },
   { "lualine.nvim", extensions = { "oil" } },
   {
     "folke/snacks.nvim",
@@ -86,7 +133,6 @@ return {
     dependencies = {
       "nvim-lua/plenary.nvim", -- required
       "sindrets/diffview.nvim", -- optional - Diff integration
-
       -- Only one of these is needed.
       "ibhagwan/fzf-lua", -- optional
     },
