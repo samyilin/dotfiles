@@ -6,13 +6,13 @@ if vim.fn.executable("pyenv") == 1 and vim.fn.filereadable(venv_path) then
 else
   vim.print("Pyenv is unavailable.")
 end
+-- Tweaks LazyVim plugin behaviour here.
 return {
   {
     "linux-cultist/venv-selector.nvim",
     ft = { "python", "quarto" },
     keys = { { "<leader>cv", "<cmd>:VenvSelect<cr>", desc = "Select VirtualEnv", ft = { "python", "quarto" } } },
   },
-  { "petertriho/nvim-scrollbar", lazy = false },
   {
     "folke/snacks.nvim",
     optional = true,
@@ -38,25 +38,6 @@ return {
     end,
   },
   {
-    "nvim-neo-tree/neo-tree.nvim",
-    config = function()
-      require("neo-tree").setup({
-        filesystem = {
-          filtered_items = {
-            visible = true,
-            hide_dotfiles = false,
-            hide_gitignores = true,
-          },
-        },
-        window = {
-          mappings = {
-            ["-"] = "navigate_up",
-          },
-        },
-      })
-    end,
-  },
-  {
     "echasnovski/mini.files",
     config = function(_, opts)
       require("mini.files").setup(opts)
@@ -78,15 +59,5 @@ return {
         end,
       })
     end,
-  },
-  {
-    "NeogitOrg/neogit",
-    dependencies = {
-      "nvim-lua/plenary.nvim", -- required
-      "sindrets/diffview.nvim", -- optional - Diff integration
-      "ibhagwan/fzf-lua", -- optional
-    },
-    config = true,
-    lazy = false,
   },
 }
