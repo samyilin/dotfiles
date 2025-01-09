@@ -2,6 +2,8 @@
 rm -rf "$HOME"/.config/nvim
 if [ -d "$HOME"/.pyenv ] && [ -f "$HOME"/.pyenv/versions/neovim/bin/python ]; then
   pyenv uninstall neovim
+elif [ -d "$HOME"/.local/share/uv ] && [ -f "$HOME"/dotfiles/nvim/neovim/bin/python ]; then
+  rm -rf "$HOME"/dotfiles/nvim/neovim
 fi
 # Remove cache files related to Neovim and/or Lazyvim.
 rm -rf "$HOME"/.local/share/nvim "$HOME"/.local/state/nvim "$HOME"/.cache/nvim "$HOME"/.local/luarocks "$HOME"/.local/venv-selector
