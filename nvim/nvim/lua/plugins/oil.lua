@@ -1,8 +1,6 @@
 return {
   "stevearc/oil.nvim",
-  dependencies = {
-    "echasnovski/mini.icons",
-  },
+  dependencies = { "echasnovski/mini.icons" },
   lazy = true,
   event = "VimEnter",
   -- set oil keymap on oil startup

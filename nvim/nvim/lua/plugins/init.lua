@@ -1,4 +1,4 @@
--- Check if pyenv and the neovim venv exists before doing anything else
+-- Check if pyenv/uv and the neovim venv exists before doing anything else
 vim.g.python_host_installed = false
 local venv_path = "~/.pyenv/versions/neovim/bin/python"
 local venv_path_uv = "~/dotfiles/nvim/neovim/bin/python"

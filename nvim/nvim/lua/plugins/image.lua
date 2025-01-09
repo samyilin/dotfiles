@@ -4,8 +4,7 @@ return {
     build = false,
     lazy = false,
     cond = function()
-      local kitty_terminals =
-        { ["xterm-kitty"] = true, ["xterm-ghostty"] = true, ["wezterm"] = true, ["xterm-256color"] = true }
+      local kitty_terminals = { ["xterm-kitty"] = true, ["xterm-ghostty"] = true, ["wezterm"] = true }
       return kitty_terminals[os.getenv("TERM")]
     end,
     config = function()
