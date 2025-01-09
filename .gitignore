@@ -5,3 +5,4 @@ package-lock.json
 .vscode
 **/kitty-conf.bak
 kitty/kitty/kitty.conf.bak
+nvim/neovim
