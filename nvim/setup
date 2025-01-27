@@ -13,7 +13,16 @@ setup_python_virtualenv() {
   pyenv activate neovim
   pip install -r "$HOME"/dotfiles/nvim/requirement.txt
   pyenv deactivate
-  pyenv global neovim
+  printf "Pyenv venv installation complete."
+}
+
+setup_python_virtualenv_uv() {
+  uv python install
+  uv venv neovim
+  source "$HOME"/dotfiles/nvim/neovim/bin/activate
+  uv pip install -r "$HOME"/dotfiles/nvim/requirement.txt
+  deactivate
+  printf "UV venv installation complete."
 }
 main() {
   if [ ! -d "$HOME"/.config/nvim ]; then
@@ -27,6 +36,8 @@ main() {
   fi
   if [ -d "$HOME"/.pyenv ] && [ ! -f "$HOME"/.pyenv/versions/neovim/bin/python ]; then
     setup_python_virtualenv
+  elif [ -d "$HOME"/.local/share/uv ] | [ ! -f "$HOME"/dotfiles/nvim/neovim/bin/python ]; then
+    setup_python_virtualenv_uv
   fi
   exit 0
 }
