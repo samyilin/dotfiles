@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 sudo pacman-key --init
 # Some brain-dead distros have really outdated keyrings, hence why this
 sudo pacman-key --refresh-keys

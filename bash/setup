@@ -5,9 +5,6 @@
 # arguments.
 main() {
   dir=$(cd -- "$(dirname -- "$0")" >>/dev/null 2>&1 && pwd)
-  if [ ! -f "$HOME"/.bashrc ]; then
-    cp "$dir"/.bashrc "$HOME"/.bashrc
-  fi
   if [ -f "$HOME/.bashrc" ] && [ ! -L "$HOME"/.bashrc ]; then
     while IFS= read -r line; do
       if [ "$line" = ". "$dir"/.bashrc.custom" ]; then
@@ -19,6 +16,9 @@ main() {
       printf "\n. %s/.bashrc.custom\n" "$dir" >>"$HOME"/.bashrc
     fi
     printf ".bashrc setup complete.\n"
+  elif [ ! -f "$HOME"/.bashrc ]; then
+    cp "$dir"/.bashrc "$HOME"/.bashrc
+    printf "\n. %s/.bashrc.custom\n" "$dir" >>"$HOME"/.bashrc
   fi
   # force .bash_profile to read .profile. Avoids dup code and avoids
   # .profile not being read.
@@ -37,14 +37,13 @@ main() {
     printf ". %s/.profile" "$HOME" >>"$HOME"/.bash_profile
   fi
   printf ".bash_profile is setup.\n"
-  # Sets up .inputrc and .bash_aliases. They are only used by GNU Bash.
-  for i in .inputrc .bash_aliases; do
-    if [ -f "$HOME"/$i ] && [ ! -L "$HOME"/$i ]; then
-      mv "$HOME"/"$i" "$HOME"/"$i".bak
-      printf "your default %s is backed up at %s/%s.bak\n" "$i" "$HOME" "$i"
+  # Sets up .inputrc. It is only used by GNU Bash.
+    if [ -f "$HOME"/.inputrc ] && [ ! -L "$HOME"/.inputrc ]; then
+      mv "$dir"/.inputrc "$HOME"/.inputrc.bak
+      printf "your default .inputrc is backed up at %s/.inputrc.bak\n" ".inputrc" "$HOME"
     fi
-    ln -sf "$dir"/"$i" "$HOME"/"$i"
-    printf "%s setup complete.\n" "$i"
+    ln -sf "$dir"/.inputrc "$HOME"/.inputrc
+    printf ".inputrc setup complete.\n"
   done
 }
 main "$@"

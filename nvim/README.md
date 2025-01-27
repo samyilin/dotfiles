@@ -32,5 +32,4 @@ heavy tweaking are the things that you want. For me, it's Jupyter notebook
 integration (I HATE Jupyter) that I have to write heavy customization for, which
 Emacs has [this](https://github.com/astoff/code-cells.el). The rest I pretty
 much use the defaults as-is. Also, I don't use directory trees, so I turn that
-off and use oil.nvim instead. Neo-tree isn't loaded anywhere so I don't have to
-care.
+off and use oil.nvim instead.

@@ -9,11 +9,6 @@ end
 -- Tweaks LazyVim plugin behaviour here.
 return {
   {
-    "linux-cultist/venv-selector.nvim",
-    ft = { "python", "quarto" },
-    keys = { { "<leader>cv", "<cmd>:VenvSelect<cr>", desc = "Select VirtualEnv", ft = { "python", "quarto" } } },
-  },
-  {
     "folke/snacks.nvim",
     optional = true,
     opts = function(_, opts)
