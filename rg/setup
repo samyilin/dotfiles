@@ -1,16 +1,16 @@
-#/bin/sh
+#!/bin/sh
 
 main() {
   if [ ! -f "$HOME"/.ripgreprc ]; then
     ln -sf "$PWD"/.ripgreprc "$HOME"/.ripgreprc
-    echo "Ripgrep config done,quitting"
+    echo "Ripgrep config done, quitting.\n"
     exit 0
   elif [ -f "$HOME"/.ripgreprc ] && [ ! -L "$HOME"/.ripgreprc ]; then
     mv "$HOME"/.ripgreprc "$HOME"/.ripgreprc.bak
     echo "Your .ripgreprc have been saved to .ripgreprc.bak"
     ln -sf "$PWD"/.ripgreprc "$HOME"/.ripgreprc
   else
-    printf "Ripgrep is already installed, quitting"
+    printf "Ripgrep is already installed, quitting.\n"
   fi
 
   exit 0

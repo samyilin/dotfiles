@@ -21,7 +21,7 @@ main() {
     # when we commit.
   elif [ ! -f "$HOME"/.profile ]; then
     cp "$dir"/.profile.default "$HOME"/.profile
-    printf "test -f %s/alias&& . %s/alias" "$dir" "$dir" >>"$HOME"/.profile
+    printf "\ntest -f %s/alias&& . %s/alias\n" "$dir" "$dir" >>"$HOME"/.profile
   fi
   printf ".profile setup complete.\n"
 }

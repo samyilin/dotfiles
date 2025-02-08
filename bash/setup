@@ -34,7 +34,7 @@ main() {
     fi
   elif [ ! -f "$HOME"/.bash_profile ]; then
     cp "$dir"/.bash_profile "$HOME"/.bash_profile
-    printf ". %s/.profile" "$HOME" >>"$HOME"/.bash_profile
+    printf "\n. %s/.profile\n" "$HOME" >>"$HOME"/.bash_profile
   fi
   printf ".bash_profile is setup.\n"
   # Sets up .inputrc. It is only used by GNU Bash.

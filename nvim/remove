@@ -1,14 +1,20 @@
 #!/bin/sh
-rm -rf "$HOME"/.config/nvim
+dir=$(cd -- "$(dirname -- "$0")" >>/dev/null 2>&1 && pwd)
+for i in "$dir"/*; do
+  i="${i%*/}"
+  i="${i##*/}"
+  rm -rf "$HOME"/.config/"$i"
+  rm -rf "$HOME"/.local/share/"$i"
+  rm -rf "$HOME"/.local/state/"$i"
+  rm -rf "$HOME"/.cache/"$i"
+  printf "%s configuration has been removed\n" "$i"
+  if [ -f "$HOME"/.config/"$i".bak ]; then
+    mv "$HOME"/.config/"$i".bak "$HOME"/.config/"$i"
+    printf "Your %s configuration has been restored.\n" "$i"
+  fi
+done
 if [ -d "$HOME"/.pyenv ] && [ -f "$HOME"/.pyenv/versions/neovim/bin/python ]; then
   pyenv uninstall neovim
 elif [ -d "$HOME"/.local/share/uv ] && [ -f "$HOME"/dotfiles/nvim/neovim/bin/python ]; then
   rm -rf "$HOME"/dotfiles/nvim/neovim
-fi
-# Remove cache files related to Neovim and/or Lazyvim.
-rm -rf "$HOME"/.local/share/nvim "$HOME"/.local/state/nvim "$HOME"/.cache/nvim "$HOME"/.local/luarocks "$HOME"/.local/venv-selector
-printf "Neovim configuration has been removed\n"
-if [ -f "$HOME"/.config/nvim.bak ]; then
-  mv "$HOME"/.config/nvim.bak "$HOME"/.config/nvim
-  printf "Your Neovim configuration has been restored.\n"
 fi

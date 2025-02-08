@@ -27,7 +27,7 @@ setup() {
           printf "Vim won't be installed by nix to avoid name collision.\n"
           return 1
         elif ! has git; then
-          printf "git is required for vim install, quitting"
+          printf "git is required for vim install, quitting. \n"
           return 1
         fi
       elif [ "$1" = alacritty ] && ! has git; then
@@ -79,7 +79,7 @@ init_user() {
         break
       fi
     done
-    printf "%s is not an available shell. Please type shell's full path.\n" "$var"
+    printf "%s is not an available shell. Please type shell's full path.\n" "$val"
   done
   test -n "${val}" && shell="${val}"
   unset "$val"
