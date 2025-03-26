@@ -1,3 +1,6 @@
+-- In case you don't want to use `:LazyExtras`,
+-- then you need to set the option below.
+vim.g.lazyvim_picker = "snacks"
 -- Check if pyenv/uv and the neovim venv exists before doing anything else
 vim.g.python_host_installed = false
 local venv_path = "~/.pyenv/versions/neovim/bin/python"

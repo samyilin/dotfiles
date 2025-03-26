@@ -8,6 +8,7 @@ home_dir = os.getenv("HOME") if os.getenv("HOME") is not None else None
 if home_dir is None:
     print("HOME variable not set up, quitting installation.")
     exit()
+
 dotfile_dir = os.path.join(home_dir, "dotfiles")
 if system != "Windows":
     print("Platform is " + system)
@@ -20,7 +21,21 @@ if system != "Windows":
 programs = next(os.walk("."))[1]
 for program in programs:
     if shutil.which(program) is not None:
-        print("installing " + program)
+        if program == "vim":
+            if shutil.which("vimtutor") is None:
+                print("Full vim is not installed, quitting vim setup.")
+                print("Vim won't be installed by nix to avoid name collision")
+                break
+            elif shutil.which("git") is None:
+                print("Git is required for vim install, quitting...")
+                break
+        elif program == "nvim":
+            setup_vim()
+            setup_nvim()
+        elif program == "bash"
+
+    else:
+        print(program + " is not installed in your system, quitting...")
     if program == "nvim":
         print("Hello")
     else:
@@ -45,3 +60,7 @@ def setup_vim(home_dir: str, dotfile_dir: str) -> None:
         )
     else:
         print("Vim is already set up, quitting")
+
+def setup_nvim():
+
+
