@@ -37,7 +37,10 @@ setup_python_virtualenv_uv() {
   uv venv neovim
   . "$HOME"/dotfiles/nvim/neovim/bin/activate
   uv pip install -r "$HOME"/dotfiles/nvim/requirement.txt
+  uv tool install jupytext
+  uv tool update-shell
   deactivate
+
   printf "UV venv installation complete."
 }
 main() {

@@ -17,6 +17,18 @@ end
 return {
   {
     "folke/snacks.nvim",
+    opts = {
+      image = {
+        enabled = true,
+        doc = {
+          inline = false,
+          float = true,
+        },
+      },
+    },
+  },
+  {
+    "folke/snacks.nvim",
     optional = true,
     opts = function(_, opts)
       table.insert(opts.dashboard.preset.keys, 3, {
@@ -25,18 +37,9 @@ return {
         icon = "󰣪 ",
         key = "m",
       })
-      table.insert(opts.dashboard.preset.keys, 4, {
-        action = "<leader>gg",
-        desc = "Lazygit",
-        icon = " ",
-        key = "G",
-      })
-      table.insert(opts.dashboard.preset.keys, 4, {
-        action = ":FzfLua colorschemes",
-        desc = "colorschemes",
-        icon = "󰋴 ",
-        key = "t",
-      })
     end,
   },
+  { "stevearc/conform.nvim", opts = {
+    log_level = vim.log.levels.DEBUG,
+  } },
 }

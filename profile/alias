@@ -9,9 +9,6 @@ done
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 
-if [ -f "$HOME"/.pyenv/versions/poetry/bin/poetry ]; then
-  alias poetry="/Users/yilinwu/.pyenv/versions/poetry/bin/poetry"
-fi
 # Add this for WSL corporate desktop. There's annoyance on corporate Windows.
 if [ -d /proc ]; then
   version="$(cat /proc/version)"

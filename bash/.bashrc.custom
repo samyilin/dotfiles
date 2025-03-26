@@ -65,9 +65,6 @@ done
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 
-if [ -f "$HOME"/.pyenv/versions/poetry/bin/poetry ]; then
-  alias poetry="/Users/yilinwu/.pyenv/versions/poetry/bin/poetry"
-fi
 # Add this for WSL corporate desktop. There's annoyance on corporate Windows.
 if [ -d /proc ]; then
   version="$(cat /proc/version)"
@@ -82,8 +79,8 @@ fi
 if [ -f /opt/homebrew/bin/vim ]; then
   alias vim="/opt/homebrew/bin/vim"
 fi
-alias nvim-lazy="NVIM_APPNAME=LazyVim nvim"
-alias nvim-diy="NVIM_APPNAME=diy nvim"
+alias lazy="NVIM_APPNAME=LazyVim nvim"
+alias diy="NVIM_APPNAME=diy nvim"
 function nvims() {
   items=("default" "LazyVim" "diy")
   config=$(printf "%s\n" "${items[@]}" | fzf --prompt=" Neovim Config  " --height=~50% --layout=reverse --border --exit-0)

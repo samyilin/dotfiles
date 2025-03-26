@@ -5,7 +5,7 @@ end
 return {
   {
     "benlubas/molten-nvim",
-    lazy = true,
+    lazy = false,
     build = ":UpdateRemotePlugins",
     cond = kitty_recognization(),
     dependencies = {
@@ -86,7 +86,7 @@ return {
   { -- requires plugins in lua/plugins/treesitter.lua and lua/plugins/lsp.lua
     -- for complete functionality (language features)
     "quarto-dev/quarto-nvim",
-    lazy = true,
+    lazy = false,
     dev = false,
     cond = kitty_recognization(),
     dependencies = {
@@ -144,7 +144,7 @@ return {
   },
   {
     "GCBallesteros/jupytext.nvim",
-    lazy = true,
+    lazy = false,
     cond = kitty_recognization(),
     config = function()
       require("jupytext").setup({

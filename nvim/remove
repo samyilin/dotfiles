@@ -17,4 +17,5 @@ if [ -d "$HOME"/.pyenv ] && [ -f "$HOME"/.pyenv/versions/neovim/bin/python ]; th
   pyenv uninstall neovim
 elif [ -d "$HOME"/.local/share/uv ] && [ -f "$HOME"/dotfiles/nvim/neovim/bin/python ]; then
   rm -rf "$HOME"/dotfiles/nvim/neovim
+  uv tool uninstall jupytext
 fi
