@@ -28,15 +28,30 @@ main() {
     unset "$response"
     touch "$HOME"/.ssh/config
     printf "Which git provider would you like to connect to(domain name)?\n"
-    printf "Example git domain names are github.com, gitlab.com or gitlab.YOURCOMPANY.com\n"
+    printf "Example git domain names are ssh.github.com, gitlab.com or gitlab.YOURCOMPANY.com\n"
     while true; do
       read -r provider
       if [ "$provider" = "" ]; then
-        printf "No response given, please enter git domain name\n"
+        printf "No response given, please enter git domain name.\n"
       else
         break
       fi
     done
+    if [ "$provider" = "github.com" ]; then
+      provider="ssh.github.com"
+    fi
+
+    printf "Which port does this provider use for SSH?\n"
+    printf "Github's default port is 443.\n"
+    while true; do
+      read -r port
+      if [ "$port" = "" ]; then
+        printf "No response given, please enter SSH port.\n"
+      else
+        break
+      fi
+    done
+
     printf "Would you like to set up an alias for this host?\n"
     printf "If you use multiple account account for the same git provider for work and life,\n"
     printf "then you can alias 1 connection as 'work' and another one as 'hobby'\n"
@@ -71,7 +86,7 @@ main() {
       fi
     done
     yes | ssh-keygen -q -t ed25519 -N '' -f ~/.ssh/"$keyfile" >/dev/null 2>&1
-    printf "\n Host %s\n\t\tHostName %s \n\t\tuser git\n\t\tIdentityFile %s/.ssh/%s\n" "${git_alias-$provider}" "$provider" "$HOME" "$keyfile" >>"$HOME"/.ssh/config
+    printf "\n Host %s\n\t\tHostName %s \n\tport %s \n\tuser git\n\t\tIdentityFile %s/.ssh/%s\n" "${git_alias-$provider}" "$provider" "$port" "$HOME" "$keyfile" >>"$HOME"/.ssh/config
     printf "\nYour public key is:\n"
     cat "$HOME"/.ssh/"$keyfile".pub
     printf "\nPlease copy and paste the above line into your git provider's appropriate setting, probably SSH Keys.\n"
