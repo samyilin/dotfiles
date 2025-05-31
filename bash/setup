@@ -7,7 +7,7 @@ main() {
   dir=$(cd -- "$(dirname -- "$0")" >>/dev/null 2>&1 && pwd)
   if [ -f "$HOME/.bashrc" ] && [ ! -L "$HOME"/.bashrc ]; then
     while IFS= read -r line; do
-      if [ "$line" = ". "$dir"/.bashrc.custom" ]; then
+      if [ "$line" = ". ""$dir""/.bashrc.custom" ]; then
         added=1
         printf "custom .bashrc already exists and is set up.\n"
       fi

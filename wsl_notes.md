@@ -31,10 +31,8 @@ sudo cp eset.crt /usr/local/share/ca-certificates/
 sudo update-ca-certificates
 ```
 
-If under Arch, do
+If under [Arch](https://wiki.archlinux.org/title/User:Grawity/Adding_a_trusted_CA_certificate), do
 
 ```bash
 sudo trust anchor --store ~/cert.crt
 ```
-
-[Reference](https://wiki.archlinux.org/title/User:Grawity/Adding_a_trusted_CA_certificate)

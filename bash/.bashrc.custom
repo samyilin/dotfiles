@@ -24,7 +24,7 @@ shopt -s checkwinsize
 HISTCONTROL=ignoreboth:erasedups
 HISTSIZE=5000
 HISTFILESIZE=10000
-export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMNMAND"
+export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
 # prompt setting. Funny combination of Ubuntu and Fedora.
 # Can be just too long on certain systems. Consider changing this later.
 PS1='\[\033[01;32m\][\u@\H \w]\[\033[00m\]\\$ '
@@ -81,8 +81,10 @@ if [ -f /opt/homebrew/bin/vim ]; then
 fi
 alias lazy="NVIM_APPNAME=LazyVim nvim"
 alias diy="NVIM_APPNAME=diy nvim"
+alias minimal="NVIM_APPNAME=minimal nvim"
+
 function nvims() {
-  items=("default" "LazyVim" "diy")
+  items=("default" "LazyVim" "diy" "minimal")
   config=$(printf "%s\n" "${items[@]}" | fzf --prompt=" Neovim Config  " --height=~50% --layout=reverse --border --exit-0)
   if [[ -z $config ]]; then
     printf "Nothing selected"
@@ -90,5 +92,5 @@ function nvims() {
   elif [[ $config == "default" ]]; then
     config=""
   fi
-  NVIM_APPNAME=$config nvim $@
+  NVIM_APPNAME=$config nvim "$@"
 }
