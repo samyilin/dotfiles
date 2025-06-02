@@ -19,6 +19,7 @@ return {
       { "<leader>gg", function() Snacks.lazygit() end, desc = "Lazygit" },
       { "<leader>uC", function() Snacks.picker.colorschemes() end, desc = "Colorschemes" },
       { "<leader>db", function() Snacks.dashboard() end, desc = "Dashboard" },
+      { "<leader>sg", function() Snacks.picker("grep") end, desc = "Grep" }
     }
 }
 

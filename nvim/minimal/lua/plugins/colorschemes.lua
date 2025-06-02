@@ -1,4 +1,4 @@
 return {
-	{"rebelot/kanagawa.nvim"},
-	{"folke/tokyonight.nvim"},
+  {"rebelot/kanagawa.nvim"},
+  {"folke/tokyonight.nvim"},
 }
