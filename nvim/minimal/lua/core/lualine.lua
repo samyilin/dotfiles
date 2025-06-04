@@ -67,3 +67,5 @@ return {
     end,
   },
 }
+-- list out languages + DAPs + LSPs + linters + Treesitter parsers needed for each language. For language specific plugins, they'll reside in specific plugin configs.
+-- lspconfig only manages lsp servers, DAP/linters/formatters only require Mason

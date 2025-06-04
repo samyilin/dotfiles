@@ -11,3 +11,5 @@ vim.opt.linebreak = true
 -- Enable mouse
 vim.opt.mouse = "a"
 vim.opt.laststatus = 3
+vim.opt.spelllang = vim.opt.spelllang + "cjk"
+vim.opt.columns = 9999
