@@ -24,7 +24,7 @@ return {
       image = {
         enabled = true,
         doc = {
-          inline = false,
+          inline = true,
           float = true,
         },
       },
