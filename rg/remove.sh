@@ -7,4 +7,3 @@ if [ -f "$HOME"/.ripgreprc.bak ]; then
   mv "$HOME"/.ripgreprc.bak "$HOME"/.ripgreprc
   echo "Your default .ripgreprc have been restored"
 fi
-

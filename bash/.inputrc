@@ -4,7 +4,7 @@
 
 set colored-stats on
 set colored-completion-prefix on
-# Readline causes the terminal to echo ^C after Ctrl+C is pressed. 
+# Readline causes the terminal to echo ^C after Ctrl+C is pressed.
 # If you don't want that, then uncomment the following line
 # set echo-control-characters off
 

@@ -35,6 +35,6 @@ RUN dnf -y install neovim \
   dnf -y groupinstall "Development Tools" "Development Libraries" && \
   /usr/bin/python3 -m pip install pynvim && \
   npm install -g neovim
-RUN dnf clean all   
+RUN dnf clean all
 COPY . /usr/share/workspace
 ENTRYPOINT ["sh","/usr/share/workspace/setup","-d"]

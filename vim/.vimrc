@@ -164,7 +164,7 @@ set history=100
 set formatoptions-=t
 
 " faster scrolling. If you are ont SSHing into a slow remote connection,
-" this will be good. 
+" this will be good.
 if !has('nvim')
   set ttyfast
 endif

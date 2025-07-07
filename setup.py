@@ -62,5 +62,3 @@ def setup_vim(home_dir: str, dotfile_dir: str) -> None:
         print("Vim is already set up, quitting")
 
 def setup_nvim():
-
-

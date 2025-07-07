@@ -31,15 +31,17 @@ setup() {
           return 1
         fi
       elif [ "$1" = alacritty ] && ! has git; then
-        printf "git is required for alacritty theme install, quitting"
+        printf "git is required for alacritty theme install, quitting. \n"
         return 1
       # Setup vim alongside nvim, because our nvim config is back
       # compatible with vim
       elif [ "$1" = nvim ]; then
         cd vim && ./setup "$2" && printf "%s setup complete.\n" "vim" && cd "$dir" || printf "%s setup complete.\n" "vim"
       fi
+    elif [ "$1" = lazygit ] && ! has difft; then
+      printf "Lazygit config is unnecessary if difftastic is not installed, quitting. \n"
     else
-      printf "%s is not installed in your system, quitting...\n" "$1"
+      printf "%s is not installed in your system, quitting.\n" "$1"
       return 1
     fi
     printf "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
