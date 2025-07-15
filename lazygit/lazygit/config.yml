@@ -1,3 +1,8 @@
+# difftastic config. Need to comment out the other one for this to work.
+# git:
+#   paging:
+#     externalDiffCommand: difft --color=always
 git:
   paging:
-    externalDiffCommand: difft --color=always
+    colorArg: always
+    pager: delta --dark --paging=never --line-numbers --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{path}:{line}" --side-by-side --line-numbers-right-format = "│ "

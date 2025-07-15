@@ -1,13 +1,24 @@
 #!/bin/sh
+
+system="$(uname -srm)"
+case ${system%% *} in
+Darwin)
+  config_path="$HOME"/Library/Application\ Support
+  ;;
+*)
+  config_path="$HOME"/.config
+  ;;
+esac
+## Macos config path is different. Why?
 setup_lazygit() {
-  test -d "$HOME"/.config || mkdir -p "$HOME"/.config
-  ln -sf "$PWD/lazygit" "$HOME/.config"
+  test -d "$config_path" || mkdir -p "$config_path"
+  ln -sf "$config_path"/lazygit "$config_path"
 }
 main() {
-  if [ ! -d "$HOME"/.config/lazygit ]; then
+  if [ ! -d "$config_path"/lazygit ]; then
     setup_lazygit
-  elif [ -d "$HOME"/.config/lazygit ] && [ ! -L "$HOME"/.config/lazygit ]; then
-    mv "$HOME"/.config/lazygit "$HOME"/.config/lazygit.bak
+  elif [ -d "$config_path"/lazygit ] && [ ! -L "$config_path"/lazygit ]; then
+    mv "$config_path"/lazygit "$config_path"/lazygit.bak
     printf "Your lazygit config have been backed up in lazygit.bak.\n"
     setup_lazygit
   else

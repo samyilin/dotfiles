@@ -6,3 +6,4 @@ package-lock.json
 **/kitty-conf.bak
 kitty/kitty/kitty.conf.bak
 nvim/neovim
+lazygit/lazygit/state.yml
