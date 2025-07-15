@@ -1,5 +1,6 @@
 #!/bin/sh
 
+## Macos config path is different. Why?
 system="$(uname -srm)"
 case ${system%% *} in
 Darwin)
@@ -9,7 +10,6 @@ Darwin)
   config_path="$HOME"/.config
   ;;
 esac
-## Macos config path is different. Why?
 setup_lazygit() {
   test -d "$config_path" || mkdir -p "$config_path"
   ln -sf "$config_path"/lazygit "$config_path"
