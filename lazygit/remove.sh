@@ -1,4 +1,5 @@
 #!/bin/sh
+
 ## Macos config path is different. Why?
 system="$(uname -srm)"
 case ${system%% *} in
