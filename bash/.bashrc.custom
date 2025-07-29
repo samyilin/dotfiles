@@ -31,6 +31,7 @@ PS1='\[\033[01;32m\][\u@\H \w]\[\033[00m\]\\$ '
 # tries to run pfetch if it's installed
 fastfetch 2>/dev/null || "$HOME"/.nix-profile/bin/fastfetch 2>/dev/null
 
+# I don't care for dircolors, but put in her just in case.
 if [ -x /usr/bin/dircolors ]; then
   if [ -r "$HOME"/.dircolors ]; then
     eval "$(dircolors -b "$HOME"/.dircolors)"
@@ -56,12 +57,13 @@ fi
 # }
 # trap cleanup exit
 #
-# Migrated .bash_aliases here for better compatibility.
+# If we have busybox and don't have grep/vi, then alias busybox version.
 for i in grep vi; do
   if [ ! -x "$i" ] && [ -x busybox ]; then
     alias '$i'='busybox $i'
   fi
 done
+# Migrated .bash_aliases here for better compatibility.
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 
@@ -82,15 +84,3 @@ fi
 alias lazy="NVIM_APPNAME=LazyVim nvim"
 alias diy="NVIM_APPNAME=diy nvim"
 alias minimal="NVIM_APPNAME=minimal nvim"
-
-function nvims() {
-  items=("default" "LazyVim" "diy" "minimal")
-  config=$(printf "%s\n" "${items[@]}" | fzf --prompt=" Neovim Config  " --height=~50% --layout=reverse --border --exit-0)
-  if [[ -z $config ]]; then
-    printf "Nothing selected"
-    return 0
-  elif [[ $config == "default" ]]; then
-    config=""
-  fi
-  NVIM_APPNAME=$config nvim "$@"
-}
