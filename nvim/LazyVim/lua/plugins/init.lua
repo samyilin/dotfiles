@@ -31,18 +31,6 @@ return {
     },
   },
   {
-    "folke/snacks.nvim",
-    optional = true,
-    opts = function(_, opts)
-      table.insert(opts.dashboard.preset.keys, 3, {
-        action = ":Mason",
-        desc = "Mason",
-        icon = "󰣪 ",
-        key = "m",
-      })
-    end,
-  },
-  {
     "stevearc/conform.nvim",
     opts = {
       log_level = vim.log.levels.DEBUG,
