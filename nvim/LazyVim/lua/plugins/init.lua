@@ -42,7 +42,28 @@ return {
       })
     end,
   },
-  { "stevearc/conform.nvim", opts = {
-    log_level = vim.log.levels.DEBUG,
-  } },
+  {
+    "stevearc/conform.nvim",
+    opts = {
+      log_level = vim.log.levels.DEBUG,
+      config = function()
+        local opts = {
+          formatters = {
+            sqlfluff = {
+              stdin = false,
+              args = { "fix", "$FILENAME" },
+            },
+          },
+          format_on_save = {
+            timeout_ms = 10000,
+          },
+          formatters_by_ft = {
+            sql = { "sqlfluff" },
+          },
+        }
+        require("conform").setup(opts)
+        require("conform").format({ async = true, lsp_fallback = true, timeout_ms = 10000 })
+      end,
+    },
+  },
 }
