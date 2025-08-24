@@ -84,3 +84,5 @@ fi
 alias lazy="NVIM_APPNAME=LazyVim nvim"
 alias diy="NVIM_APPNAME=diy nvim"
 alias minimal="NVIM_APPNAME=minimal nvim"
+
+export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"

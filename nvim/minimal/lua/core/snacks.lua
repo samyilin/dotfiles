@@ -10,12 +10,11 @@ return {
       -- refer to the configuration section below
       dashboard = { enabled = true },
       bufdelete = { enabled = true },
-      picker = { enabled = true },
-      lazyvim = { enabled = true },
+      lazygit = { enabled = true },
       image = {
         enabled = true,
         doc = {
-          inline = false,
+          inline = true,
           float = true,
         },
       },

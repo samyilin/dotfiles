@@ -1,4 +1,5 @@
 _G.Config = {}
+_G.Util = require("util")
 
 require("options")
 require("keymaps")

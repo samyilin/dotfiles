@@ -13,3 +13,6 @@ vim.opt.mouse = "a"
 vim.opt.laststatus = 3
 vim.opt.spelllang = vim.opt.spelllang + "cjk"
 vim.opt.columns = 9999
+
+vim.opt.number = true
+vim.opt.cmdheight = 0

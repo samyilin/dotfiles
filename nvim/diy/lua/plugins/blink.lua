@@ -2,7 +2,7 @@ require("blink.cmp").setup({
   keymap = {
     preset = "super-tab",
     ["<Tab>"] = {
-      require("blink.cmp.keymap.presets")["super-tab"]["<Tab>"][1],
+      require("blink.cmp.keymap.presets").get("super-tab")["<Tab>"][1],
       require("util").map({ "snippet_forward", "ai_accept" }),
       "fallback",
     },

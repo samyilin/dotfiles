@@ -1,5 +1,5 @@
 return {
-  {"rebelot/kanagawa.nvim"},
-  {"folke/tokyonight.nvim"},
-  { "ellisonleao/gruvbox.nvim"},
+  { "rebelot/kanagawa.nvim" },
+  { "folke/tokyonight.nvim" },
+  { "ellisonleao/gruvbox.nvim" },
 }

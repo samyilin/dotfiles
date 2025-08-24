@@ -6,7 +6,7 @@ return {
   { "olimorris/onedarkpro.nvim" },
   { "ellisonleao/gruvbox.nvim" },
   { "rose-pine/neovim" },
-  { "catppuccin/nvim" },
+  { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
   { "EdenEast/nightfox.nvim" },
   { "folke/tokyonight.nvim" },
 }

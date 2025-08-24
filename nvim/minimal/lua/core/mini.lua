@@ -1,6 +1,6 @@
 return {
   {
-    'echasnovski/mini.nvim',
+    "echasnovski/mini.nvim",
     version = false,
     config = function()
       require("mini.icons").setup({
@@ -49,6 +49,7 @@ return {
         -- better deal with markdown code blocks
         markdown = true,
       })
+      require("mini.statusline").setup({})
     end,
   },
 }

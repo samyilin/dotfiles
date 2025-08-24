@@ -3,3 +3,4 @@
 
 # Exclude file types.
 --iglob=!*.{~sql}
+-i
