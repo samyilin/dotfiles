@@ -36,7 +36,7 @@ setup() {
       # Setup vim alongside nvim, because our nvim config is back
       # compatible with vim
       elif [ "$1" = nvim ]; then
-        cd vim && ./setup "$2" && printf "%s setup complete.\n" "vim" && cd "$dir" || printf "%s setup complete.\n" "vim"
+        cd vim && ./setup.sh "$2" && printf "%s setup complete.\n" "vim" && cd "$dir" || printf "%s setup complete.\n" "vim"
       fi
     elif [ "$1" = lazygit ] && ! has difft; then
       printf "Lazygit config is unnecessary if difftastic is not installed, quitting. \n"
@@ -48,7 +48,7 @@ setup() {
     printf "Initializing %s setup.\n" "$1"
   fi
   # set up config for programs.
-  cd "$1" && ./setup "$2" && printf "%s setup complete.\n" "$1" || printf "%s setup failed.\n" "$1"
+  cd "$1" && ./setup.sh "$2" && printf "%s setup complete.\n" "$1" || printf "%s setup failed.\n" "$1"
   sleep 1
   cd "$dir" || return 1
 }
