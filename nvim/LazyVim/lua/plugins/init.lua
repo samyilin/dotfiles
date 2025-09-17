@@ -53,5 +53,9 @@ return {
         require("conform").format({ async = true, lsp_fallback = true, timeout_ms = 10000 })
       end,
     },
+    {
+      "nvim-treesitter/nvim-treesitter",
+      opts = { ensure_installed = { "css", "norg", "scss", "svelte", "typst", "vue", "latex" } },
+    },
   },
 }
