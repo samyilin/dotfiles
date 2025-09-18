@@ -84,7 +84,7 @@ later(load("plugins.mini.ai", { add = { depends = "mini.extra" } }))
 later(
   load(
     "NeogitOrg/Neogit",
-    { init = "plugins.neogit", add = { depends = { "nvim-lua/plenary.nvim", "sindrets/diffview.nvim" } } }
+    { init = "plugins.neogit", add = { depends = { "nvim-lua/plenary.nvim", "sindrets/diffview.nvim", "mini.pick" } } }
   )
 )
 -- My go to file explorer under Neovim.
