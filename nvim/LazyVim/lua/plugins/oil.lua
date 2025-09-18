@@ -6,6 +6,15 @@ return {
   -- set oil keymap on oil startup
   init = function()
     vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open Parent Directory" })
+    vim.keymap.set("n", "<leader>g1", function()
+      require("oil").open(vim.fn.stdpath("config"))
+    end, { desc = "Open config directory" })
+    vim.keymap.set("n", "<leader>g2", function()
+      require("oil").open(os.getenv("HOME"))
+    end, { desc = "Open home directory" })
+    vim.keymap.set("n", "<leader>g3", function()
+      require("oil").open(vim.uv.cwd())
+    end, { desc = "Open current working directory" })
   end,
   config = function()
     require("oil").setup({
