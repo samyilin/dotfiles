@@ -12,7 +12,7 @@ Darwin)
 esac
 setup_lazygit() {
   test -d "$config_path" || mkdir -p "$config_path"
-  ln -sf "$config_path"/lazygit "$config_path"
+  ln -sf "$PWD"/lazygit "$config_path"
 }
 main() {
   if [ ! -d "$config_path"/lazygit ]; then

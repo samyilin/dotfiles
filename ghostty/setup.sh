@@ -3,7 +3,7 @@
 config_path="$HOME"/.config
 setup_ghostty() {
   test -d "$config_path" || mkdir -p "$config_path"
-  ln -sf "$config_path"/ghostty "$config_path"
+  ln -sf "$PWD"/ghostty "$config_path"
 }
 main() {
   if [ ! -d "$config_path"/ghostty ]; then
