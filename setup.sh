@@ -38,7 +38,7 @@ setup() {
       elif [ "$1" = nvim ]; then
         cd vim && ./setup.sh "$2" && printf "%s setup complete.\n" "vim" && cd "$dir" || printf "%s setup complete.\n" "vim"
       fi
-    elif [ "$1" = lazygit ] && ! has difft && ! has delta; then
+    elif [ "$1" = lazygit ] && (! has difft && ! has delta); then
       printf "Lazygit config is unnecessary if difftastic is not installed, quitting. \n"
     else
       printf "%s is not installed in your system, quitting.\n" "$1"
