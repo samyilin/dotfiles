@@ -152,7 +152,7 @@ main() {
         setup_user
         # after successfully setting up the user, re-execute this script
         # under the user's new credential.
-        exec su - "$name" -C "$dir/setup"
+        exec su - "$name" -C "$dir/setup.sh"
       else
         printf "You are running as root but your setup doesn't have useradd/adduser or passwd.\n"
         printf "Configs will be set to /root directory for now.\n"
