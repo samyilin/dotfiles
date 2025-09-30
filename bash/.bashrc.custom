@@ -86,13 +86,13 @@ update_repos() {
     i="${i%*/}"
     i="${i##*/}"
     if [ -d "$dir"/"$i"/.git ]; then
-      cd "$i"
+      cd "$i" || exit
       case "$(git branch 2>&1)" in
       *main*) git pull || exit ;;
       *master*) git pull || exit ;;
       *) ;;
       esac
-      cd "$dir"
+      cd "$dir" || exit
     fi
   done
 }
