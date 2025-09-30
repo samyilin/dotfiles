@@ -78,23 +78,23 @@ if [ -d /proc ]; then
   esac
 fi
 
+# A command to automatically update all git repos to latest if they're
+# currently on the main branch.
 update_repos() {
-  dir=$(cd -- "$(dirname -- "$0")" >>/dev/null 2>&1 && pwd)
-  cd "$dir" || exit 0
+  dir=$(pwd)
   for i in "$dir"/*; do
     i="${i%*/}"
     i="${i##*/}"
-    cd "$1"
-    if [ -d "$dir"/.git ]; then
-      case "$(git branch >>/dev/null 2>&1)" in
-      *main*) git pull ;;
-      *master*) git pull ;;
-      *) return 0 ;;
+    if [ -d "$dir"/"$i"/.git ]; then
+      cd "$i"
+      case "$(git branch 2>&1)" in
+      *main*) git pull || exit ;;
+      *master*) git pull || exit ;;
+      *) ;;
       esac
+      cd "$dir"
     fi
-    cd "$dir"
   done
-  cd "$dir"
 }
 
 # Try to use homebrew's vim if available. Mac's Vim is stuck at 9.0

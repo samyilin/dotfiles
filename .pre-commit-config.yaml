@@ -16,8 +16,3 @@ repos:
         types: [shell]
         require_serial: true # shellcheck can detect sourcing this way
         args: ["-x"]
-  - repo: https://github.com/samyilin/pre-commit-luacheck
-    rev: v1.0.1
-    hooks:
-      - id: luacheck
-        args: ["--globals vim lvim reload"]
