@@ -82,15 +82,17 @@ fi
 # currently on the main branch.
 update_repos() {
   dir=$(pwd)
+  printf "Attempting to update all git repos under folder...\n"
   for i in "$dir"/*; do
     i="${i%*/}"
     i="${i##*/}"
     if [ -d "$dir"/"$i"/.git ]; then
       cd "$i" || exit
       case "$(git branch | head -1 2>&1)" in
-      *main*) git pull || printf "Git repo %s updated to the laster main branch." "$i" || exit ;;
-      *master*) git pull || printf "Git repo %s updated to the latest master branch." "$i" exit ;;
-      *) printf "Git repo %s not on the main(master) branch." "$i" ;;
+      *main*) git pull --quiet && printf "Git repo %s updated to the laster main branch.\n" "$i" || exit ;;
+      *master*) git pull --quiet && printf "Git repo %s updated to the latest master branch.\n" "$i" || exit ;;
+      *release*) git pull --quiet && printf "Git repo %s updated to the latest release branch.\n" "$i" || exit ;;
+      *) printf "Git repo %s not on the main(master) branch.\n" "$i" ;;
       esac
       cd "$dir" || exit
     fi
