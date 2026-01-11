@@ -1,35 +1,33 @@
 # README
 
-My Neovim config using LazyVim
+Revamping to not use LazyVim as Neovim configuration.
 
-## Introduction
+## Why?
 
-I've started to use
-[LazyVim](https://github.com/LazyVim/LazyVim), a Neovim setup powered by
-Lazy.nvim.
+I've opted to simplify my workflow so I can better understand what's hapapening. LazyVim sometimes work well, sometimes an upstream update on either Neovim, LazyVim or other packages will nuke my SQL settings and I don't know why.
 
-For system requirement from Lazyvim, read their [front page](https://www.lazyvim.org/).
+Setting my own thing is a hassle, but Neovim community is mature enough, and Neovim is OOTB enough for me to get rid of as many dependencies as possible.
 
-## Why Neovim AND Vim?
+## DIY requirements
 
-I'm still maintaining my Vim configuration minimally, and they serves
-different purposes.
+I have to install LSPs, formatters, DAPs, etc. using other means and not rely on Mason anymore. Which should've been the case anyway. 
 
-## Why LazyVim though? You don't use a distribution for Vim
+On MacOS use Homebrew, on Linux use whatever package manager you have, on Windows... WSL or scoop I think are the easiest ones. 
 
-Vim has been around longer, so tpope's plugins will not be deprecated anytime
-soon, for example. Also, Vim plugins, LSP shenanigans aside, don't need a huge
-amount of glue code for cohesiveness. On the contrary, Neovim packages get
-deprecated very quickly (relatively speaking, most are here to stay for a
-while) and I don't have time to re-configure my packages and re-write my glue
-code just because
-[null-ls](https://github.com/jose-elias-alvarez/null-ls.nvim) have been
-deprecated, for example.
+I will later document more thoroughly the LSPs/formatters I use per file type, when this config is mature enough.
 
-LazyVim is a distribution for sure, but if you're careful enough, you CAN just
-use it as a starting point to configure your own thing! The pieces that need
-heavy tweaking are the things that you want. For me, it's Jupyter notebook
-integration (I HATE Jupyter) that I have to write heavy customization for, which
-Emacs has [this](https://github.com/astoff/code-cells.el). The rest I pretty
-much use the defaults as-is. Also, I don't use directory trees, so I turn that
-off and use oil.nvim instead.
+## What I'm getting rid of
+
+I'm getting rid of pickers. Yes I am trying to do that. :grep and :find is really what you're looking for.
+
+The only thing I'm missing is quickfix on find, I will find a way to achieve this.
+
+I'm getting rid of package manager in favour of builtin package manager vim.pack. I think it simplifies things drastically.
+
+## What I'm keeping
+
+The "essentials", as minimal as possible, though not married to this idea.
+
+## How long am I dedicating to completing this DIY project?
+
+Try to finish it off as quick as possible in my spare time. So... Months?
