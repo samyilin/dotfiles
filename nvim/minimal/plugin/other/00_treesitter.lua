@@ -1,13 +1,3 @@
-Config.on_packchanged('tree-sitter', { 'update' }, function()
-  vim.cmd('TSUpdate')
-  require('nvim-treesitter').install(ensure_languages)
-end, 'Update tree-sitter parsers')
-vim.pack.add({
-  { src = 'https://github.com/nvim-treesitter/nvim-treesitter', version = 'main' },
-  { src = 'https://github.com/nvim-treesitter/nvim-treesitter-textobjects', version = 'main' },
-  { src = 'https://github.com/nvim-treesitter/nvim-treesitter-context' },
-}, { load = true })
-
 local ensure_languages = {
   'bash',
   'json',
@@ -20,7 +10,17 @@ local ensure_languages = {
   'toml',
   'yaml',
 }
-
+vim.pack.add({
+  { src = 'https://github.com/nvim-treesitter/nvim-treesitter', version = 'main' },
+  { src = 'https://github.com/nvim-treesitter/nvim-treesitter-textobjects', version = 'main' },
+  { src = 'https://github.com/nvim-treesitter/nvim-treesitter-context' },
+}, { load = true })
+Config.on_packchanged('tree-sitter', { 'update' }, function()
+  vim.cmd('TSUpdate')
+  require('nvim-treesitter').setup()
+  require('nvim-treesitter').install(ensure_languages)
+end, 'Update tree-sitter parsers')
+require('nvim-treesitter').install(ensure_languages)
 local filetypes = vim.iter(ensure_languages):map(vim.treesitter.language.get_filetypes):flatten():totable()
 Config.new_autocmd('FileType', {
   pattern = filetypes,
