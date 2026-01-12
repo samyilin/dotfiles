@@ -3,6 +3,8 @@ require('conform').setup({
   -- Map of filetype to formatters
   formatters_by_ft = {
     lua = { 'stylua' },
+    sh = { 'shellcheck' },
+    bash = { 'shellcheck' },
   },
   -- Automatically turns on format on save via this setting.
   format_on_save = {

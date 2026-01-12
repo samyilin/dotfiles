@@ -3,7 +3,7 @@
 
 dir=$(cd -- "$(dirname -- "$0")" >>/dev/null 2>&1 && pwd)
 if [ -f "$HOME"/.bashrc ]; then
-  while IFS= read -r line; do
+	while IFS= read -r line; do
     if [ ! "$line" = "$(printf "test -f %s/.bashrc.custom && source %s/.bashrc.custom" "$dir" "$dir")" ]; then
       printf "%s\n" "$line"
     fi

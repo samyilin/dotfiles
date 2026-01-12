@@ -103,8 +103,6 @@ update_repos() {
 if [ -f /opt/homebrew/bin/vim ]; then
   alias vim="/opt/homebrew/bin/vim"
 fi
-alias lazy="NVIM_APPNAME=LazyVim nvim"
-alias diy="NVIM_APPNAME=diy nvim"
 alias minimal="NVIM_APPNAME=minimal nvim"
 
 export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
