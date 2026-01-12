@@ -1,1 +1,1 @@
-vim.keymap.set('n', '<Leader>l', function() vim.pack.update() end)
+vim.keymap.set('n', '<leader>l', function() vim.pack.update() end)
