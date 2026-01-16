@@ -9,6 +9,17 @@ local ensure_languages = {
   'sql',
   'toml',
   'yaml',
+  -- snacks.nvim requirements
+  'css',
+  'html',
+  'javascript',
+  'latex',
+  -- 'norg',
+  'scss',
+  'svelte',
+  'tsx',
+  'typst',
+  'vue',
 }
 vim.pack.add({
   { src = 'https://github.com/nvim-treesitter/nvim-treesitter', version = 'main' },

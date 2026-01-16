@@ -7,4 +7,3 @@ vim.o.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 vim.o.clipboard = vim.env.SSH_CONNECTION and '' or 'unnamedplus' -- Sync with system clipboard
 vim.o.swapfile = false
 vim.diagnostic.config({ virtual_text = true })
-vim.g.mapleader = ' ' -- Use `<Space>` as a leader key

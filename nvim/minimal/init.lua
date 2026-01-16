@@ -2,6 +2,10 @@
 -- Initialization
 -- ---------------------------------------------------------------------------
 
+-- Set leader keys before any keymaps are defined
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
+
 -- Bootstrap with mini
 vim.pack.add({ 'https://github.com/nvim-mini/mini.nvim' })
 

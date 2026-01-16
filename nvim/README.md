@@ -10,23 +10,23 @@ Setting my own thing is a hassle, but Neovim community is mature enough, and Neo
 
 ## DIY requirements
 
-I have to install LSPs, formatters, DAPs, etc. using other means and not rely on Mason anymore. Which should've been the case anyway. 
+I have to install LSPs, formatters, DAPs, etc. using other means and not rely on Mason anymore. Which should've been the case anyway.
 
-On MacOS use Homebrew, on Linux use whatever package manager you have, on Windows... WSL or scoop I think are the easiest ones. 
+On MacOS use Homebrew, on Linux use whatever package manager you have, on Windows... WSL or scoop I think are the easiest ones.
 
 I will later document more thoroughly the LSPs/formatters I use per file type, when this config is mature enough.
 
 ## What I'm getting rid of
 
-I'm getting rid of pickers. Yes I am trying to do that. :grep and :find is really what you're looking for.
-
-The only thing I'm missing is quickfix on find, I will find a way to achieve this.
-
 I'm getting rid of package manager in favour of builtin package manager vim.pack. I think it simplifies things drastically.
+
+I'm getting rid of a lot of UI niceties for simpler approaches, yes it isn't as pretty, but the point is to reduce dependency as much as possible.
 
 ## What I'm keeping
 
 The "essentials", as minimal as possible, though not married to this idea.
+
+Note that Neovim have plans to replace netrw. When that time comes, I will get rid of netrw enhancements such as vim-vinegar and netrw.lua.
 
 ## How long am I dedicating to completing this DIY project?
 
