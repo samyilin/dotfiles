@@ -9,6 +9,13 @@ local ensure_languages = {
   'sql',
   'toml',
   'yaml',
+  'gitignore',
+  'gitattributes',
+  'gitcommit',
+  'git_config',
+  'git_rebase',
+  'jinja_inline',
+  'jinja',
   -- snacks.nvim requirements
   'css',
   'html',
@@ -30,6 +37,11 @@ vim.pack.add({
 Config.on_packchanged('tree-sitter', { 'update' }, function() vim.cmd('TSUpdate') end, 'Update tree-sitter parsers')
 -- add this line just in case I decided to add some languages ad-hoc.
 require('nvim-treesitter').install(ensure_languages)
+require('nvim-treesitter').setup({
+  incremental_selection = {
+    enable = true,
+  },
+})
 
 local filetypes = vim.iter(ensure_languages):map(vim.treesitter.language.get_filetypes):flatten():totable()
 Config.new_autocmd('FileType', {
