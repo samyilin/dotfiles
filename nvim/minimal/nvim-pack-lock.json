@@ -20,6 +20,10 @@
       "rev": "90501c62b9b816ed3ed1e912ae9db9af5671a1b2",
       "src": "https://github.com/prichrd/netrw.nvim.git"
     },
+    "nvim-dev-container": {
+      "rev": "59d85de531912c3def3061ae1d84c769e09a5653",
+      "src": "https://codeberg.org/esensar/nvim-dev-container"
+    },
     "nvim-lspconfig": {
       "rev": "92ee7d42320edfbb81f3cad851314ab197fa324a",
       "src": "https://github.com/neovim/nvim-lspconfig"
