@@ -5,10 +5,8 @@
 -- Set leader keys before any keymaps are defined
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
-
 -- Bootstrap with mini
 vim.pack.add({ 'https://github.com/nvim-mini/mini.nvim' })
-
 -- Setup 'mini.deps' for access to `now` and `later` helpers
 require('mini.deps').setup()
 

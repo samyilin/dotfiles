@@ -139,7 +139,10 @@ set nobackup
 set noswapfile
 set nowritebackup
 
-set icon
+" TODO
+if !has('nvim')
+	set icon
+endif
 
 
 " highlight search hits
@@ -151,6 +154,7 @@ set ignorecase
 set smartcase
 
 " prevents truncated yanks, deletes, etc.
+" TODO
 set viminfo='20,<1000,s1000
 " wrap around when searching
 set wrapscan
@@ -178,14 +182,14 @@ set omnifunc=syntaxcomplete#Complete
 
 " displays all the syntax rules for current position, useful
 " when writing vimscript syntax plugins
-if has("syntax")
-  function! <SID>SynStack()
-    if !exists("*synstack")
-      return
-    endif
-    echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
-  endfunc
-endif
+"if has("syntax")
+"  function! <SID>SynStack()
+"    if !exists("*synstack")
+"      return
+"    endif
+"    echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+"  endfunc
+"endif
 
 " start at last place you were editing
 if !has('nvim')
