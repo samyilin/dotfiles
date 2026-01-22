@@ -10,7 +10,7 @@ esac
 
 # This bashrc does one thing only, referencing the actual bashrc config
 if [ -f "$HOME"/.bash_aliases ]; then
-  source "$HOME"/.bash_aliases
+	source "$HOME"/.bash_aliases
 fi
 
 # vi mode
@@ -33,11 +33,11 @@ fastfetch 2>/dev/null || "$HOME"/.nix-profile/bin/fastfetch 2>/dev/null
 
 # I don't care for dircolors, but put in her just in case.
 if [ -x /usr/bin/dircolors ]; then
-  if [ -r "$HOME"/.dircolors ]; then
-    eval "$(dircolors -b "$HOME"/.dircolors)"
-  else
-    eval "$(dircolors -b)"
-  fi
+	if [ -r "$HOME"/.dircolors ]; then
+		eval "$(dircolors -b "$HOME"/.dircolors)"
+	else
+		eval "$(dircolors -b)"
+	fi
 fi
 
 # launches emacs in server mode if not already running. Optional code.
@@ -59,9 +59,9 @@ fi
 #
 # If we have busybox and don't have grep/vi, then alias busybox version.
 for i in grep vi; do
-  if [ ! -x "$i" ] && [ -x busybox ]; then
-    alias '$i'='busybox $i'
-  fi
+	if [ ! -x "$i" ] && [ -x busybox ]; then
+		alias '$i'='busybox $i'
+	fi
 done
 # Migrated .bash_aliases here for better compatibility.
 alias ls='ls --color=auto'
@@ -69,40 +69,39 @@ alias grep='grep --color=auto'
 
 # Add this for WSL corporate desktop. There's annoyance on corporate Windows.
 if [ -d /proc ]; then
-  version="$(cat /proc/version)"
-  case "$version" in
-  *microsoft*)
-    alias network="sudo chattr -i /etc/resolv.conf && sudo vim /etc/resolv.conf && sudo chattr +i /etc/resolv.conf"
-    ;;
-  **) ;;
-  esac
+	version="$(cat /proc/version)"
+	case "$version" in
+	*microsoft*)
+		alias network="sudo chattr -i /etc/resolv.conf && sudo vim /etc/resolv.conf && sudo chattr +i /etc/resolv.conf"
+		;;
+	**) ;;
+	esac
 fi
 
 # A command to automatically update all git repos to latest if they're
 # currently on the main branch.
 update_repos() {
-  dir=$(pwd)
-  printf "Attempting to update all git repos under folder...\n"
-  for i in "$dir"/*; do
-    i="${i%*/}"
-    i="${i##*/}"
-    if [ -d "$dir"/"$i"/.git ]; then
-      cd "$i" || exit
-      case "$(git branch | head -1 2>&1)" in
-      *main*) git pull --quiet && printf "Git repo %s updated to the laster main branch.\n" "$i" || exit ;;
-      *master*) git pull --quiet && printf "Git repo %s updated to the latest master branch.\n" "$i" || exit ;;
-      *release*) git pull --quiet && printf "Git repo %s updated to the latest release branch.\n" "$i" || exit ;;
-      *) printf "Git repo %s not on the main(master) branch.\n" "$i" ;;
-      esac
-      cd "$dir" || exit
-    fi
-  done
+	dir=$(pwd)
+	printf "Attempting to update all git repos under folder...\n"
+	for i in "$dir"/*; do
+		i="${i%*/}"
+		i="${i##*/}"
+		if [ -d "$dir"/"$i"/.git ]; then
+			cd "$i" || exit
+			case "$(git branch | head -1 2>&1)" in
+			*main*) git pull --quiet && printf "Git repo %s updated to the laster main branch.\n" "$i" || exit ;;
+			*master*) git pull --quiet && printf "Git repo %s updated to the latest master branch.\n" "$i" || exit ;;
+			*release*) git pull --quiet && printf "Git repo %s updated to the latest release branch.\n" "$i" || exit ;;
+			*) printf "Git repo %s not on the main(master) branch.\n" "$i" ;;
+			esac
+			cd "$dir" || exit
+		fi
+	done
 }
 
 # Try to use homebrew's vim if available. Mac's Vim is stuck at 9.0
 if [ -f /opt/homebrew/bin/vim ]; then
-  alias vim="/opt/homebrew/bin/vim"
+	alias vim="/opt/homebrew/bin/vim"
 fi
-alias minimal="NVIM_APPNAME=minimal nvim"
-
+export EDITOR="nvim"
 export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
