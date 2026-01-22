@@ -5,5 +5,5 @@ vim.o.shiftwidth = 2
 vim.o.confirm = true
 vim.o.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 vim.o.clipboard = vim.env.SSH_CONNECTION and '' or 'unnamedplus' -- Sync with system clipboard
-vim.o.swapfile = false
+vim.o.swapfile = false -- disable swapfile. Causes more problem than what it fixes
 vim.diagnostic.config({ virtual_text = true })

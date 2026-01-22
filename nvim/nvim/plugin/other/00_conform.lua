@@ -13,3 +13,8 @@ require('conform').setup({
     lsp_format = 'fallback',
   },
 })
+require('conform').formatters.shfmt = {
+  append_args = { '-i', '2' },
+  -- The base args are { "-filename", "$FILENAME" } so the final args will be
+  -- { "-filename", "$FILENAME", "-i", "2" }
+}
