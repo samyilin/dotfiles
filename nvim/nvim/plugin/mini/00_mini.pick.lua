@@ -1,7 +1,0 @@
-require('mini.pick').setup()
-vim.keymap.set('n', '<Leader>pf', function() MiniPick.builtin.files() end)
-vim.keymap.set('n', '<Leader>pb', function() MiniPick.builtin.buffers() end)
-vim.keymap.set('n', '<Leader>ph', function() MiniPick.builtin.help() end)
-vim.keymap.set('n', '<Leader>pg', function() MiniPick.builtin.grep_live() end)
--- vim.keymap.set('n', '<Leader>pc', function() MiniPick.builtin.cli() end)
-vim.keymap.set('n', '<Leader>pr', function() MiniPick.builtin.resume() end)

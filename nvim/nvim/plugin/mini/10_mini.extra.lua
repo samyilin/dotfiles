@@ -1,0 +1,5 @@
+Config.later(function()
+  require('mini.extra').setup()
+  vim.keymap.set('n', '<Leader>pe', function() MiniExtra.pickers.explorer() end)
+  vim.keymap.set('n', '<Leader>pc', function() MiniExtra.pickers.colorschemes() end)
+end)
