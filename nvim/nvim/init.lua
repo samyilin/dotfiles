@@ -6,7 +6,7 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 -- Bootstrap with mini
-vim.pack.add({ 'https://github.com/nvim-mini/mini.nvim' })
+vim.pack.add({{ src = 'https://github.com/nvim-mini/mini.nvim', version = "main"} }, {load = true})
 -- Setup 'mini.deps' for access to `now` and `later` helpers
 require('mini.deps').setup()
 
