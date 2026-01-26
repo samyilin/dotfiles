@@ -1,5 +1,9 @@
 {
   "plugins": {
+    "blink.cmp": {
+      "rev": "b137f63d89d0285ca76eed12e1923220e0aff8c1",
+      "src": "https://github.com/saghen/blink.cmp.git"
+    },
     "conform.nvim": {
       "rev": "c2526f1cde528a66e086ab1668e996d162c75f4f",
       "src": "https://github.com/stevearc/conform.nvim"
@@ -16,10 +20,6 @@
       "rev": "9b935c218ddba02e5dc75c94f90143bce1f7c646",
       "src": "https://github.com/nvim-mini/mini.nvim"
     },
-    "netrw.nvim": {
-      "rev": "90501c62b9b816ed3ed1e912ae9db9af5671a1b2",
-      "src": "https://github.com/prichrd/netrw.nvim.git"
-    },
     "nvim-dev-container": {
       "rev": "c3d9681380cb69e81b81509851a07f12daa0000c",
       "src": "https://codeberg.org/esensar/nvim-dev-container"
@@ -29,7 +29,7 @@
       "src": "https://github.com/neovim/nvim-lspconfig"
     },
     "nvim-treesitter": {
-      "rev": "275b9fe801d56d5fea6d34f5bfea8bb24887b805",
+      "rev": "568ede7e79172a0fe7c9d631454a97ad968deaf2",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter",
       "version": "'main'"
     },
@@ -42,6 +42,10 @@
       "src": "https://github.com/nvim-treesitter/nvim-treesitter-textobjects",
       "version": "'main'"
     },
+    "oil.nvim": {
+      "rev": "f55b25e493a7df76371cfadd0ded5004cb9cd48a",
+      "src": "https://github.com/stevearc/oil.nvim.git"
+    },
     "render-markdown.nvim": {
       "rev": "c54380dd4d8d1738b9691a7c349ecad7967ac12e",
       "src": "https://github.com/MeanderingProgrammer/render-markdown.nvim"
@@ -49,15 +53,6 @@
     "snacks.nvim": {
       "rev": "fe7cfe9800a182274d0f868a74b7263b8c0c020b",
       "src": "https://github.com/folke/snacks.nvim.git"
-    },
-    "vim-fugitive": {
-      "rev": "61b51c09b7c9ce04e821f6cf76ea4f6f903e3cf4",
-      "src": "https://github.com/tpope/vim-fugitive.git"
-    },
-    "vim-vinegar": {
-      "rev": "bb1bcddf43cfebe05eb565a84ab069b357d0b3d6",
-      "src": "https://github.com/tpope/vim-vinegar",
-      "version": "'master'"
     }
   }
 }

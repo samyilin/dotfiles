@@ -1,1 +1,1 @@
-require('vim._extui').enable({})
+Config.now(function() require('vim._extui').enable({}) end)

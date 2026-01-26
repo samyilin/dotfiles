@@ -18,20 +18,4 @@ Config.now = MiniDeps.now
 Config.later = MiniDeps.later
 Config.now_if_args = vim.fn.argc(-1) > 0 and MiniDeps.now or MiniDeps.later
 
--- Helper for creating a new autocommand
-Config.custom_group = vim.api.nvim_create_augroup('custom-config', {})
-Config.new_autocmd = function(event, opts)
-  opts.group = opts.group or Config.custom_group
-  vim.api.nvim_create_autocmd(event, opts)
-end
--- Hook for vim.pack.update
-Config.on_packchanged = function(plugin_name, kinds, callback, desc)
-  local f = function(ev)
-    local name, kind = ev.data.spec.name, ev.data.kind
-    if not (name == plugin_name and vim.tbl_contains(kinds, kind)) then return end
-    if not ev.data.active then vim.cmd.packadd(plugin_name) end
-    callback()
-  end
-  Config.new_autocmd('PackChanged', { pattern = '*', callback = f, desc = 'Callback for Update packages' })
-end
 vim.cmd.colorscheme('minicyan')
