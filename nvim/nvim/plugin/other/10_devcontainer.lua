@@ -1,5 +1,5 @@
 Config.later(function()
-  vim.pack.add({ { src = 'https://codeberg.org/esensar/nvim-dev-container' } })
+  vim.pack.add({ { src = 'https://github.com/esensar/nvim-dev-container' } })
   require('devcontainer').setup({
     -- Can be set to false to prevent generating default commands
     -- Default commands are listed below

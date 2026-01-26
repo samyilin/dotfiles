@@ -23,7 +23,7 @@
     },
     "nvim-dev-container": {
       "rev": "c3d9681380cb69e81b81509851a07f12daa0000c",
-      "src": "https://codeberg.org/esensar/nvim-dev-container"
+      "src": "https://github.com/esensar/nvim-dev-container"
     },
     "nvim-lspconfig": {
       "rev": "4044b8544a6cea57179d5a29c203b6b65d2b6ac4",
