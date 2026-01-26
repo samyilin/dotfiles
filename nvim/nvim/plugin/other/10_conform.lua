@@ -1,5 +1,5 @@
 Config.later(function()
-  vim.pack.add({ 'https://github.com/stevearc/conform.nvim' }, { load = true })
+  vim.pack.add({ { src = 'https://github.com/stevearc/conform.nvim' } }, { load = true })
   require('conform').setup({
     notify_on_error = true,
     -- Map of filetype to formatters
