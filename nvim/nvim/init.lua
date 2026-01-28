@@ -19,3 +19,9 @@ Config.later = MiniDeps.later
 Config.now_if_args = vim.fn.argc(-1) > 0 and MiniDeps.now or MiniDeps.later
 
 vim.cmd.colorscheme('minicyan')
+-- Helper for creating a new autocommand
+Config.custom_group = vim.api.nvim_create_augroup('custom-config', {})
+Config.new_autocmd = function(event, opts)
+  opts.group = opts.group or Config.custom_group
+  vim.api.nvim_create_autocmd(event, opts)
+end
