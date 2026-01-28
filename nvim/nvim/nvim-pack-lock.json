@@ -23,14 +23,14 @@
     },
     "nvim-dev-container": {
       "rev": "c3d9681380cb69e81b81509851a07f12daa0000c",
-      "src": "https://github.com/esensar/nvim-dev-container"
+      "src": "https://codeberg.org/esensar/nvim-dev-container"
     },
     "nvim-lspconfig": {
-      "rev": "4044b8544a6cea57179d5a29c203b6b65d2b6ac4",
+      "rev": "ff9c0af8f9b2097fdd2695058db7e04c193908aa",
       "src": "https://github.com/neovim/nvim-lspconfig"
     },
     "nvim-treesitter": {
-      "rev": "568ede7e79172a0fe7c9d631454a97ad968deaf2",
+      "rev": "f8bbc3177d929dc86e272c41cc15219f0a7aa1ac",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter",
       "version": "'main'"
     },
