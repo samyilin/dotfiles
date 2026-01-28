@@ -1,5 +1,8 @@
 Config.now(function()
-  vim.pack.add({ { src = 'https://github.com/stevearc/oil.nvim.git' } }, { load = true })
+  vim.pack.add(
+    { { src = 'https://github.com/stevearc/oil.nvim.git' } },
+    { load = true }
+  )
   require('oil').setup({
     default_file_explorer = true,
     delete_to_traash = true,
@@ -30,15 +33,28 @@ Config.now(function()
     },
   })
   vim.keymap.set('n', '-', '<CMD>Oil<CR>', { desc = 'Open parent directory' })
-  vim.keymap.set('n', '`', '<CMD>Oil --float<CR>', { desc = 'Open parent directory' })
-  vim.keymap.set('n', '<leader>g1', function() vim.cmd(':e ' .. vim.fn.stdpath('config')) end)
-  vim.keymap.set('n', '<leader>g2', function() vim.cmd(':e ' .. os.getenv('HOME')) end)
-  vim.keymap.set('n', '<leader>g3', function() vim.cmd(':e ' .. vim.uv.cwd()) end)
-  local function close_floats()
-    for _, win in ipairs(vim.api.nvim_list_wins()) do
-      if vim.api.nvim_win_get_config(win).relative ~= '' then vim.api.nvim_win_close(win, false) end
-    end
-  end
-
-  vim.keymap.set('n', '<Esc>', function() close_floats() end, { desc = 'Close floats' })
+  vim.keymap.set(
+    'n',
+    '`',
+    '<CMD>Oil --float<CR>',
+    { desc = 'Open parent directory' }
+  )
+  vim.keymap.set(
+    'n',
+    '<leader>g1',
+    function() vim.cmd(':e ' .. vim.fn.stdpath('config')) end,
+    { desc = 'Open Neovim config directory' }
+  )
+  vim.keymap.set(
+    'n',
+    '<leader>g2',
+    function() vim.cmd(':e ' .. os.getenv('HOME')) end,
+    { desc = 'Open Home directory' }
+  )
+  vim.keymap.set(
+    'n',
+    '<leader>g3',
+    function() vim.cmd(':e ' .. vim.uv.cwd()) end,
+    { desc = 'Open CWD' }
+  )
 end)

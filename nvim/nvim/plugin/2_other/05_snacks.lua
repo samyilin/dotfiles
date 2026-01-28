@@ -5,5 +5,10 @@ Config.now_if_args(function()
     lazygit = { enabled = true },
     image = { enabled = true },
   })
-  vim.keymap.set('n', '<Leader>gg', function() Snacks.lazygit() end)
+  vim.keymap.set(
+    'n',
+    '<Leader>gg',
+    function() Snacks.lazygit() end,
+    { desc = 'Lazygit' }
+  )
 end)
