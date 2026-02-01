@@ -1,5 +1,8 @@
 Config.later(function()
-  vim.pack.add({ { src = 'https://github.com/stevearc/conform.nvim' } }, { load = true })
+  vim.pack.add(
+    { { src = 'https://github.com/stevearc/conform.nvim' } },
+    { load = true }
+  )
   require('conform').setup({
     notify_on_error = true,
     -- Map of filetype to formatters
@@ -7,13 +10,14 @@ Config.later(function()
       lua = { 'stylua' },
       sh = { 'shfmt' },
       bash = { 'shfmt' },
+      sql = { 'sqlfluff' },
       ['markdown'] = { 'markdownlint-cli2' },
       ['markdown.mdx'] = { 'markdownlint-cli2' },
     },
     -- Automatically turns on format on save via this setting.
     format_on_save = {
       -- These options will be passed to conform.format()
-      timeout_ms = 50000,
+      timeout_ms = 500000,
       lsp_format = 'fallback',
     },
     formatters = {
@@ -27,7 +31,10 @@ Config.later(function()
       -- },
       ['markdownlint-cli2'] = {
         condition = function(_, ctx)
-          local diag = vim.tbl_filter(function(d) return d.source == 'markdownlint' end, vim.diagnostic.get(ctx.buf))
+          local diag = vim.tbl_filter(
+            function(d) return d.source == 'markdownlint' end,
+            vim.diagnostic.get(ctx.buf)
+          )
           return #diag > 0
         end,
       },
