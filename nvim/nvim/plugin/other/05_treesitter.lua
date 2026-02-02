@@ -30,8 +30,14 @@ Config.now_if_args(function()
     'vue',
   }
   vim.pack.add({
-    { src = 'https://github.com/nvim-treesitter/nvim-treesitter', version = 'main' },
-    { src = 'https://github.com/nvim-treesitter/nvim-treesitter-textobjects', version = 'main' },
+    {
+      src = 'https://github.com/nvim-treesitter/nvim-treesitter',
+      version = 'main',
+    },
+    {
+      src = 'https://github.com/nvim-treesitter/nvim-treesitter-textobjects',
+      version = 'main',
+    },
     { src = 'https://github.com/nvim-treesitter/nvim-treesitter-context' },
   }, { load = true })
 
@@ -64,7 +70,11 @@ Config.now_if_args(function()
     },
   })
 
-  local filetypes = vim.iter(ensure_languages):map(vim.treesitter.language.get_filetypes):flatten():totable()
+  local filetypes = vim
+    .iter(ensure_languages)
+    :map(vim.treesitter.language.get_filetypes)
+    :flatten()
+    :totable()
   Config.new_autocmd('FileType', {
     pattern = filetypes,
     callback = function() vim.treesitter.start() end,

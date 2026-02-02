@@ -1,6 +1,8 @@
 Config.now_if_args(function()
-  vim.pack.add({ {
-    src = 'https://github.com/MeanderingProgrammer/render-markdown.nvim',
-  } })
+  vim.pack.add({
+    {
+      src = 'https://github.com/MeanderingProgrammer/render-markdown.nvim',
+    },
+  })
   require('render-markdown').setup({}) -- only mandatory if you want to set custom options
 end)
