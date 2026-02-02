@@ -3,5 +3,3 @@ fullscreen = true
 mouse-hide-while-typing = true
 # Keybinding to rename tab
 keybind = cmd+r=prompt_surface_title
-# Get rid of window decoration on multiple tabs
-window-decoration = false
