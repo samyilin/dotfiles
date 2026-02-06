@@ -1,1 +1,1 @@
-Config.now(function() require('vim._extui').enable({}) end)
+Config.now(function() require('vim._core.ui2').enable({}) end)
