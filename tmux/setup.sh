@@ -9,7 +9,7 @@ main() {
     echo "Your .tmux.conf have been saved to .tmux.conf.bak"
     ln -sf "$PWD"/.tmux.conf "$HOME"/.tmux.conf
   else
-    printf "Tmux is already installed, quitting"
+    printf "Tmux config is already installed, quitting"
   fi
 
   exit 0
