@@ -11,7 +11,7 @@ Config.on_packchanged = function(plugin_name, kinds, callback, desc)
   end
   Config.new_autocmd(
     'PackChanged',
-    { pattern = '*', callback = f, desc = 'Callback for Update packages' }
+    { pattern = '*', callback = f, desc = desc }
   )
 end
 Config.on_packchangedpre = function(plugin_name, kinds, callback, desc)

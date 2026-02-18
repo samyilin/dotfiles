@@ -4,9 +4,10 @@ Config.new_autocmd(
   -- "*" applies to all files. You can also use {"*.py", "*.js"} etc.
   {
     pattern = { '*' },
-    callback = function(data)
+    callback = function()
       MiniTrailspace.trim()
       MiniTrailspace.trim_last_lines()
     end,
+    desc = 'Trim whitespace before save',
   }
 )

@@ -3,3 +3,7 @@ fullscreen = true
 mouse-hide-while-typing = true
 # Keybinding to rename tab
 keybind = cmd+r=prompt_surface_title
+# window-padding-x = 0
+window-padding-y = 0
+window-padding-balance = true
+window-padding-color = extend

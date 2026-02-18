@@ -3,7 +3,6 @@ package-lock.json
 **/lazy-lock.json
 **/lazyvim.json
 .vscode
-**/kitty-conf.bak
-kitty/kitty/kitty.conf.bak
+**/*.bak
 nvim/neovim
 lazygit/lazygit/state.yml
