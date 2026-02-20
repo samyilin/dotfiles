@@ -30,7 +30,7 @@ vim.pack.add(
   { load = true }
 )
 -- Set colorscheme
-vim.cmd.colorscheme('minicyan')
+vim.cmd.colorscheme('miniautumn')
 
 -- Define global config table for sharing between modules
 _G.Config = {}

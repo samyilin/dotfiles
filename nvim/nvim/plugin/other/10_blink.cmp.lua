@@ -12,6 +12,18 @@ Config.later(function()
         auto_show = true,
       },
     },
+    sources = {
+      -- Static list of providers to enable, or a function to dynamically enable/disable providers based on the context
+      default = { 'lazydev', 'lsp', 'path', 'snippets', 'buffer' },
+      providers = {
+        lazydev = {
+          name = 'LazyDev',
+          module = 'lazydev.integrations.blink',
+          -- make lazydev completions top priority (see `:h blink.cmp`)
+          score_offset = 100,
+        },
+      },
+    },
     keymap = {
       preset = 'default',
       ['<CR>'] = { 'select_and_accept', 'fallback' },
