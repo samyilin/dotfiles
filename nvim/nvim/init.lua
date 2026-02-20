@@ -2,28 +2,6 @@
 -- Initialization
 -- ---------------------------------------------------------------------------
 
--- OSC11 fix to remove padding.
--- Link:https://www.reddit.com/r/neovim/comments/1ehidxy/you_can_remove_padding_around_neovim_instance/
--- Solved in Ghostty via Ghostty settings.
--- local kitty_recognization = function()
---   local kitty_terminals =
---     { ['xterm-kitty'] = true, ['xterm-ghostty'] = true, ['wezterm'] = true }
---   return kitty_terminals[os.getenv('TERM')]
--- end
--- if kitty_recognization() then
---   vim.api.nvim_create_autocmd({ 'UIEnter', 'ColorScheme' }, {
---     callback = function()
---       local normal = vim.api.nvim_get_hl(0, { name = 'Normal' })
---       if not normal.bg then return end
---       io.write(string.format('\027]11;#%06x\027\\', normal.bg))
---     end,
---   })
---
---   vim.api.nvim_create_autocmd('UILeave', {
---     callback = function() io.write('\027]111\027\\') end,
---   })
--- end
-
 -- Bootstrap with mini
 vim.pack.add(
   { { src = 'https://github.com/nvim-mini/mini.nvim', version = 'main' } },

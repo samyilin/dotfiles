@@ -1,6 +1,6 @@
 -- Hook for vim.pack.update
 -- Pretty sure none of this actually works, keeping just in case
-Config.on_packchanged = function(plugin_name, kinds, callback, desc)
+Config.on_packchanged = function(plugin_name, kinds, callback)
   local f = function(ev)
     local name, kind = ev.data.spec.name, ev.data.kind
     if not (name == plugin_name and vim.tbl_contains(kinds, kind)) then
@@ -11,10 +11,10 @@ Config.on_packchanged = function(plugin_name, kinds, callback, desc)
   end
   Config.new_autocmd(
     'PackChanged',
-    { pattern = '*', callback = f, desc = desc }
+    { pattern = '*', callback = f, desc = 'Callback for Update packages' }
   )
 end
-Config.on_packchangedpre = function(plugin_name, kinds, callback, desc)
+Config.on_packchangedpre = function(plugin_name, kinds, callback)
   local f = function(ev)
     local name, kind = ev.data.spec.name, ev.data.kind
     if not (name == plugin_name and vim.tbl_contains(kinds, kind)) then
