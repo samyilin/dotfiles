@@ -4,7 +4,7 @@
 
 -- Bootstrap with mini
 vim.pack.add(
-  { { src = 'https://github.com/nvim-mini/mini.nvim', version = 'main' } },
+  { { src = 'https://github.com/nvim-mini/mini.nvim' } },
   { load = true }
 )
 -- Set colorscheme

@@ -17,9 +17,8 @@
       "src": "https://github.com/folke/lazydev.nvim"
     },
     "mini.nvim": {
-      "rev": "9b935c218ddba02e5dc75c94f90143bce1f7c646",
-      "src": "https://github.com/nvim-mini/mini.nvim",
-      "version": "'main'"
+      "rev": "577d2dcb558efce1518c45a76345e01bf346c8e8",
+      "src": "https://github.com/nvim-mini/mini.nvim"
     },
     "nvim-dev-container": {
       "rev": "87ea57f420b3460d0c45e239057ffc38fa32f886",
