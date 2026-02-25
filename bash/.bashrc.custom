@@ -82,17 +82,16 @@ fi
 # currently on the main branch.
 update_repos() {
   dir=$(pwd)
-  printf "Attempting to update all git repos under folder...\n"
+  printf "Attempting to update all git repos under folder to the latest default branch...\n"
   for i in "$dir"/*; do
     i="${i%*/}"
     i="${i##*/}"
     if [ -d "$dir"/"$i"/.git ]; then
       cd "$i" || exit
+      default_branch="$(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@')"
       case "$(git branch | head -1 2>&1)" in
-      *main*) git pull --quiet && printf "Git repo %s updated to the laster main branch.\n" "$i" || exit ;;
-      *master*) git pull --quiet && printf "Git repo %s updated to the latest master branch.\n" "$i" || exit ;;
-      *release*) git pull --quiet && printf "Git repo %s updated to the latest release branch.\n" "$i" || exit ;;
-      *) printf "Git repo %s not on the main(master) branch.\n" "$i" ;;
+      *$default_branch*) git pull --quiet && printf "Git repo %s updated to the laster %s branch.\n" "$i" "$default_branch" || exit ;;
+      *) printf "Git repo %s not on the default branch.\n" "$i" ;;
       esac
       cd "$dir" || exit
     fi
