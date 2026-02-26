@@ -5,7 +5,7 @@ Config.later(function()
       pattern = 'blink.cmp',
       group = vim.api.nvim_create_augroup('blink_update', { clear = true }),
       callback = function(e)
-        if e.data.kind == 'update' then
+        if e.data.kind == 'update' or e.data.kind == 'install' then
           -- Recommended way to access plugin files inside `PackChanged` event
           -- vim.cmd [[packadd blink.cmp]]
           if not e.data.active then

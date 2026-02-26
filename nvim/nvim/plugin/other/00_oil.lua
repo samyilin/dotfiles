@@ -42,8 +42,8 @@ Config.now(function()
   vim.keymap.set(
     'n',
     '<leader>g1',
-    function() vim.cmd(':e ' .. vim.fn.stdpath('config')) end,
-    { desc = 'Open Neovim config directory' }
+    function() vim.cmd(':e ' .. vim.uv.cwd()) end,
+    { desc = 'Open CWD' }
   )
   vim.keymap.set(
     'n',
@@ -54,7 +54,30 @@ Config.now(function()
   vim.keymap.set(
     'n',
     '<leader>g3',
-    function() vim.cmd(':e ' .. vim.uv.cwd()) end,
-    { desc = 'Open CWD' }
+    function() vim.cmd(':e ' .. vim.fn.stdpath('config')) end,
+    { desc = 'Open Neovim config directory' }
+  )
+  vim.keymap.set(
+    'n',
+    '<leader>g4',
+    function()
+      vim.cmd(
+        ':e'
+          .. vim.fs.joinpath(
+            vim.fn.stdpath('data'),
+            'site',
+            'pack',
+            'core',
+            'opt'
+          )
+      )
+    end,
+    { desc = 'Open Neovim plugin Directory' }
   )
 end)
+vim.keymap.set(
+  'n',
+  '<leader>g5',
+  function() vim.cmd(':e ' .. vim.fn.stdpath('log')) end,
+  { desc = 'Open Neovim log directory' }
+)

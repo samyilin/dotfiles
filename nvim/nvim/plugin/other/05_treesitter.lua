@@ -35,6 +35,7 @@ Config.now_if_args(function()
     },
     {
       src = 'https://github.com/nvim-treesitter/nvim-treesitter-textobjects',
+      version = 'main',
     },
     { src = 'https://github.com/nvim-treesitter/nvim-treesitter-context' },
   }, { load = true })
@@ -81,5 +82,5 @@ Config.now_if_args(function()
   -- Display context when current block is off-screen
   require('treesitter-context').setup()
   local ts_update = function() vim.cmd('TSUpdate') end
-  Config.on_packchanged('nvim-treesitter', { 'update' }, ts_update, ':TSUpdate')
+  Config.on_packchanged('nvim-treesitter', { 'update' }, ts_update)
 end)
