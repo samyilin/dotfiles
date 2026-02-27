@@ -91,9 +91,10 @@ update_repos() {
     if [ -d "$dir"/"$i"/.git ]; then
       cd "$i" || exit
       default_branch="$(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@')"
-      case "$(git branch | head -1 2>&1)" in
-      *$default_branch*) git pull --quiet && printf "Git repo %s updated to the laster %s branch.\n" "$i" "$default_branch" || exit ;;
-      *) printf "Git repo %s not on the default branch.\n" "$i" ;;
+      current_branch="$(git branch --show-current)"
+      case "$current_branch" in
+      *$default_branch*) git pull --quiet && printf "\342\234\224 Git repo %s updated to the laster %s branch.\n" "$i" "$default_branch" || exit ;;
+      *) printf "\xE2\x9D\x8C Git repo %s not on the default branch. Default branch is %s, but repo is in %s branch.\n" "$i" "$default_branch" "$current_branch" ;;
       esac
       cd "$dir" || exit
     fi
