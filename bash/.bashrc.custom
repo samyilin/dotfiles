@@ -13,6 +13,8 @@ if [ -f "$HOME"/.bash_aliases ]; then
   source "$HOME"/.bash_aliases
 fi
 
+# Force end POSIX mode, somehow Kitty won't reset POSIX mode
+set +o posix
 # vi mode
 set -o vi
 # Append to the history file, don't overwrite it
