@@ -89,16 +89,23 @@ update_repos() {
     i="${i%*/}"
     i="${i##*/}"
     if [ -d "$dir"/"$i"/.git ]; then
-      cd "$i" || exit
-      default_branch="$(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@')"
-      current_branch="$(git branch --show-current)"
+      cd "$i" || return 1
+      if git remote -v | read -r; then
+        default_branch="$(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@')"
+        current_branch="$(git branch --show-current)"
+      else
+        printf "\xE2\x9D\x8C Git repo %s is local only, no need to update.\n" "$i"
+        cd "$dir" && continue || return 1
+      fi
       case "$current_branch" in
-      *$default_branch*) git pull --quiet && printf "\342\234\224 Git repo %s updated to the laster %s branch.\n" "$i" "$default_branch" || exit ;;
+      *$default_branch*) git pull --quiet && printf "\342\234\224 Git repo %s updated to the laster %s branch.\n" "$i" "$default_branch" || return 1 ;;
       *) printf "\xE2\x9D\x8C Git repo %s not on the default branch. Default branch is %s, but repo is in %s branch.\n" "$i" "$default_branch" "$current_branch" ;;
       esac
-      cd "$dir" || exit
+      cd "$dir" || return 1
     fi
   done
+  sleep 1
+  return 1
 }
 
 # Try to use homebrew's vim if available. Mac's Vim is stuck at 9.0

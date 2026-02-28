@@ -12,7 +12,7 @@ main() {
   else
     printf "Vim is already set up, quitting\n"
   fi
-  exit 0
+  return 0
 }
 
 main "$@"

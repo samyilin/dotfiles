@@ -18,7 +18,7 @@ else
         cd "$i" && ./remove && echo "$i config removed, proceeding" && sleep 1
       else
         printf "Invalid %s command line argument given." "$1"
-        exit 1
+        return 1
       fi
       ;;
     esac

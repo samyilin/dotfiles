@@ -8,7 +8,7 @@ main() {
       tic -x -o ~/.terminfo "$tempfile" &&
       rm "$tempfile"
     echo "wezterm config done, quitting"
-    exit 0
+    return 0
   fi
 }
 main "$@"

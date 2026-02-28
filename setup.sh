@@ -129,12 +129,12 @@ main() {
     case "$opt" in
     h)
       print_help
-      exit 0
+      return 0
       ;;
     d) default=1 ;;
     *)
       print_help
-      exit 1
+      return 1
       ;;
     esac
     shift
@@ -143,7 +143,7 @@ main() {
   default=${default-0}
   # Safe way to ensure we have current working directory correctly.
   dir=$(cd -- "$(dirname -- "$0")" >>/dev/null 2>&1 && pwd)
-  cd "$dir" || exit 0
+  cd "$dir" || return 0
   # non-default mode logic.
   if [ "$default" -eq 0 ]; then
     # in non-default mode, if user is running as root, help user set up
@@ -177,7 +177,7 @@ main() {
           setup "$1" "$default"
         else
           printf "%s cannot be configured using this script." "$1"
-          exit 1
+          return 1
         fi
         ;;
       esac
@@ -191,5 +191,6 @@ main() {
   else
     . "$HOME"/.profile
   fi
+  return 1
 }
 main "$@"

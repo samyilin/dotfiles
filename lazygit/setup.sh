@@ -24,6 +24,6 @@ main() {
   else
     printf "lazygit is already setup, quitting\n"
   fi
-  exit 0
+  return 0
 }
 main "$@"

@@ -50,6 +50,6 @@ main() {
   elif [ -d "$HOME"/.local/share/uv ] && [ ! -f "$HOME"/dotfiles/nvim/neovim/bin/python ]; then
     setup_python_virtualenv_uv
   fi
-  exit 0
+  return 0
 }
 main "$@"
