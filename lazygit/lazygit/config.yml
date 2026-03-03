@@ -2,6 +2,7 @@
 # git:
 #   paging:
 #     externalDiffCommand: difft --color=always
+# delta config.
 git:
   pagers:
     - colorArg: always
