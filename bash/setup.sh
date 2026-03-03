@@ -39,8 +39,8 @@ main() {
   printf ".bash_profile is setup.\n"
   # Sets up .inputrc. It is only used by GNU Bash.
   if [ -f "$HOME"/.inputrc ] && [ ! -L "$HOME"/.inputrc ]; then
-    mv "$dir"/.inputrc "$HOME"/.inputrc.bak
-    printf "your default .inputrc is backed up at %s/.inputrc.bak\n" ".inputrc" "$HOME"
+    mv "$HOME"/.inputrc "$HOME"/.inputrc.bak
+    printf "your default .inputrc is backed up at %s/.inputrc.bak\n" "$HOME"
   fi
   ln -sf "$dir"/.inputrc "$HOME"/.inputrc
   printf ".inputrc setup complete.\n"
