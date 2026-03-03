@@ -2,6 +2,7 @@ package-lock.json
 .DS_Store
 lazy-lock.json
 lazyvim.json
+lazygit/lazygit/config.yml
 .vscode
 *.yazi
 *.bak

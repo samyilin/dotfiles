@@ -1,7 +1,3 @@
-# difftastic config. Need to comment out the other one for this to work.
-# git:
-#   paging:
-#     externalDiffCommand: difft --color=always
 # delta config.
 git:
   pagers:
