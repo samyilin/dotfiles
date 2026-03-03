@@ -1,8 +1,9 @@
 package-lock.json
-**/.DS_Store
-**/lazy-lock.json
-**/lazyvim.json
+.DS_Store
+lazy-lock.json
+lazyvim.json
 .vscode
-**/*.bak
+*.yazi
+*.bak
 nvim/neovim
 lazygit/lazygit/state.yml

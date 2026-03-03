@@ -1,6 +1,5 @@
 #!/bin/sh
 
-## Macos config path is different. Why?
 config_path="$HOME"/.config
 rm -rf "$config_path"/ghostty
 if [ -f "$config_path"/ghostty.bak ]; then
