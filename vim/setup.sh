@@ -1,18 +1,3 @@
 #!/bin/sh
-setup_vim() {
-  ln -sf "$PWD/.vimrc" "$HOME/.vimrc"
-}
-main() {
-  if [ ! -f "$HOME"/.vimrc ]; then
-    setup_vim
-  elif [ -f "$HOME"/.vimrc ] && [ ! -L "$HOME"/.vimrc ]; then
-    mv "$HOME"/.vimrc "$HOME"/.vimrc.bak
-    echo "Your .vimrc have been backed up in .vimrc.bak"
-    setup_vim
-  else
-    printf "Vim is already set up, quitting\n"
-  fi
-  return 0
-}
-
-main "$@"
+. "$(dirname "$0")"/../common.sh
+link_config "$PWD/.vimrc" "$HOME/.vimrc"

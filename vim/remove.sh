@@ -1,10 +1,3 @@
 #!/bin/sh
-
-# unlink vimrc
-unlink "$HOME"/.vimrc 2>/dev/null
-# get rid of caches created by dein, our plugin manager
-rm -rf "$HOME"/.cache/dein
-if [ -f "$HOME"/.vimrc.bak ]; then
-  mv "$HOME"/.vimrc.bak "$HOME"/.vimrc
-  echo "Your default .vimrc have been restored."
-fi
+. "$(dirname "$0")"/../common.sh
+unlink_config "$HOME/.vimrc"

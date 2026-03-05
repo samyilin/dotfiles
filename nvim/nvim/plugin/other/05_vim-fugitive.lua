@@ -1,3 +1,5 @@
-Config.now_if_args(
-  function() vim.pack.add({ { src = 'https://github.com/tpope/vim-fugitive' } }) end
-)
+Config.now_if_args(function()
+  vim.pack.add({ { src = 'https://github.com/tpope/vim-fugitive' } })
+
+  vim.g.minigit_disable = true
+end)

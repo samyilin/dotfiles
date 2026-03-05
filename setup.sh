@@ -1,5 +1,5 @@
 #!/bin/sh
-# Sets up bash profile, vimrc and more.
+# Sets up UNIXish configurations.
 # Helper to determine if a certain required program is missing from user
 # setup. Checks if the command/program exists and if is an executable.
 # This is more POSIX compliant than "which" or "type" in shell scripts.
@@ -18,38 +18,39 @@ has() {
 setup() {
   if [ "$1" != profile ]; then
     if has "$1"; then
-      # special logic to handle vim full version detection. Vim without
-      # full version cannot  cannot leverage its true potential.
-      # vim-plug.vim also needs git to function.
-      if [ "$1" = vim ]; then
-        if ! has vimtutor; then
-          printf "Full vim is not installed, quitting vim setup.\n"
-          printf "Vim won't be installed by nix to avoid name collision.\n"
-          return 1
-        elif ! has git; then
-          printf "git is required for vim install, quitting. \n"
-          return 1
-        fi
-      elif [ "$1" = alacritty ] && ! has git; then
-        printf "git is required for alacritty theme install, quitting. \n"
+      :
+    elif [ -f "$dir/$1/requires_any" ]; then
+      found_any=0
+      while IFS= read -r cmd; do
+        if has "$cmd"; then found_any=1; break; fi
+      done < "$dir/$1/requires_any"
+      if [ "$found_any" -eq 0 ]; then
+        printf "%s requires at least one of these programs to be installed: " "$1"
+        tr '\n' ' ' < "$dir/$1/requires_any"
+        printf "\nQuitting.\n"
         return 1
-      # Setup vim alongside nvim, because our nvim config is back
-      # compatible with vim
-      elif [ "$1" = nvim ]; then
-        cd vim && ./setup.sh "$2" && printf "%s setup complete.\n" "vim" && cd "$dir" || printf "%s setup complete.\n" "vim"
       fi
-    elif [ "$1" = lazygit ] && (! has difft && ! has delta); then
-      printf "Lazygit config is unnecessary if difftastic is not installed, quitting. \n"
     else
       printf "%s is not installed in your system, quitting.\n" "$1"
       return 1
     fi
+    if [ -f "$dir/$1/requires" ]; then
+      while IFS= read -r cmd; do
+        if ! has "$cmd"; then
+          printf "%s requires %s but it is not installed, quitting.\n" "$1" "$cmd"
+          return 1
+        fi
+      done < "$dir/$1/requires"
+    fi
+    if [ -f "$dir/$1/depends" ]; then
+      while IFS= read -r dep; do
+        setup "$dep" "$2"
+      done < "$dir/$1/depends"
+    fi
     printf "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
     printf "Initializing %s setup.\n" "$1"
   fi
-  # set up config for programs.
   cd "$1" && ./setup.sh "$2" && printf "%s setup complete.\n" "$1" || printf "%s setup failed.\n" "$1"
-  sleep 1
   cd "$dir" || return 1
 }
 init_user() {
@@ -149,7 +150,7 @@ main() {
     # in non-default mode, if user is running as root, help user set up
     if [ "$(id -u)" -eq 0 ]; then
       if (has useradd || has adduser) && has passwd; then
-        setup_user
+        init_user
         # after successfully setting up the user, re-execute this script
         # under the user's new credential.
         exec su - "$name" -C "$dir/setup.sh"
@@ -185,12 +186,11 @@ main() {
     done
   fi
   printf "Setup complete, thank you for using this script.\n"
-  sleep 1
   if [ "$default" -eq 1 ] && [ "$name" != "$USER" ]; then
     exec su - "${name}"
   else
     . "$HOME"/.profile
   fi
-  return 1
+  return 0
 }
 main "$@"

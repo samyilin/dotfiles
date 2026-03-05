@@ -1,3 +1,3 @@
 #!/bin/sh
 . "$(dirname "$0")"/../common.sh
-unlink_config "$HOME/.ripgreprc"
+link_config "$PWD/zed" "$HOME/.config/zed"

@@ -1,3 +1,3 @@
 #!/bin/sh
 . "$(dirname "$0")"/../common.sh
-unlink_config "$HOME/.ripgreprc"
+unlink_config "$HOME/.config/yazi"

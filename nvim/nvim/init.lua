@@ -2,6 +2,14 @@
 -- Initialization
 -- ---------------------------------------------------------------------------
 
+vim.cmd(
+  'source'
+    .. vim.fs.joinpath(
+      os.getenv('HOME'),
+      vim.uv.os_uname().sysname == 'Windows' and '_vimrc' or '.vimrc'
+    )
+)
+
 -- Bootstrap with mini
 vim.pack.add(
   { { src = 'https://github.com/nvim-mini/mini.nvim' } },

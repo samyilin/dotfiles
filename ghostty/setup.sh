@@ -1,20 +1,3 @@
 #!/bin/sh
-
-config_path="$HOME"/.config
-setup_ghostty() {
-  test -d "$config_path" || mkdir -p "$config_path"
-  ln -sf "$PWD"/ghostty "$config_path"
-}
-main() {
-  if [ ! -d "$config_path"/ghostty ]; then
-    setup_ghostty
-  elif [ -d "$config_path"/ghostty ] && [ ! -L "$config_path"/ghostty ]; then
-    mv "$config_path"/ghostty "$config_path"/ghostty.bak
-    printf "Your ghostty config have been backed up in ghostty.bak.\n"
-    setup_ghostty
-  else
-    printf "ghostty is already setup, quitting\n"
-  fi
-  return 0
-}
-main "$@"
+. "$(dirname "$0")"/../common.sh
+link_config "$PWD/ghostty" "$HOME/.config/ghostty"

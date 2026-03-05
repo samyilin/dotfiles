@@ -1,9 +1,3 @@
 #!/bin/sh
-
-# only performs unlink. Ensures that physical file won't be inpacted if
-# present.
-rm -f "$HOME"/.tmux.conf 2>/dev/null
-if [ -f "$HOME"/.tmux.conf.bak ]; then
-  mv "$HOME"/.tmux.conf.bak "$HOME"/.tmux.conf
-  echo "Your default .tmux.conf have been restored"
-fi
+. "$(dirname "$0")"/../common.sh
+unlink_config "$HOME/.tmux.conf"

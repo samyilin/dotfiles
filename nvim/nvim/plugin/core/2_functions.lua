@@ -14,17 +14,3 @@ Config.on_packchanged = function(plugin_name, kinds, callback)
     { pattern = '*', callback = f, desc = 'Callback for Update packages' }
   )
 end
-Config.on_packchangedpre = function(plugin_name, kinds, callback)
-  local f = function(ev)
-    local name, kind = ev.data.spec.name, ev.data.kind
-    if not (name == plugin_name and vim.tbl_contains(kinds, kind)) then
-      return
-    end
-    if not ev.data.active then vim.cmd.packadd(plugin_name) end
-    callback()
-  end
-  Config.new_autocmd(
-    'PackChangedPre',
-    { pattern = '*', callback = f, desc = 'Callback for Update packages' }
-  )
-end
