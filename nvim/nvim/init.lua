@@ -10,6 +10,9 @@ vim.pack.add(
 -- Set colorscheme
 vim.cmd.colorscheme('miniautumn')
 
+-- Add undotree
+vim.cmd('packadd nvim.undotree')
+
 -- Define global config table for sharing between modules
 _G.Config = {}
 

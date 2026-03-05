@@ -8,3 +8,6 @@ vim.o.swapfile = false -- disable swapfile. Causes more problem than what it fix
 vim.diagnostic.config({ virtual_text = true })
 vim.o.expandtab = true
 vim.o.autowrite = true
+vim.opt.foldmethod = 'expr'
+vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
+vim.opt.foldlevel = 99
