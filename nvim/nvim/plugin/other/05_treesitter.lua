@@ -28,6 +28,9 @@ Config.now_if_args(function()
     'tsx',
     'typst',
     'vue',
+    --rust
+    'rust',
+    'ron',
   }
   vim.pack.add({
     {
