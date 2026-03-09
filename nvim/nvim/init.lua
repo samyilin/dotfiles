@@ -10,6 +10,13 @@ vim.cmd(
     )
 )
 
+-- Add this to your init.lua
+vim.filetype.add({
+  extension = {
+    mdc = 'markdown', -- Treat .mdc files as markdown
+  },
+})
+
 -- Bootstrap with mini
 vim.pack.add(
   { { src = 'https://github.com/nvim-mini/mini.nvim' } },
