@@ -4,5 +4,8 @@ Config.now_if_args(function()
       src = 'https://github.com/MeanderingProgrammer/render-markdown.nvim',
     },
   })
-  require('render-markdown').setup({}) -- only mandatory if you want to set custom options
+  require('render-markdown').setup({
+    enabled = true,
+    preset = 'obsidian',
+  }) -- only mandatory if you want to set custom options
 end)

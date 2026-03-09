@@ -1,4 +1,6 @@
 package-lock.json
+zed/zed/prompts/
+zed/zed/themes/
 .DS_Store
 lazy-lock.json
 lazyvim.json

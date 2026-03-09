@@ -1,20 +1,20 @@
-# use rawhide for latest packages
-FROM fedora:rawhide
+FROM fedora:latest
 
-LABEL maintainer="samsu42@yahoo.ca"
+LABEL maintainer="Sam Su samsu42@yahoo.ca"
+LABEL description="Self-contained Vim/Tmux based CLI Workspace"
 
-LABEL DESCRIPTION "Self-contained Vim/Tmux based Workspace"
-# Get some manuals going
-RUN grep -v nodocs /etc/dnf/dnf.conf | sudo tee /etc/dnf/dnf.conf
-# reinstall packages so we can have manpages
-RUN dnf -y update && dnf -y reinstall "*" && \
-  dnf -y install man \
+RUN sed -i '/^tsflags=nodocs/d' /etc/dnf/dnf.conf && \
+  dnf -y update && \
+  dnf -y reinstall "*" && \
+  dnf -y install \
+  man-db \
   man-pages \
   info \
   procps-ng \
   iputils \
   iproute \
   vim \
+  neovim \
   git \
   busybox \
   tmux \
@@ -22,19 +22,13 @@ RUN dnf -y update && dnf -y reinstall "*" && \
   wget \
   curl \
   less \
-  xz
-# neovim prerequisites. Sign.
-RUN dnf -y install neovim \
-  wget \
-  ctags \
+  xz \
   ripgrep \
-  fd-find \
-  gcc-c++ \
-  npm \
-  && \
-  dnf -y groupinstall "Development Tools" "Development Libraries" && \
-  /usr/bin/python3 -m pip install pynvim && \
-  npm install -g neovim
-RUN dnf clean all
+  fd-find && \
+  dnf clean all
+
 COPY . /usr/share/workspace
-ENTRYPOINT ["sh","/usr/share/workspace/setup","-d"]
+WORKDIR /usr/share/workspace
+RUN ./setup.sh -d
+
+CMD ["/bin/bash"]

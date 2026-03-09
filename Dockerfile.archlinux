@@ -1,39 +1,30 @@
 FROM archlinux:latest
 
-LABEL maintainer="samsu42@yahoo.ca"
+LABEL maintainer="Sam Su samsu42@yahoo.ca"
+LABEL description="Self-contained Vim/Tmux based CLI Workspace"
 
-LABEL DESCRIPTION "Self-contained Vim/Tmux based Workspace"
-
-COPY . /usr/share/workspace
-# fix man-pages plus locale, see misc/arch/docker-bootstrap
-RUN /usr/share/workspace/misc/arch/docker-bootstrap
-# Update packages and reinstall packes to ensure man-page
-RUN yes | pacman -Syu && pacman -Qqn | pacman -S --noconfirm -
-# Basic terminal system setup
-RUN  pacman -S --noconfirm \
+RUN printf "\nen_US.UTF-8 UTF-8\n" >>/etc/locale.gen && locale-gen && \
+  sed -i '/^NoExtract/d' /etc/pacman.conf && \
+  pacman -Syu --noconfirm && \
+  pacman -Qqn | pacman -S --noconfirm - && \
+  pacman -S --noconfirm \
   man-db \
   texinfo \
   curl \
+  wget \
   vim \
   neovim \
   tmux \
   shellcheck \
-  git
-# Neovim plus kickstart.nvim requirements
-RUN  pacman -S --noconfirm neovim \
-  python-pynvim \
-  npm \
-  neovim-lspconfig \
-  neovim-nvim-treesitter \
-  wget \
-  unzip \
-  base-devel \
+  git \
+  openssh \
   fd \
-  ripgrep && \
-  npm install -g neovim
-# emacs
-RUN yes | pacman -S emacs-nativecomp
-# delete pacman cache to save space
-RUN yes | pacman -Scc
+  ripgrep \
+  unzip && \
+  pacman -Scc --noconfirm
 
-ENTRYPOINT ["sh","/usr/share/workspace/setup","-d"]
+COPY . /usr/share/workspace
+WORKDIR /usr/share/workspace
+RUN ./setup.sh -d
+
+CMD ["/bin/bash"]

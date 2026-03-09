@@ -1,32 +1,32 @@
-# Use rolling Ubuntu for latest release, still not bleeding-edge though.
-FROM ubuntu:rolling
+FROM ubuntu:24.04
 
-LABEL MAINTAINER "Sam Su samsu42@yahoo.ca"
-
-LABEL DESCRIPTION "Self-contained Vim/Tmux based Workspace"
+LABEL maintainer="Sam Su samsu42@yahoo.ca"
+LABEL description="Self-contained Vim/Tmux based CLI Workspace"
 
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN yes | unminimize && \
-  apt-get -y --no-install-recommends upgrade && \
-  apt-get install -y \
+  apt-get update && \
+  apt-get -y upgrade && \
+  apt-get install -y --no-install-recommends \
   xz-utils \
   man-db \
   curl \
+  wget \
+  less \
   sudo \
-  ssh  \
+  openssh-client \
   tmux \
   git \
   vim \
   shellcheck \
   busybox \
-  iputils-ping \
-  wget \
-  less \
-  && \
+  iputils-ping && \
   apt-get clean && \
-  rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /var/log/dmesg.* && \
-  cat /dev/null > /var/log/dmesg
+  rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 COPY . /usr/share/workspace
-ENTRYPOINT ["sh","/usr/share/workspace/setup","-d","&&","source","/root/bashrc"]
+WORKDIR /usr/share/workspace
+RUN ./setup.sh -d
+
+CMD ["/bin/bash"]

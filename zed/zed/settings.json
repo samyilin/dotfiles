@@ -7,28 +7,33 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "disable_ai": false,
+  "agent_servers": {
+    "cursor": {
+      "type": "registry",
+    },
+  },
   "tab_size": 2,
   "colorize_brackets": true,
   "terminal": {
     "toolbar": {
-      "breadcrumbs": true
+      "breadcrumbs": true,
     },
     "font_family": "JetBrainsMono Nerd Font",
     "dock": "bottom",
-    "button": true
+    "button": true,
   },
   "search": {
-    "regex": true
+    "regex": true,
   },
   "tabs": {
     "file_icons": true,
-    "git_status": true
+    "git_status": true,
   },
   "title_bar": {
     "show_menus": true,
-    "show_branch_icon": true
+    "show_branch_icon": true,
   },
-  "disable_ai": true,
   "vim_mode": true,
   "icon_theme": "Zed (Default)",
   "ui_font_size": 13,
@@ -36,6 +41,6 @@
   "theme": {
     "mode": "system",
     "light": "One Dark",
-    "dark": "Gruvbox Dark Hard"
-  }
+    "dark": "Gruvbox Dark Hard",
+  },
 }
