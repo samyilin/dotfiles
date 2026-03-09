@@ -13,6 +13,16 @@ if [ -f "$HOME"/.bash_aliases ]; then
   source "$HOME"/.bash_aliases
 fi
 
+has() {
+  # if it is not an executable, then search in aliases to see if it's an
+  # alias. If it's an alias, then it can be configured.
+  case "$(type "$1" >>/dev/null 2>&1)" in
+  *alias*) return 0 ;;
+  *) ;;
+  esac
+  command -v "$1" >>/dev/null 2>&1 && test -x "$(command -v "$1")" >>/dev/null 2>&1 && return 0 || return 1
+}
+
 # Force end POSIX mode, somehow Kitty won't reset POSIX mode
 set +o posix
 # vi mode
@@ -26,8 +36,12 @@ shopt -s checkwinsize
 HISTCONTROL=ignoreboth:erasedups
 HISTSIZE=5000
 HISTFILESIZE=10000
-export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
 # prompt setting. Funny combination of Ubuntu and Fedora.
+if has starship; then
+  eval "$(starship init bash)"
+else
+  export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
+fi
 # Can be just too long on certain systems. Consider changing this later.
 PS1='\[\033[01;32m\][\u@\H \w]\[\033[00m\]\\$ '
 # tries to run pfetch if it's installed
