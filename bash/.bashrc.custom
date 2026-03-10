@@ -40,10 +40,10 @@ HISTFILESIZE=10000
 if has starship; then
   eval "$(starship init bash)"
 else
-  export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
+  PS1='\[\033[01;32m\][\u@\H \w]\[\033[00m\]\\$ '
 fi
+export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
 # Can be just too long on certain systems. Consider changing this later.
-PS1='\[\033[01;32m\][\u@\H \w]\[\033[00m\]\\$ '
 # tries to run pfetch if it's installed
 fastfetch 2>/dev/null || "$HOME"/.nix-profile/bin/fastfetch 2>/dev/null
 
