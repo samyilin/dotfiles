@@ -8,3 +8,7 @@ disabled = true
 disabled = true
 [git_metrics]
 disabled = false
+[docker_context]
+disabled = true
+
+command_timeout	= 5000

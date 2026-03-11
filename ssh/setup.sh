@@ -22,7 +22,7 @@ main() {
       case "$response" in
       [Yy]*) break ;;
       [Nn]*) return 2>/dev/null ;;
-      *) printf "Invalid response, please try again\n" ;;
+      *) printf "Invalid response, please try again.\n" ;;
       esac
     done
     unset "$response"
@@ -73,7 +73,7 @@ main() {
         break
         ;;
       [Nn]*) break ;;
-      *) printf "Invalid response, please try agai\nn" ;;
+      *) printf "Invalid response, please try again.\n" ;;
       esac
     done
     printf "Which file, in ~/.ssh, would you like to store your public/private key?\n"
