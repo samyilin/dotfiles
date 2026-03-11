@@ -1,6 +1,6 @@
 package-lock.json
-zed/zed/prompts/
-zed/zed/themes/
+zed/zed/*
+!zed/zed/settings.json
 .DS_Store
 lazy-lock.json
 lazyvim.json
@@ -10,3 +10,7 @@ lazygit/lazygit/config.yml
 *.bak
 nvim/neovim
 lazygit/lazygit/state.yml
+emacs/.emacs.d/*
+!emacs/.emacs.d/init.el
+!emacs/.emacs.d/early-init.el
+!emacs/.emacs.d/custom.el
