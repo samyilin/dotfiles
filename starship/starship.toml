@@ -11,4 +11,4 @@ disabled = false
 [docker_context]
 disabled = true
 
-command_timeout	= 5000
+command_timeout = 5000
