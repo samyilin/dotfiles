@@ -24,3 +24,5 @@ Neovim requires:
 ## other requirements
 1. pyenv or uv for Python dev
 2. starship for prompt
+3. bash and git (for up-to-date modern packages)
+4. vim and neovim
