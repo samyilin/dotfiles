@@ -26,3 +26,17 @@ Neovim requires:
 2. starship for prompt
 3. bash and git (for up-to-date modern packages)
 4. vim and neovim
+
+## List xcode-select tools
+
+```sh
+ls "$(xcode-select --print-path)/usr/bin"
+```
+
+## Setting default bash to Homebrew bash
+
+```sh
+echo "$(brew --prefix)/bin/bash" | sudo tee -a /etc/shells
+chsh -s "$(brew --prefix)/bin/bash"
+
+```
