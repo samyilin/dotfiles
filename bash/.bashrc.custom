@@ -123,8 +123,13 @@ update_repos() {
 }
 
 # Try to use homebrew's vim if available. Mac's Vim is stuck at 9.0
-if [ -f /opt/homebrew/bin/vim ]; then
-  alias vim="/opt/homebrew/bin/vim"
+if has brew; then
+  if [ -f "$(brew --prefix)"/bin/vim ]; then
+    alias vim='$(brew --prefix)bin/vim'
+  fi
+  if [ -f "$(brew --prefix)"/bin/git ]; then
+    alias git='$(brew --prefix)/bin/git'
+  fi
 fi
 export EDITOR="nvim"
 export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
