@@ -99,6 +99,8 @@
   (set-face-attribute 'default nil :family mono-spaced-font :height 100)
   (set-face-attribute 'fixed-pitch nil :family mono-spaced-font :height 1.0)
   (set-face-attribute 'variable-pitch nil :family proportionately-spaced-font :height 1.0))
+(when (member "Google Sans Code" (font-family-list))
+  (add-to-list 'default-frame-alist '(font . "Google Sans Code-13")))
 
 (use-package modus-themes
   :ensure t
