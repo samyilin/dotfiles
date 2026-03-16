@@ -47,31 +47,11 @@ Config.now_if_args(function()
   -- This will mature as vim.pack improves.
   -- add this line just in case I decided to add some languages ad-hoc.
   require('nvim-treesitter').install(ensure_languages)
-  Config.new_autocmd('User', {
-    pattern = 'TSUpdate',
-    callback = function()
-      require('nvim-treesitter.parsers').jsonc = {
-        install_info = {
-          url = 'https://gitlab.com/WhyNotHugo/tree-sitter-jsonc',
-          revision = 'HEAD', -- commit hash for revision to check out; HEAD if missing
-          -- optional entries:
-          branch = 'main', -- only needed if different from default branch
-          -- location = 'parser', -- only needed if the parser is in subdirectory of a "monorepo"
-          generate = false, -- only needed if repo does not contain pre-generated `src/parser.c`
-          generate_from_json = false, -- only needed if repo does not contain `src/grammar.json` either
-          -- queries = 'queries/neovim', -- also install queries from given directory
-        },
-        tier = 1,
-      }
-    end,
-    desc = '',
-  })
   require('nvim-treesitter').setup({
     incremental_selection = {
       enable = true,
     },
   })
-
   local filetypes = vim
     .iter(ensure_languages)
     :map(vim.treesitter.language.get_filetypes)
@@ -84,6 +64,4 @@ Config.now_if_args(function()
 
   -- Display context when current block is off-screen
   require('treesitter-context').setup()
-  local ts_update = function() vim.cmd('TSUpdate') end
-  Config.on_packchanged('nvim-treesitter', { 'update' }, ts_update)
 end)

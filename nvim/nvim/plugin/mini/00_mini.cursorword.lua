@@ -1,1 +1,1 @@
-require('mini.cursorword').setup()
+Config.now(function() require('mini.cursorword').setup() end)

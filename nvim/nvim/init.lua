@@ -1,7 +1,58 @@
 -- ---------------------------------------------------------------------------
 -- Initialization
 -- ---------------------------------------------------------------------------
-
+-- https://github.com/neovim/neovim/pull/22668
+vim.loader.enable()
+-- vim.pack autocmd
+if vim.fn.executable('rustup') then
+  -- so it runs automatically after the plugin is installed.
+  vim.api.nvim_create_autocmd('PackChanged', {
+    pattern = 'blink.cmp',
+    group = vim.api.nvim_create_augroup('blink_update', { clear = true }),
+    callback = function(e)
+      if e.data.kind == 'update' or e.data.kind == 'install' then
+        -- Recommended way to access plugin files inside `PackChanged` event
+        -- vim.cmd [[packadd blink.cmp]]
+        if not e.data.active then
+          vim.cmd.packadd({ args = { e.data.spec.name }, bang = false })
+        end
+        -- Build the plugin from source
+        -- vim.cmd [[BlinkCmp build]]
+        require('blink.cmp.fuzzy.build').build()
+      end
+    end,
+  })
+end
+vim.api.nvim_create_autocmd('PackChanged', {
+  callback = function(ev)
+    local name, kind = ev.data.spec.name, ev.data.kind
+    if name == 'nvim-treesitter' and kind == 'update' then
+      if not ev.data.active then vim.cmd.packadd('nvim-treesitter') end
+      vim.cmd('TSUpdate')
+    end
+  end,
+})
+-- JSONC parser
+vim.api.nvim_create_autocmd('User', {
+  pattern = 'TSUpdate',
+  callback = function()
+    require('nvim-treesitter.parsers').jsonc = {
+      install_info = {
+        url = 'https://gitlab.com/WhyNotHugo/tree-sitter-jsonc',
+        revision = 'HEAD', -- commit hash for revision to check out; HEAD if missing
+        -- optional entries:
+        branch = 'main', -- only needed if different from default branch
+        -- location = 'parser', -- only needed if the parser is in subdirectory of a "monorepo"
+        generate = false, -- only needed if repo does not contain pre-generated `src/parser.c`
+        generate_from_json = false, -- only needed if repo does not contain `src/grammar.json` either
+        -- queries = 'queries/neovim', -- also install queries from given directory
+      },
+      tier = 1,
+    }
+  end,
+  desc = '',
+})
+-- load vimrc
 vim.cmd(
   'source'
     .. vim.fs.joinpath(
@@ -45,15 +96,3 @@ Config.new_autocmd = function(event, opts)
   opts.group = Config.custom_group
   vim.api.nvim_create_autocmd(event, opts)
 end
--- load mini.basics and mini.misc immediately
---
-Config.now(function()
-  require('mini.basics').setup({
-    options = {
-      extra_ui = true,
-    },
-  })
-  require('mini.misc').setup()
-  -- Restore cursor position
-  MiniMisc.setup_restore_cursor()
-end)
