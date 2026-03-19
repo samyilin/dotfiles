@@ -74,7 +74,6 @@ vim.pack.add(
   { load = true }
 )
 -- Set colorscheme
-vim.cmd.colorscheme('miniautumn')
 
 -- Add undotree
 vim.cmd('packadd nvim.undotree')
@@ -96,3 +95,4 @@ Config.new_autocmd = function(event, opts)
   opts.group = Config.custom_group
   vim.api.nvim_create_autocmd(event, opts)
 end
+vim.cmd.colorscheme('miniautumn')
