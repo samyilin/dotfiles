@@ -43,3 +43,11 @@ echo "$(brew --prefix)/bin/bash" | sudo tee -a /etc/shells
 chsh -s "$(brew --prefix)/bin/bash"
 
 ```
+## Making sure that homebrew packages are used first in bash scripts
+
+Also, coreutils would alias all their installs with a g (ggrep instead
+of grep), so make sure you adjust any script to use to use those.
+```sh
+export PATH="/opt/homebrew/bin:$PATH"
+export PATH="/opt/homebrew/sbin:$PATH"
+```
