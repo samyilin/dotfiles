@@ -1,0 +1,2 @@
+-- Add undotree
+Config.later(function() vim.cmd('packadd nvim.undotree') end)

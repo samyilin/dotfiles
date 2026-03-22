@@ -57,8 +57,9 @@ Config.now_if_args(function()
     :map(vim.treesitter.language.get_filetypes)
     :flatten()
     :totable()
-  Config.new_autocmd('FileType', {
+  vim.api.nvim_create_autocmd('FileType', {
     pattern = filetypes,
+    group = Config.custom_group,
     callback = function() vim.treesitter.start() end,
   })
 
