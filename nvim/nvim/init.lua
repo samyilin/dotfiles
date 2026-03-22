@@ -8,6 +8,9 @@ Config.custom_group = vim.api.nvim_create_augroup('custom-config', {})
 -- https://github.com/neovim/neovim/pull/22668
 vim.loader.enable()
 
+-- set leader and localleader key
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
 -- add homebrew bin and sbin
 if vim.fn.executable('brew') then
   -- Get the current PATH value
