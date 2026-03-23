@@ -1,3 +1,5 @@
+-- https://github.com/neovim/neovim/pull/22668
+vim.loader.enable()
 -- Bootstrap with mini
 vim.pack.add(
   { { src = 'https://github.com/nvim-mini/mini.nvim' } },

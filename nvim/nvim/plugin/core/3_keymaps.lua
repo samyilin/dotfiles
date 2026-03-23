@@ -1,3 +1,7 @@
+-- set leader and localleader key
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
+-- vim.pack update
 vim.keymap.set(
   'n',
   '<leader>pu',
