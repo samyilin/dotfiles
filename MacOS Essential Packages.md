@@ -15,14 +15,39 @@ Neovim requires:
 7. fd
 8. lazygit delta (for now)
 
-## Neovim LS + formatter requirements
+## 2. Neovim LS + formatter requirements
 
 1. lua-language-server stylua
 2. shfmt shellcheck
 3. sqlfluff
 
-## other requirements
+## 3. other requirements
+
 1. pyenv or uv for Python dev
 2. starship for prompt
-3. bash and git (for up-to-date modern packages)
+3. bash, bash-completion and git (for up-to-date modern packages)
 4. vim and neovim
+5. A good font (maple for now, have Chinese support)
+6. Terminal (ghostty/kitty)
+
+## 4. List xcode-select tools
+
+```sh
+ls "$(xcode-select --print-path)/usr/bin"
+```
+
+## 5. Setting default bash to Homebrew bash
+
+```sh
+echo "$(brew --prefix)/bin/bash" | sudo tee -a /etc/shells
+chsh -s "$(brew --prefix)/bin/bash"
+
+```
+## Making sure that homebrew packages are used first in bash scripts
+
+Also, coreutils would alias all their installs with a g (ggrep instead
+of grep), so make sure you adjust any script to use to use those.
+```sh
+export PATH="/opt/homebrew/bin:$PATH"
+export PATH="/opt/homebrew/sbin:$PATH"
+```

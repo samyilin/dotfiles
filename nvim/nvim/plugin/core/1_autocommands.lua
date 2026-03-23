@@ -1,5 +1,6 @@
 -- resize splits if window got resized
-Config.new_autocmd('VimResized', {
+vim.api.nvim_create_autocmd('VimResized', {
+  group = Config.custom_group,
   callback = function()
     local current_tab = vim.fn.tabpagenr()
     vim.cmd('tabdo wincmd =')

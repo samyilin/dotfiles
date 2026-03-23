@@ -7,3 +7,7 @@ keybind = cmd+r=prompt_surface_title
 window-padding-y = 0
 window-padding-balance = true
 window-padding-color = extend
+
+font-family = "Maple Mono NF CN"
+# https://ghostty.org/docs/help/terminfo
+shell-integration-features = ssh-terminfo,ssh-env

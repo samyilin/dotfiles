@@ -105,7 +105,15 @@
 (use-package modus-themes
   :ensure t
   :config
-  (load-theme 'modus-vivendi-tinted :no-confirm-loading))
+  (load-theme 'modus-operandi-tinted :no-confirm-loading))
+(use-package ef-themes
+  :ensure t
+  :config
+  (modus-themes-include-derivatives-mode 1))
+(use-package standard-themes
+  :ensure t
+  :config
+  (modus-themes-include-derivatives-mode 1))
 
 ;; Remember to do M-x and run `nerd-icons-install-fonts' to get the
 ;; font files.  Then restart Emacs to see the effect.
@@ -215,3 +223,5 @@
 
 (add-function :after after-focus-change-function #'td/adapt-font-size)
 (add-hook 'after-make-frame-functions #'td/adapt-font-size)
+;; Remember and restore the last cursor location of opened files
+(save-place-mode 1)

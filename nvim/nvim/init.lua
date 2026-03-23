@@ -1,7 +1,60 @@
 -- ---------------------------------------------------------------------------
 -- Initialization
 -- ---------------------------------------------------------------------------
+-- Define global config table for sharing between modules
+_G.Config = {}
+-- Helper for custom group
+Config.custom_group = vim.api.nvim_create_augroup('custom-config', {})
+-- https://github.com/neovim/neovim/pull/22668
+vim.loader.enable()
 
+-- set leader and localleader key
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
+-- add homebrew bin and sbin
+if vim.fn.executable('brew') then
+  -- Get the current PATH value
+  local current_path = vim.env.PATH
+
+  -- Define the directory you want to prepend
+  local homebrew_bin = '/opt/homebrew/bin'
+  local homebrew_sbin = '/opt/homebrew/sbin'
+
+  -- Define the path separator based on the operating system
+  local separator = ':'
+
+  -- Prepend the new directory to the PATH environment variable
+  vim.env.PATH = homebrew_bin
+    .. separator
+    .. homebrew_sbin
+    .. separator
+    .. current_path
+end
+
+-- vim.pack autocmd
+vim.api.nvim_create_autocmd('PackChanged', {
+  group = Config.custom_group,
+  callback = function(ev)
+    local name, kind, active = ev.data.spec.name, ev.data.kind, ev.data.active
+    if name == 'nvim-treesitter' and kind == 'update' then
+      if not ev.data.active then vim.cmd.packadd('nvim-treesitter') end
+      vim.cmd('TSUpdate')
+    end
+    if vim.fn.executable('rustup') then
+      if name == 'blink.cmp' and kind == 'update' or kind == 'install' then
+        -- Recommended way to access plugin files inside `PackChanged` event
+        -- vim.cmd [[packadd blink.cmp]]
+        if not active then
+          vim.cmd.packadd({ args = { name }, bang = false })
+        end
+        -- Build the plugin from source
+        -- vim.cmd [[BlinkCmp build]]
+        require('blink.cmp.fuzzy.build').build()
+      end
+    end
+  end,
+})
+-- load vimrc
 vim.cmd(
   'source'
     .. vim.fs.joinpath(
@@ -10,7 +63,7 @@ vim.cmd(
     )
 )
 
--- Add this to your init.lua
+-- Treat .mdc files as markdown
 vim.filetype.add({
   extension = {
     mdc = 'markdown', -- Treat .mdc files as markdown
@@ -22,14 +75,6 @@ vim.pack.add(
   { { src = 'https://github.com/nvim-mini/mini.nvim' } },
   { load = true }
 )
--- Set colorscheme
-vim.cmd.colorscheme('miniautumn')
-
--- Add undotree
-vim.cmd('packadd nvim.undotree')
-
--- Define global config table for sharing between modules
-_G.Config = {}
 
 -- Define lazy helpers
 local misc = require('mini.misc')
@@ -39,21 +84,4 @@ Config.now_if_args = vim.fn.argc(-1) > 0 and Config.now or Config.later
 Config.on_event = function(ev, f) misc.safely('event:' .. ev, f) end
 Config.on_filetype = function(ft, f) misc.safely('filetype:' .. ft, f) end
 
--- Helper for creating a new autocommand
-Config.custom_group = vim.api.nvim_create_augroup('custom-config', {})
-Config.new_autocmd = function(event, opts)
-  opts.group = Config.custom_group
-  vim.api.nvim_create_autocmd(event, opts)
-end
--- load mini.basics and mini.misc immediately
---
-Config.now(function()
-  require('mini.basics').setup({
-    options = {
-      extra_ui = true,
-    },
-  })
-  require('mini.misc').setup()
-  -- Restore cursor position
-  MiniMisc.setup_restore_cursor()
-end)
+vim.cmd.colorscheme('miniautumn')

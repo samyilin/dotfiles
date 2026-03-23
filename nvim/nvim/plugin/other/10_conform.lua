@@ -11,6 +11,7 @@ Config.later(function()
       sh = { 'shfmt' },
       bash = { 'shfmt' },
       sql = { 'sqlfluff' },
+      json = { 'jq' },
       ['markdown'] = { 'markdownlint-cli2' },
       ['markdown.mdx'] = { 'markdownlint-cli2' },
     },
