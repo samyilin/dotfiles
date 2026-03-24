@@ -2,9 +2,11 @@
 # Simple script to remove influence of my script in bash configs.
 
 dir=$(cd -- "$(dirname -- "$0")" >>/dev/null 2>&1 && pwd)
+bashrc_custom=". ""$dir""/.bashrc.custom"
+profile_line=". ""$HOME""/.profile"
 if [ -f "$HOME"/.bashrc ]; then
   while IFS= read -r line; do
-    if [ ! "$line" = "$(printf "test -f %s/.bashrc.custom && source %s/.bashrc.custom" "$dir" "$dir")" ]; then
+    if [ ! "$line" = "$bashrc_custom" ]; then
       printf "%s\n" "$line"
     fi
   done <"$HOME"/.bashrc >o
@@ -12,7 +14,7 @@ if [ -f "$HOME"/.bashrc ]; then
 fi
 if [ -f "$HOME"/.bash_profile ]; then
   while IFS= read -r line; do
-    if [ ! "$line" = "$(printf ". %s/.profile" "$HOME")" ]; then
+    if [ ! "$line" = "$profile_line" ]; then
       printf "%s\n" "$line"
     fi
   done <"$HOME/".bash_profile >o

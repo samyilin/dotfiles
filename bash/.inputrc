@@ -1,12 +1,11 @@
 # This is used by readline or the like to set up how command line works.
 # These 2 lines basically enforces a colorscheme for when I do
 # tab-complete within Bash.
-
 set colored-stats on
 set colored-completion-prefix on
 # Readline causes the terminal to echo ^C after Ctrl+C is pressed.
 # If you don't want that, then uncomment the following line
-# set echo-control-characters off
+set echo-control-characters off
 
 
 # 1 line per completion item
