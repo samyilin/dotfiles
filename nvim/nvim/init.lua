@@ -28,13 +28,11 @@ if vim.fn.executable('brew') then
 end
 
 -- load vimrc
-vim.cmd(
-  'source'
-    .. vim.fs.joinpath(
-      os.getenv('HOME'),
-      vim.uv.os_uname().sysname == 'Windows' and '_vimrc' or '.vimrc'
-    )
+local vimrc_path = vim.fs.joinpath(
+  os.getenv('HOME'),
+  vim.uv.os_uname().sysname == 'Windows' and '_vimrc' or '.vimrc'
 )
+if vim.fn.filereadable(vimrc_path) then vim.cmd('source' .. vimrc_path) end
 
 -- Treat .mdc files as markdown
 vim.filetype.add({

@@ -30,15 +30,15 @@ Config.later(function()
       --     return false
       --   end,
       -- },
-      ['markdownlint-cli2'] = {
-        condition = function(_, ctx)
-          local diag = vim.tbl_filter(
-            function(d) return d.source == 'markdownlint' end,
-            vim.diagnostic.get(ctx.buf)
-          )
-          return #diag > 0
-        end,
-      },
+      -- ['markdownlint-cli2'] = {
+      --   condition = function(_, ctx)
+      --     local diag = vim.tbl_filter(
+      --       function(d) return d.source == 'markdownlint' end,
+      --       vim.diagnostic.get(ctx.buf)
+      --     )
+      --     return #diag > 0
+      --   end,
+      -- },
       ['shfmt'] = {
         append_args = { '-i', '2' },
         -- The base args are { "-filename", "$FILENAME" } so the final args will be

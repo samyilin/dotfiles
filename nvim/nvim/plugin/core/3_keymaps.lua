@@ -8,12 +8,14 @@ vim.keymap.set(
   function() vim.pack.update() end,
   { desc = 'Plugin Update' }
 )
+-- vim.pack sync
 vim.keymap.set(
   'n',
   '<leader>ps',
   function() vim.pack.update({}, { target = 'lockfile' }) end,
   { desc = 'Plugin update against lockfile' }
 )
+-- close floats on pressing escape
 local function close_floats()
   for _, win in ipairs(vim.api.nvim_list_wins()) do
     if vim.api.nvim_win_get_config(win).relative ~= '' then
@@ -21,7 +23,6 @@ local function close_floats()
     end
   end
 end
-
 vim.keymap.set(
   'n',
   '<Esc>',
