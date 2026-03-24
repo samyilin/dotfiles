@@ -9,7 +9,7 @@
       "src": "https://github.com/stevearc/conform.nvim"
     },
     "gitsigns.nvim": {
-      "rev": "7c4faa3540d0781a28588cafbd4dd187a28ac6e3",
+      "rev": "5c569562d9f9c98f12d684de5f37150e0ca1b12d",
       "src": "https://github.com/lewis6991/gitsigns.nvim.git"
     },
     "lazydev.nvim": {
