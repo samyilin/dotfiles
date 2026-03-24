@@ -27,7 +27,8 @@ type, when this config is mature enough.
 ## What I'm getting rid of
 
 I'm getting rid of package manager in favour of builtin package manager
-vim.pack. I think it simplifies things drastically.
+vim.pack. It simplifies config templating, but it complicates things by
+replacing that template with config structure.
 
 I'm getting rid of a lot of UI niceties for simpler approaches, yes it
 isn't as pretty, but the point is to reduce dependency as much as

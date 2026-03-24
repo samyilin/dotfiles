@@ -1,22 +1,7 @@
 #!/bin/sh
 dir=$(cd -- "$(dirname -- "$0")" >>/dev/null 2>&1 && pwd)
-for i in "$dir"/*; do
-  i="${i%*/}"
-  i="${i##*/}"
-  if [ -d "$i" ] && case "$i" in neovim*) false ;; *) true ;; esac then
-    i="${i%*/}"
-    i="${i##*/}"
-    rm -rf "$HOME"/.config/"$i"
-    rm -rf "$HOME"/.local/share/"$i"
-    rm -rf "$HOME"/.local/state/"$i"
-    rm -rf "$HOME"/.cache/"$i"
-    printf "%s configuration has been removed\n" "$i"
-    if [ -f "$HOME"/.config/"$i".bak ]; then
-      mv "$HOME"/.config/"$i".bak "$HOME"/.config/"$i"
-      printf "Your %s configuration has been restored.\n" "$i"
-    fi
-  fi
-done
+. "$(dirname "$0")"/../common.sh
+unlink_config "$HOME/.config/nvim"
 if [ -d "$HOME"/.pyenv ] && [ -f "$HOME"/.pyenv/versions/neovim/bin/python ]; then
   pyenv uninstall neovim
 elif [ -d "$HOME"/.local/share/uv ] && [ -f "$HOME"/dotfiles/nvim/neovim/bin/python ]; then
