@@ -4,25 +4,21 @@
 # bash-specific setup.
 main() {
   dir=$(cd -- "$(dirname -- "$0")" >>/dev/null 2>&1 && pwd)
-  if [ -f "$HOME"/.profile ] && [ ! -L "$HOME"/.profile ]; then
+  profile_default=". ""$dir""/.profile.default"
+  if [ -f "$HOME/.profile" ] && [ ! -L "$HOME"/.profile ]; then
     while IFS= read -r line; do
-      if [ "$line" = "$(printf "test -f %s/alias && . %s/alias" "$dir" "$dir")" ]; then
+      if [ "$line" = "$profile_default" ]; then
         added=1
-        printf ".profile already exists and is set up.\n"
+        printf "custom .profile already exists and is set up.\n"
       fi
     done <"$HOME/.profile"
     if [ "${added-0}" -eq 0 ]; then
-      printf "\ntest -f %s/alias && . %s/alias\n" "$dir" "$dir" | tee -a "$HOME"/.profile >/dev/null
+      printf "\n%s\n" "$profile_default" >>"$HOME"/.profile
     fi
-    # if no profile exists right now,  copy and paste .profile.default
-    # to .profile. This .profile is a placeholder, so no symlink is
-    # necessary.  Plus, we want this .profile to be written to by other
-    # programs, so symlinking would lead to master copy to be polluted
-    # when we commit.
+    printf ".profile setup complete.\n"
   elif [ ! -f "$HOME"/.profile ]; then
-    cp "$dir"/.profile.default "$HOME"/.profile
-    printf "\ntest -f %s/alias&& . %s/alias\n" "$dir" "$dir" >>"$HOME"/.profile
+    cp "$dir"/.profile "$HOME"/.profile
+    printf "\n%s\n" "$profile_default" >>"$HOME"/.profile
   fi
-  printf ".profile setup complete.\n"
 }
 main "$@"

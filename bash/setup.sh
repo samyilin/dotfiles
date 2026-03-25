@@ -4,7 +4,6 @@
 # this function and wrap case-ifs into a function and call that with
 # arguments.
 main() {
-  added=0
   dir=$(cd -- "$(dirname -- "$0")" >>/dev/null 2>&1 && pwd)
   bashrc_custom=". ""$dir""/.bashrc.custom"
   if [ -f "$HOME/.bashrc" ] && [ ! -L "$HOME"/.bashrc ]; then
@@ -24,7 +23,6 @@ main() {
   fi
   # force .bash_profile to read .profile. Avoids dup code and avoids
   # .profile not being read.
-  added=0
   profile_line=". ""$HOME""/.profile"
   if [ -f "$HOME"/.bash_profile ] && [ ! -L "$HOME"/.bash_profile ]; then
     while IFS= read -r line; do

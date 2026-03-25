@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 ##################################################################
 # This is my personal bash profile section, nothing to see here.
 
@@ -8,20 +8,16 @@ case $- in
 *) return ;;
 esac
 
-# This bashrc does one thing only, referencing the actual bashrc config
-if [ -f "$HOME"/.bash_aliases ]; then
-  source "$HOME"/.bash_aliases
-fi
-
-has() {
-  # if it is not an executable, then search in aliases to see if it's an
-  # alias. If it's an alias, then it can be configured.
-  case "$(type "$1" >>/dev/null 2>&1)" in
-  *alias*) return 0 ;;
-  *) ;;
+# Add this for WSL corporate desktop. There's annoyance on corporate Windows.
+if [ -d /proc ]; then
+  version="$(cat /proc/version)"
+  case "$version" in
+  *microsoft*)
+    alias network="sudo chattr -i /etc/resolv.conf && sudo vim /etc/resolv.conf && sudo chattr +i /etc/resolv.conf"
+    ;;
+  **) ;;
   esac
-  command -v "$1" >>/dev/null 2>&1 && test -x "$(command -v "$1")" >>/dev/null 2>&1 && return 0 || return 1
-}
+fi
 
 # Force end POSIX mode, somehow Kitty won't reset POSIX mode
 set +o posix
@@ -36,27 +32,7 @@ shopt -s checkwinsize
 HISTCONTROL=ignoreboth:erasedups
 HISTSIZE=5000
 HISTFILESIZE=10000
-# Use Starship prompt if present.
-if has starship; then
-  eval "$(starship init bash)"
-else
-  # prompt setting. Funny combination of Ubuntu and Fedora.
-  PS1='\[\033[01;32m\][\u@\H \w]\[\033[00m\]\\$ '
-fi
 export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
-
-# Can be just too long on certain systems. Consider changing this later.
-# tries to run pfetch if it's installed
-fastfetch 2>/dev/null || "$HOME"/.nix-profile/bin/fastfetch 2>/dev/null
-
-# I don't care for dircolors, but put in her just in case.
-if [ -x /usr/bin/dircolors ]; then
-  if [ -r "$HOME"/.dircolors ]; then
-    eval "$(dircolors -b "$HOME"/.dircolors)"
-  else
-    eval "$(dircolors -b)"
-  fi
-fi
 
 # launches emacs in server mode if not already running. Optional code.
 # You would know what I mean here if you've used emacs extensively.
@@ -75,27 +51,6 @@ fi
 # }
 # trap cleanup exit
 #
-# If we have busybox and don't have grep/vi, then alias busybox version.
-for i in grep vi; do
-  if [ ! -x "$i" ] && [ -x busybox ]; then
-    alias '$i'='busybox $i'
-  fi
-done
-# Migrated .bash_aliases here for better compatibility.
-alias ls='ls --color=auto'
-alias grep='grep --color=auto'
-
-# Add this for WSL corporate desktop. There's annoyance on corporate Windows.
-if [ -d /proc ]; then
-  version="$(cat /proc/version)"
-  case "$version" in
-  *microsoft*)
-    alias network="sudo chattr -i /etc/resolv.conf && sudo vim /etc/resolv.conf && sudo chattr +i /etc/resolv.conf"
-    ;;
-  **) ;;
-  esac
-fi
-
 # A command to automatically update all git repos to latest if they're
 # currently on the main branch.
 update_repos() {
@@ -123,10 +78,24 @@ update_repos() {
   return 1
 }
 
-# Try to use Homebrew bin and sbin wherever possible
-if has brew; then
-  export PATH="/opt/homebrew/bin/:$PATH"
-  export PATH="/opt/homebrew/sbin/:$PATH"
+has() {
+  # if it is not an executable, then search in aliases to see if it's an
+  # alias. If it's an alias, then it can be configured.
+  case "$(type "$1" >>/dev/null 2>&1)" in
+  *alias*) return 0 ;;
+  *) ;;
+  esac
+  command -v "$1" >>/dev/null 2>&1 && test -x "$(command -v "$1")" >>/dev/null 2>&1 && return 0 || return 1
+}
+# Use Starship prompt if present.
+if has starship; then
+  eval "$(starship init bash)"
+else
+  # prompt setting. Funny combination of Ubuntu and Fedora.
+  PS1='\[\033[01;32m\][\u@\H \w]\[\033[00m\]\\$ '
 fi
-export EDITOR="nvim"
-export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
+if has brew; then
+  brew_prefix="$(brew --prefix)"
+  export PATH="$brew_prefix/bin:$PATH"
+  export PATH="$brew_prefix/sbin:$PATH"
+fi
