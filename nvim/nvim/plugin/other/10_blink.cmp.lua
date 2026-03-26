@@ -1,5 +1,11 @@
 Config.later(function()
-  vim.pack.add({ { src = 'https://github.com/saghen/blink.cmp' } })
+  -- Pinning V1.X until blink 2.0 is stable
+  vim.pack.add({
+    {
+      src = 'https://github.com/saghen/blink.cmp',
+      version = vim.version.range('1.X'),
+    },
+  })
   require('blink.cmp').setup({
     fuzzy = { implementation = 'prefer_rust' },
     appearance = {
