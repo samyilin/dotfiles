@@ -6,6 +6,7 @@ my own setup. Documenting them here.
 ## 1. Neovim requirements
 
 Neovim requires:
+
 1. tree-sitter-cli
 2. rustup from its own installation script (not in Homebrew)
 3. ripgrep (regex finder)
@@ -43,10 +44,13 @@ echo "$(brew --prefix)/bin/bash" | sudo tee -a /etc/shells
 chsh -s "$(brew --prefix)/bin/bash"
 
 ```
+
 ## Making sure that homebrew packages are used first in bash scripts
 
 Also, coreutils would alias all their installs with a g (ggrep instead
-of grep), so make sure you adjust any script to use to use those.
+of grep), so make sure you adjust any script to use to use those. This
+is within my .profile.
+
 ```sh
 export PATH="/opt/homebrew/bin:$PATH"
 export PATH="/opt/homebrew/sbin:$PATH"

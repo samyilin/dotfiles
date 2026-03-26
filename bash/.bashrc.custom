@@ -1,23 +1,12 @@
 #!/usr/bin/env bash
 ##################################################################
-# This is my personal bash profile section, nothing to see here.
+# This is my personal bashrc section.
 
 # If not running interactively, don't do anything
 case $- in
 *i*) test -f "$HOME"/.inputrc && bind -f "$HOME"/.inputrc ;;
 *) return ;;
 esac
-
-# Add this for WSL corporate desktop. There's annoyance on corporate Windows.
-if [ -d /proc ]; then
-  version="$(cat /proc/version)"
-  case "$version" in
-  *microsoft*)
-    alias network="sudo chattr -i /etc/resolv.conf && sudo vim /etc/resolv.conf && sudo chattr +i /etc/resolv.conf"
-    ;;
-  **) ;;
-  esac
-fi
 
 # Force end POSIX mode, somehow Kitty won't reset POSIX mode
 set +o posix
@@ -93,9 +82,4 @@ if has starship; then
 else
   # prompt setting. Funny combination of Ubuntu and Fedora.
   PS1='\[\033[01;32m\][\u@\H \w]\[\033[00m\]\\$ '
-fi
-if has brew; then
-  brew_prefix="$(brew --prefix)"
-  export PATH="$brew_prefix/bin:$PATH"
-  export PATH="$brew_prefix/sbin:$PATH"
 fi

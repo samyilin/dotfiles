@@ -20,19 +20,19 @@ Basically:
    cert.cer for example.
 5. Use the below code:
 
-```bash
+```sh
 openssl x509 -inform DER -in /mnt/d/cert.cer -out ./eset.crt
 ```
 
 If under Ubuntu, do
 
-```bash
+```sh
 sudo cp eset.crt /usr/local/share/ca-certificates/
 sudo update-ca-certificates
 ```
 
 If under [Arch](https://wiki.archlinux.org/title/User:Grawity/Adding_a_trusted_CA_certificate), do
 
-```bash
+```sh
 sudo trust anchor --store ~/cert.crt
 ```

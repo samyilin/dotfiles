@@ -1,31 +1,24 @@
 # README
 
 This is my dotfile. Usable both as a standalone Git repository or work in a
-Docker environment as a development container.
+Docker environment.
 
-This repo has 3 purposes:
+This repo has 2 purposes:
 
 1. This is my personal dotfile. I do try to make it as distro/OS-agnostic as
    possible though.
 
-2. To force myself to learn shell programming, tmux configuration, etc.
-
-3. To be able to run development container(s).
+2. To be able to run development container(s). This is not a priority.
 
 ## Design Principles
 
 1. Do not overwrite existing configuration. This is a common scenario in
    Linux/MacOS environments:
 
-   1. Various configurations are already there when personal configuration
-      begins. Some systems would create .bashrc in your home directory
-      automatically.
+   1. Various configurations are already present when you start to configure.
 
-   2. Programs love to spew lines to .bashrc or .profile, so they cannot be
-      assumed to be static.
-
-2. Leave shell config for programs to abuse. These are copied to home
-   directory rather than linked.
+2. Leave shell config for programs to abuse. These are soured rather
+   than linked.
 
 3. Use links for customizations that are not related to application abuse.
 
@@ -36,7 +29,7 @@ This repo has 3 purposes:
    such as vim, emacs, etc. This is the job of your package manager.
 
 5. Make it modular. Scripts/configs for each program should be separated by
-   folder to make maintenance easy.
+   folder to make maintenance easier.
 
 6. Make it so that using setup script(s) repeatedly will skip the parts that's
    already been set up.
@@ -87,9 +80,7 @@ can SSH into git repos easier, and nothing else.
    nowadays I live in Vim/Neovim/Emacs whenever possible. So I don't even
    heavily rely on Bash at all.
 
-3. Emacs. It deserves its own config repo.
-
-4. IDEs/Full programming environment setup?
+3. IDEs/Full programming environment setup?
 
    Try IntelliJ suite if that tickles your fancy. Or even Visual Studio.
 
@@ -108,14 +99,14 @@ There's 2 ways to set up this config.
 
    To set up everything:
 
-   ```bash
+   ```sh
    cd $HOME/dotfiles ./setup && . "$HOME"/.profile
    ```
 
    To setup additional programs after initial setup, i.e. your initial setup
    did not install vim but now it does, do
 
-   ```bash
+   ```sh
    cd $HOME/dotfiles ./setup YOUR_PROGRAM
    ```
 
@@ -123,25 +114,25 @@ There's 2 ways to set up this config.
 
    To get the latest from this setup, do
 
-   ```bash
+   ```sh
    cd $HOME/dotfiles git pull
    ```
 
    If you want to remove this config:
 
-   ```bash
+   ```sh
    cd $HOME/dotfiles ./remove && . "$HOME"/.bash_profile
    ```
 
    If you want to remove config for a certain program, i.e. vim, then
 
-   ```bash
+   ```sh
    cd $HOME/dotfiles ./remove YOUR_PROGRAM
    ```
 
    To remove this repo from your setup altogether, do
 
-   ```bash
+   ```sh
    rm -rf $HOME/dotfiles
    ```
 
@@ -152,7 +143,7 @@ There's 2 ways to set up this config.
 
    To install using non-interactive mode:
 
-   ```bash
+   ```sh
    cd $HOME/dotfiles ./setup -d
    ```
 
@@ -170,27 +161,27 @@ There's 2 ways to set up this config.
    Using the appropriate Dockerfile name, the below code would generate a
    docker image:
 
-   ```bash
+   ```sh
    cd $HOME git clone https://github.com/samyilin/dotfiles cd dotfiles
    docker build -f Dockerfile.DISTRO -t IMAGE_NAME
    ```
 
    Podman requires using buildah to build image, so:
 
-   ```bash
+   ```sh
    cd $HOME git clone https://github.com/samyilin/dotfiles cd dotfiles
    buildah build -f Dockerfile.DISTRO -t IMAGE_NAME
    ```
 
    To enter this image, use
 
-   ```bash
+   ```sh
    docker run -it --rm localhost/IMAGE_NAME
    ```
 
    On podman, use
 
-   ```bash
+   ```sh
    podman run -it --rm localhost/IMAGE_NAME
    ```
 
@@ -199,7 +190,7 @@ There's 2 ways to set up this config.
    time you spin up a container. To mount host's ssh and git configurations,
    use something like
 
-   ```bash
+   ```sh
    docker run -it --rm -v $HOME/.ssh:$HOME/.ssh \ -v $HOME/.gitconfig
    $HOME/.gitconfig \ localhost/IMAGE_NAME
 

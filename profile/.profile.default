@@ -20,19 +20,6 @@ fi
 if [ -d "$HOME/.local/bin" ]; then
   PATH="$HOME/.local/bin:$PATH"
 fi
-# I don't care for dircolors, but put in her just in case.
-if [ -x /usr/bin/dircolors ]; then
-  if [ -r "$HOME"/.dircolors ]; then
-    eval "$(dircolors -b "$HOME"/.dircolors)"
-  else
-    eval "$(dircolors -b)"
-  fi
-fi
-for i in grep vi; do
-  if [ ! -x "$i" ] && [ -x busybox ]; then
-    alias '$i'='busybox $i'
-  fi
-done
 has() {
   # if it is not an executable, then search in aliases to see if it's an
   # alias. If it's an alias, then it can be configured.
@@ -42,6 +29,25 @@ has() {
   esac
   command -v "$1" >>/dev/null 2>&1 && test -x "$(command -v "$1")" >>/dev/null 2>&1 && return 0 || return 1
 }
+# I don't care for dircolors, but put in her just in case.
+if has dircolors; then
+  if [ -r "$HOME"/.dircolors ]; then
+    eval "$(dircolors -b "$HOME"/.dircolors)"
+  else
+    eval "$(dircolors -b)"
+  fi
+elif has gdircolors; then
+  if [ -r "$HOME"/.dircolors ]; then
+    eval "$(gdircolors -b "$HOME"/.dircolors)"
+  else
+    eval "$(gdircolors -b)"
+  fi
+fi
+for i in grep vi; do
+  if [ ! -x "$i" ] && [ -x busybox ]; then
+    alias '$i'='busybox $i'
+  fi
+done
 if has nvim; then
   export EDITOR="nvim"
 fi
@@ -50,6 +56,11 @@ if has rg; then
 fi
 if has fastfetch; then
   fastfetch
+fi
+if has brew; then
+  brew_prefix="$(brew --prefix)"
+  export PATH="$brew_prefix/bin:$PATH"
+  export PATH="$brew_prefix/sbin:$PATH"
 fi
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
