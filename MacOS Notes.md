@@ -1,7 +1,11 @@
 # What is This?
 
 Some packages are essential for CLI in a modern MacOS system, including
-my own setup. Documenting them here.
+my own setup.
+
+There're some particularities about MacBook setup.
+
+Documenting all of them here.
 
 ## 1. Neovim requirements
 
@@ -45,7 +49,7 @@ chsh -s "$(brew --prefix)/bin/bash"
 
 ```
 
-## Making sure that homebrew packages are used first in bash scripts
+## 6. Making sure that homebrew packages are used first in bash scripts
 
 Also, coreutils would alias all their installs with a g (ggrep instead
 of grep), so make sure you adjust any script to use to use those. This
@@ -54,4 +58,26 @@ is within my .profile.
 ```sh
 export PATH="/opt/homebrew/bin:$PATH"
 export PATH="/opt/homebrew/sbin:$PATH"
+```
+
+## 6. Homebrew shenanighan
+
+This specific package manager I have to use everyday, documenting here.
+
+```sh
+# turn off analytics
+brew analytics off
+# Uninstall formulae that were only installed as a dependency of another
+# formula and are now no longer needed.
+brew autoremove
+# perform cleanup
+brew cleanup
+# debug potential problems
+brew doctor
+# list all 'independent' formulae
+brew link
+# check for missing dependencies
+brew missing
+# homebrew can enable background services using launchctl
+brew services
 ```
