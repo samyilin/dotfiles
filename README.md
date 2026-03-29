@@ -12,23 +12,23 @@ This repo has 2 purposes:
 
 ## Design Principles
 
-1. Do not overwrite existing configuration. This is a common scenario in
-   Linux/MacOS environments:
+1. Do not overwrite existing configuration if there were any. This is
+   because sometimes various configurations are already present when you
+   start to configure.
 
-   1. Various configurations are already present when you start to configure.
-
-2. Leave shell config for programs to abuse. These are soured rather
+2. Leave shell config for programs to abuse. These are sourced rather
    than linked.
 
-3. Use links for customizations that are not related to application abuse.
+3. Use links for customizations that won't have a default configuration
+   at all, at least not in the user context.
 
 4. Make sure it (this config) is easy to delete. After deleting this config,
-   you should have a default or non-existent config.
+   you should have a default (or non-existent) config.
 
    Keep in mind that removing this config won't help you uninstall packages
    such as vim, emacs, etc. This is the job of your package manager.
 
-5. Make it modular. Scripts/configs for each program should be separated by
+5. Make it modular. Scripts/configs for each program are be separated by
    folder to make maintenance easier.
 
 6. Make it so that using setup script(s) repeatedly will skip the parts that's
@@ -50,8 +50,9 @@ There're very few assumptions here, not in any particular order:
 
 ## Non-assumptions
 
-1. You have bash as your interactive shell. If you don't have bash in your
-   system, then .profile is loaded only. If you do use bash, then:
+1. You have bash as your interactive shell. If you don't have bash in
+   your system, then .profile is loaded only assuming a POSIX shell
+   would be used.. If you do use bash, then:
 
    1. .bash_profile is loaded, and it will load .profile.
    2. .profile does what it's supposed to do, and load in .bashrc.
@@ -62,6 +63,9 @@ There're very few assumptions here, not in any particular order:
 
 Bash, Vim, Neovim, tmux, SSH, git. A "complete" CLI working environment.
 
+These days I dabble in Zed, etc., so whatever other configurable
+programs.
+
 This script can also helps you set up your user name and password where applicable.
 Good for initializing things on WSL or other root systems.
 
@@ -71,7 +75,7 @@ multiplexer, ssh and git could work together or separately.
 SSH setup script here is a wrapper to allow users to set up git and SSH so we
 can SSH into git repos easier, and nothing else.
 
-## Non-goals/Programs Not Configuring in this setup?
+## Non-goals?
 
 1. dircolors. I realize they exist, I just don't care about them enough to
    write one.
@@ -80,11 +84,9 @@ can SSH into git repos easier, and nothing else.
    nowadays I live in Vim/Neovim/Emacs whenever possible. So I don't even
    heavily rely on Bash at all.
 
-3. IDEs/Full programming environment setup?
+3. IDEs/Full programming environment setup.
 
-   Try IntelliJ suite if that tickles your fancy. Or even Visual Studio.
-
-## How to Set up and Use
+## Setup
 
 There's 2 ways to set up this config.
 
@@ -215,3 +217,128 @@ practical guide for Unix/Linux tools that is actually pleasant to read,
 unlike the [POSIX standard
 specification](https://pubs.opengroup.org/onlinepubs/9699919799/) (which you
 have to read if you found Grymoire not clear enough).
+
+## WSL Notes
+
+Windows is such a pain to work with when it comes to WSL. A part of the
+reason is because WSL2 is a virtual machine, so network/internet access
+becomes a problem, especially when under corporate network.
+
+I have 1 alias called "netowrk" in .bash_aliases that address the DNS
+forwarding problem in corporate network, but still has SSL certification
+problem when using Git (Git itself or package managers who use git) or
+anything that uses opensssl. Here's the actual fix, don't disable SSL
+globally to try to fix this:
+
+[Reference](https://stackoverflow.com/questions/72167566/wsl-docker-curl-60-ssl-certificate-problem-unable-to-get-local-issuer-certi) here:
+Basically:
+
+1. run certmgr.msc.
+2. go to Trusted Root Certification Authorities\Certifiactes
+3. Find entries here that has certificate template of "CA"
+4. Export them to a folder using DER coded x.509, call it whatever.
+   cert.cer for example.
+5. Use the below code:
+
+```sh
+openssl x509 -inform DER -in /mnt/d/cert.cer -out ./eset.crt
+```
+
+If under Ubuntu, do
+
+```sh
+sudo cp eset.crt /usr/local/share/ca-certificates/
+sudo update-ca-certificates
+```
+
+If under [Arch](https://wiki.archlinux.org/title/User:Grawity/Adding_a_trusted_CA_certificate), do
+
+```sh
+sudo trust anchor --store ~/cert.crt
+```
+
+## Macos Notes
+
+Some packages are essential for CLI in a modern MacOS system, including
+my own setup.
+
+There're some particularities about MacBook setup.
+
+Documenting all of them here.
+
+### 1. Neovim requirements
+
+Neovim requires:
+
+1. tree-sitter-cli
+2. rustup from its own installation script (not in Homebrew)
+3. ripgrep (regex finder)
+4. imagemagick (for image display, if you need it)
+5. mmdc (for mermaid rendering, if you need it)
+6. latex suite (for latex rendering, if you need it)
+7. fd
+8. lazygit delta (for now)
+
+### 2. Neovim LS + formatter requirements
+
+1. lua-language-server stylua
+2. shfmt shellcheck
+3. sqlfluff
+
+### 3. other requirements
+
+1. pyenv or uv for Python dev (whatever else for formatter, etc.,
+   depending on repo setup, etc.)
+2. starship for prompt
+3. bash, bash-completion and git (for up-to-date modern packages)
+4. vim and neovim
+5. A good font (maple for now, have Chinese support)
+6. A modern terminal (ghostty/kitty for me)
+
+### 4. List xcode-select tools
+
+```sh
+ls "$(xcode-select --print-path)/usr/bin"
+```
+
+## 5. Setting default bash to Homebrew bash
+
+```sh
+echo "$(brew --prefix)/bin/bash" | sudo tee -a /etc/shells
+chsh -s "$(brew --prefix)/bin/bash"
+
+```
+
+## 6. Making sure that homebrew packages are used first in bash scripts
+
+Also, coreutils would alias all their installs with a g (ggrep instead
+of grep), so make sure you adjust any script to use to use those. This
+is within my .profile.
+
+```sh
+export PATH="/opt/homebrew/bin:$PATH"
+export PATH="/opt/homebrew/sbin:$PATH"
+```
+
+## 6. Homebrew shenanighan
+
+This specific package manager I have to use everyday, documenting some
+common commands here.
+
+```sh
+# turn off analytics
+brew analytics off
+# Uninstall formulae that were only installed as a dependency of another
+# formula and are now no longer needed.
+brew autoremove
+# perform cleanup
+brew cleanup
+# debug potential problems
+brew doctor
+# list all 'independent' formulae
+brew link
+# check for missing dependencies
+brew missing
+# homebrew can enable background services using launchctl
+brew services
+```
