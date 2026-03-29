@@ -22,11 +22,14 @@ setup() {
     elif [ -f "$dir/$1/requires_any" ]; then
       found_any=0
       while IFS= read -r cmd; do
-        if has "$cmd"; then found_any=1; break; fi
-      done < "$dir/$1/requires_any"
+        if has "$cmd"; then
+          found_any=1
+          break
+        fi
+      done <"$dir/$1/requires_any"
       if [ "$found_any" -eq 0 ]; then
         printf "%s requires at least one of these programs to be installed: " "$1"
-        tr '\n' ' ' < "$dir/$1/requires_any"
+        tr '\n' ' ' <"$dir/$1/requires_any"
         printf "\nQuitting.\n"
         return 1
       fi
@@ -40,12 +43,12 @@ setup() {
           printf "%s requires %s but it is not installed, quitting.\n" "$1" "$cmd"
           return 1
         fi
-      done < "$dir/$1/requires"
+      done <"$dir/$1/requires"
     fi
     if [ -f "$dir/$1/depends" ]; then
       while IFS= read -r dep; do
         setup "$dep" "$2"
-      done < "$dir/$1/depends"
+      done <"$dir/$1/depends"
     fi
     printf "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
     printf "Initializing %s setup.\n" "$1"

@@ -4,8 +4,9 @@ main() {
     if [ ! -d "$HOME"/.ssh ]; then
       mkdir "$HOME"/.ssh
     fi
+    printf "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
     printf "Would you like to generate new SSH keys for git usage?\n"
-    printf "Warning: This script doens't help you check prior config to avoid naming collision.\n"
+    printf "This script doens't help you check prior config to avoid naming collision.\n"
     printf "This is only a wrapper to speed up ssh config for git.\n"
     if [ -f "$HOME"/.ssh/config ]; then
       printf "Your current SSH config file is printed below:\n"
@@ -13,10 +14,10 @@ main() {
     else
       printf "It seems that you do not have an SSH config file at the moment.\n"
     fi
+    printf "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
     printf "Warning: This script uses ed25519 algorithm by default, which is the recommended\n"
     printf "SSH algorithm at the time of writing. If your git provider recommend another\n"
     printf "SSH algorithm, changing the script below regarding ssh-keygen would work.\n"
-    printf "Warning: This script sets up SSH key without password. It is designed for single-user mode.\n"
     while true; do
       read -r response
       case "$response" in
@@ -27,6 +28,7 @@ main() {
     done
     unset "$response"
     touch "$HOME"/.ssh/config
+    printf "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
     printf "Which git provider would you like to connect to(domain name)?\n"
     printf "Example git domain names are ssh.github.com, gitlab.com or gitlab.YOURCOMPANY.com\n"
     while true; do
@@ -40,7 +42,7 @@ main() {
     if [ "$provider" = "github.com" ]; then
       provider="ssh.github.com"
     fi
-
+    printf "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
     printf "Which port does this provider use for SSH?\n"
     printf "Github's default port is 443.\n"
     while true; do
@@ -51,7 +53,7 @@ main() {
         break
       fi
     done
-
+    printf "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
     printf "Would you like to set up an alias for this host?\n"
     printf "If you use multiple account account for the same git provider for work and life,\n"
     printf "then you can alias 1 connection as 'work' and another one as 'hobby'\n"
@@ -76,6 +78,7 @@ main() {
       *) printf "Invalid response, please try again.\n" ;;
       esac
     done
+    printf "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
     printf "Which file, in ~/.ssh, would you like to store your public/private key?\n"
     while true; do
       read -r keyfile
@@ -85,8 +88,31 @@ main() {
         break
       fi
     done
-    yes | ssh-keygen -q -t ed25519 -N '' -f ~/.ssh/"$keyfile" >/dev/null 2>&1
+    printf "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
+    printf "Would you like to set up a comment for this host?\n"
+    printf "A common comment would be your associated work/private email.\n"
+    while true; do
+      read -r response
+      case "$response" in
+      [Yy]*)
+        printf "What would you like your alias to be?\n"
+        while true; do
+          read -r comment
+          if [ "$comment" = "" ]; then
+            printf "No response, please try again\n"
+          else
+            break
+          fi
+        done
+        break
+        ;;
+      [Nn]*) break ;;
+      *) printf "Invalid response, please try again.\n" ;;
+      esac
+    done
+    yes | ssh-keygen -t ed25519 -f ~/.ssh/"$keyfile" -C "$comment" >/dev/null 2>&1
     printf "\n Host %s\n\t\tHostName %s \n\tport %s \n\tuser git\n\t\tIdentityFile %s/.ssh/%s\n" "${git_alias-$provider}" "$provider" "$port" "$HOME" "$keyfile" >>"$HOME"/.ssh/config
+    printf "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
     printf "\nYour public key is:\n"
     cat "$HOME"/.ssh/"$keyfile".pub
     printf "\nPlease copy and paste the above line into your git provider's appropriate setting, probably SSH Keys.\n"
@@ -98,5 +124,6 @@ main() {
   else
     printf "SSH setup is skipped in non-interactive mode\n"
   fi
+  return
 }
 main "$@"
