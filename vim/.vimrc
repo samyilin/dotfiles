@@ -6,25 +6,26 @@ if has("eval")                               " vim-tiny lacks 'eval'
   let skip_defaults_vim = 1
 endif
 
-" automatically indent new lines
-set autoindent
+if !has('nvim')
+
+  " automatically indent new lines
+  set autoindent
+
+  " turn col and row position on in bottom right
+  set ruler " see ruf for formatting
+
+  " show command and insert mode
+  set showmode
+  " inhibits errors when running Alacritty on Windows
+  set t_u7=
+endif
 
 " replace tabs with spaces automatically
 set expandtab
 
-
 " automatically write files when changing when multiple files open
 set autowrite
 
-
-" turn col and row position on in bottom right
-set ruler " see ruf for formatting
-
-" show command and insert mode
-set showmode
-
-" inhibits errors when running Alacritty on Windows
-set t_u7=
 
 "#######################################################################
 "vim-plug Scripts-----------------------------
@@ -104,6 +105,22 @@ endif
 " disable visual bell (also disable in .inputrc)
 if !has('nvim')
   set vb t_vb=
+  " mark trailing spaces as errors
+   match IncSearch '\s\+$'
+  set icon
+  " wrap around when searching
+  set wrapscan
+  " faster scrolling. If you are ont SSHing into a slow remote connection,
+  " this will be good.
+  set ttyfast
+  " better command-line completion
+  set wildmenu
+  " enable omni-completion
+  set omnifunc=syntaxcomplete#Complete
+  " start at last place you were editing
+  autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+  " python setting
+  autocmd FileType python if executable('black')| setlocal equalprg=black\ -q\ -| endif
 endif
 
 set smartindent
@@ -123,13 +140,9 @@ if v:version >= 800
   set nofoldenable
 endif
 
-" mark trailing spaces as errors
-" match IncSearch '\s\+$'
 
 " enough for line numbers + gutter within 80 standard
 set textwidth=72
-
-
 
 " disable spellcapcheck
 set spc=
@@ -139,10 +152,6 @@ set nobackup
 set noswapfile
 set nowritebackup
 
-" TODO
-if !has('nvim')
-	set icon
-endif
 
 
 " highlight search hits
@@ -156,29 +165,13 @@ set smartcase
 " prevents truncated yanks, deletes, etc.
 " TODO
 set viminfo='20,<1000,s1000
-" wrap around when searching
-set wrapscan
 
 " stop complaints about switching buffer with changes.
 set hidden
 
-" command history
-set history=100
-
 set formatoptions-=t
 
-" faster scrolling. If you are ont SSHing into a slow remote connection,
-" this will be good.
-if !has('nvim')
-  set ttyfast
-endif
 
-" better command-line completion
-if !has('nvim')
-  set wildmenu
-endif
-" enable omni-completion
-set omnifunc=syntaxcomplete#Complete
 
 " displays all the syntax rules for current position, useful
 " when writing vimscript syntax plugins
@@ -191,23 +184,18 @@ set omnifunc=syntaxcomplete#Complete
 "  endfunc
 "endif
 
-" start at last place you were editing
-if !has('nvim')
-  autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
-endif
-
 " functions keys
 " F0 toggles showing line number
-nmap <F1> :set number!<CR>:set relativenumber!<CR>
-" " F2 shows syntax of item in vim
+"nmap <F1> :set number!<CR>:set relativenumber!<CR>
+" F2 shows syntax of item in vim
 " nmap <F2> :call <SID>SynStack()<CR>
-" " F2 to Toggle paste mode. Useful for pasting into vim
+" F3 to Toggle paste mode. Useful for pasting into vim
 " set pastetoggle=<F3>
-" " F4 to see spaces as "*"
+" F4 to see spaces as "*"
 " map <F4> :set list!<CR>
 " " F5 to show current line at which our cursor is
-map <F5> :set cursorline!<CR>
-" F7 to toggle spellchecking
+"map <F5> :set cursorline!<CR>
+" F6 to toggle spellchecking
 " map <F6> :set spell!<CR>
 " map <F12> :set fdm=indent<CR>
 
@@ -215,13 +203,9 @@ map <F5> :set cursorline!<CR>
 " Provides tab-completion for all file-related tasks
 set path+=**
 " Create the `tags` file (may need to install ctags first)
-if executable('ctags')
-  command! MakeTags !ctags -R .
-endif
+"if executable('ctags')
+"  command! MakeTags !ctags -R .
+"endif
 if !empty(expand(glob("~/work.vim")))
   source ~/work.vim
-endif
-" python setting
-if !has("nvim")
-  autocmd FileType python if executable('black')| setlocal equalprg=black\ -q\ -| endif
 endif
