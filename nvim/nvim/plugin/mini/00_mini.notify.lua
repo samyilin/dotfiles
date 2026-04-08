@@ -1,1 +1,1 @@
-Config.now(function() require('mini.notify').setup() end)
+-- Config.now(function() require('mini.notify').setup() end)
