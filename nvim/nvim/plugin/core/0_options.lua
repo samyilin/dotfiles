@@ -10,5 +10,5 @@ vim.diagnostic.config({ virtual_text = true })
 vim.o.expandtab = true
 vim.o.autowrite = true
 vim.opt.foldmethod = 'expr'
-vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
+vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 vim.opt.foldlevel = 99

@@ -1,6 +1,9 @@
 Config.now(function()
   -- Experimental UI2: floating cmdline and messages
-  vim.o.cmdheight = 1
+  -- Works with ui2. Hides cmd.
+  vim.o.cmdheight = 0
+  -- Enables different targets
+  -- see :h api-ui-events
   require('vim._core.ui2').enable({
     enable = true,
     msg = {
@@ -17,7 +20,7 @@ Config.now(function()
         list_cmd = 'pager',
         lua_error = 'pager',
         lua_print = 'msg',
-        progress = 'pager',
+        progress = 'msg',
         rpc_error = 'pager',
         quickfix = 'msg',
         search_cmd = 'cmd',
@@ -47,6 +50,7 @@ Config.now(function()
       },
     },
   })
+  -- styling to window
   vim.api.nvim_create_autocmd('FileType', {
     pattern = 'msg',
     callback = function()
@@ -61,6 +65,7 @@ Config.now(function()
       end
     end,
   })
+  -- position UI to topright corner
   local ui2 = require('vim._core.ui2')
   local msgs = require('vim._core.ui2.messages')
   local orig_set_pos = msgs.set_pos
@@ -69,17 +74,40 @@ Config.now(function()
     if
       (tgt == 'msg' or tgt == nil) and vim.api.nvim_win_is_valid(ui2.wins.msg)
     then
-      pcall(
-        vim.api.nvim_win_set_config,
-        ui2.wins.msg,
-        {
-          relative = 'editor',
-          anchor = 'NE',
-          row = 1,
-          col = vim.o.columns - 1,
-          border = 'rounded',
-        }
-      )
+      pcall(vim.api.nvim_win_set_config, ui2.wins.msg, {
+        relative = 'editor',
+        anchor = 'NE',
+        row = 1,
+        col = vim.o.columns - 1,
+        border = 'rounded',
+      })
     end
   end
+  -- vim.api.nvim_create_autocmd('LspProgress', {
+  --   callback = function(ev)
+  --     local client = vim.lsp.get_client_by_id(ev.data.client_id)
+  --     local value = ev.data.params.value
+  --     local msg = ('[%s] %s %s'):format(
+  --       client.name,
+  --       value.kind == 'end' and '✓' or '',
+  --       value.title or ''
+  --     )
+  --     vim.notify(msg)
+  --   end,
+  -- })
+  -- LSP Progress integration
+  -- vim.ai.nvim_echo is associated with the progress kind above.
+  vim.api.nvim_create_autocmd('LspProgress', {
+    callback = function(ev)
+      local value = ev.data.params.value
+      vim.api.nvim_echo({ { value.message or 'done' } }, false, {
+        id = 'lsp.' .. ev.data.client_id,
+        kind = 'progress',
+        source = 'vim.lsp',
+        title = value.title,
+        status = value.kind ~= 'end' and 'running' or 'success',
+        percent = value.percentage,
+      })
+    end,
+  })
 end)

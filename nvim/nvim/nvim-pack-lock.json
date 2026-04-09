@@ -30,7 +30,7 @@
       "src": "https://codeberg.org/esensar/nvim-dev-container"
     },
     "nvim-lspconfig": {
-      "rev": "fb5fa30626ae10f7f79f740059d3769993936ecb",
+      "rev": "c588db330592fa477a70d2fee6ba20a57194bdc3",
       "src": "https://github.com/neovim/nvim-lspconfig"
     },
     "nvim-treesitter": {
