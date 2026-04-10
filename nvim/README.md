@@ -5,7 +5,7 @@ Revamping to not use LazyVim as Neovim configuration.
 ## Why?
 
 I've opted to simplify my workflow so I can better understand what's
-hapapening. LazyVim sometimes work well, sometimes an upstream update on
+happening. LazyVim sometimes work well, sometimes an upstream update on
 either Neovim, LazyVim or other packages will nuke my SQL settings and I
 don't know why.
 
@@ -22,13 +22,13 @@ On MacOS use Homebrew, on Linux use whatever package manager you have,
 on Windows... WSL or scoop I think are the easiest ones.
 
 I will later document more thoroughly the LSPs/formatters I use per file
-type, when this config is mature enough.
+type, when this configuration is mature enough.
 
 ## What I'm getting rid of
 
 I'm getting rid of package manager in favour of builtin package manager
-vim.pack. It simplifies config templating, but it complicates things by
-replacing that template with config structure.
+vim.pack. It simplifies configuration templating, but it complicates things by
+replacing that template with configuration structure.
 
 I'm getting rid of a lot of UI niceties for simpler approaches, yes it
 isn't as pretty, but the point is to reduce dependency as much as
