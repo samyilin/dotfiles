@@ -18,7 +18,7 @@ Config.later(function()
     },
     sources = {
       -- Static list of providers to enable, or a function to dynamically enable/disable providers based on the context
-      default = { 'lazydev', 'lsp', 'path', 'snippets', 'buffer' },
+      default = { 'lazydev', 'lsp', 'path', 'buffer' },
       providers = {
         lazydev = {
           name = 'LazyDev',
