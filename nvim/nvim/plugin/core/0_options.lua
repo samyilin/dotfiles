@@ -8,3 +8,7 @@ vim.diagnostic.config({ virtual_text = true })
 vim.o.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 vim.o.foldmethod = 'expr'
 vim.o.foldlevel = 99
+-- spell
+vim.o.spelllang = 'en'
+vim.o.spellfile =
+  vim.fs.joinpath(vim.fn.stdpath('config'), 'spell', 'en.utf-8.add')
