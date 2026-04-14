@@ -3,4 +3,5 @@ Config.later(function()
   vim.lsp.enable({
     vim.fn.executable('lua-language-server') and 'lua_ls' or nil,
   })
+  vim.lsp.codelens.enable(true)
 end)
