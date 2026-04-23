@@ -96,7 +96,7 @@ Config.now(function()
   --   end,
   -- })
   -- LSP Progress integration
-  -- vim.ai.nvim_echo is associated with the progress kind above.
+  -- vim.ai.nvim_echo is associated with the progress kind.
   vim.api.nvim_create_autocmd('LspProgress', {
     callback = function(ev)
       local value = ev.data.params.value

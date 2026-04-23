@@ -16,11 +16,13 @@ Config.later(function()
       ['markdown.mdx'] = { 'markdownlint-cli2' },
     },
     -- Automatically turns on format on save via this setting.
-    format_on_save = {
-      -- These options will be passed to conform.format()
-      timeout_ms = 50000,
-      lsp_format = 'fallback',
-    },
+    format_on_save = function(bufnr)
+      -- Disable with a global or buffer-local variable
+      if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
+        return
+      end
+      return { timeout_ms = 50000, lsp_format = 'fallback' }
+    end,
     formatters = {
       -- ['markdown-toc'] = {
       --   condition = function(_, ctx)
@@ -45,5 +47,16 @@ Config.later(function()
         -- { "-filename", "$FILENAME", "-i", "2" }
       },
     },
+  })
+  vim.api.nvim_create_user_command('FormatToggle', function()
+    vim.b.disable_autoformat = not vim.b.disable_autoformat
+    vim.g.disable_autoformat = not vim.g.disable_autoformat
+    if vim.b.disable_autoformat then
+      vim.notify('Autoformat disabled')
+    else
+      vim.notify('Autoformat enabled')
+    end
+  end, {
+    desc = 'Toggle autoformat on save',
   })
 end)
