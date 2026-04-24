@@ -51,6 +51,11 @@ Config.later(function()
   vim.api.nvim_create_user_command('FormatToggle', function()
     vim.b.disable_autoformat = not vim.b.disable_autoformat
     vim.g.disable_autoformat = not vim.g.disable_autoformat
+    if vim.b.disable_autoformat then
+      vim.notify('Conform autoformat is disabled')
+    else
+      vim.notify('Conform autoformat is enabled')
+    end
   end, {
     desc = 'Toggle autoformat on save',
   })
