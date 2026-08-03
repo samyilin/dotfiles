@@ -119,8 +119,12 @@ main() {
     printf "This will ensure that the git provider recognize your identity.\n"
     printf "Your current SSH config file is printed below:\n"
     cat "$HOME"/.ssh/config
+    # git clone uses scp-style host:path, so no port/user goes in the URL;
+    # ssh resolves them from ~/.ssh/config via the matching Host block.
+    # ${git_alias-$provider} uses the alias when set, otherwise falls back
+    # to the provider hostname, e.g. "git clone github.com:user/repo".
     printf "\nTo clone a repository from git provider using this configuration, please type\n"
-    printf "git clone %s:PROJECT_NAME/REPO_NAME.git\n" "$git_alias"
+    printf "git clone %s:PROJECT_NAME/REPO_NAME.git\n" "${git_alias-$provider}"
   else
     printf "SSH setup is skipped in non-interactive mode\n"
   fi
