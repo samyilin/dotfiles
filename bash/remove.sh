@@ -9,23 +9,15 @@ if [ -f "$HOME"/.bashrc ]; then
     if [ ! "$line" = "$bashrc_custom" ]; then
       printf "%s\n" "$line"
     fi
-  done <"$HOME"/.bashrc >o
-  mv o "$HOME"/.bashrc
+  done <"$HOME"/.bashrc >"$HOME"/.bashrc.tmp
+  mv "$HOME"/.bashrc.tmp "$HOME"/.bashrc
 fi
 if [ -f "$HOME"/.bash_profile ]; then
   while IFS= read -r line; do
     if [ ! "$line" = "$profile_line" ]; then
       printf "%s\n" "$line"
     fi
-  done <"$HOME/".bash_profile >o
-  mv o "$HOME"/.bash_profile
+  done <"$HOME/".bash_profile >"$HOME"/.bash_profile.tmp
+  mv "$HOME"/.bash_profile.tmp "$HOME"/.bash_profile
 fi
-for i in .inputrc .bash_aliases; do
-  if [ -f "$HOME"/"$i" ]; then
-    rm -f "$HOME"/"$i"
-  fi
-  if [ -f "$HOME"/"$i".bak ]; then
-    mv "$HOME"/"$i".bak "$HOME"/"$i"
-    printf "Your default %s have been restored." "$i"
-  fi
-done
+unlink_config "$HOME/.inputrc"
