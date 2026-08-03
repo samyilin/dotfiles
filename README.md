@@ -155,10 +155,10 @@ There's 2 ways to set up this config.
    To use this method, you would need to install docker or podman on your
    setup. I would suggest podman.
 
-   I have 3 Dockerfile here, one Ubuntu based (more stable-ish, although I use
-   the latest Ubuntu release), one Fedora rawhide based (cutting-edge, good for
-   testing latest software) and one Archlinux based (bleeding-edge, good for
-   testing development software)
+   I have 3 Dockerfiles here, one Ubuntu based on `ubuntu:latest` which
+   tracks the latest LTS (more stable-ish), one Fedora latest based
+   (current stable, good for testing recent software) and one Arch Linux
+   based (bleeding-edge, good for testing development software)
 
    Using the appropriate Dockerfile name, the below code would generate a
    docker image:
@@ -186,6 +186,11 @@ There's 2 ways to set up this config.
    ```sh
    podman run -it --rm localhost/IMAGE_NAME
    ```
+
+   Note: these Dockerfiles have not been built and tested after recent
+   updates (locale env vars, Ubuntu base switched to `ubuntu:latest`, and
+   package additions). TODO: build all three images and confirm
+   `./setup.sh -d` completes.
 
    Default container/docker install would not help you set up ssh and git.
    These belong in your host system so you don't have to reset your ssh every

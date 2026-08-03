@@ -1,7 +1,7 @@
 FROM fedora:latest
 
-LABEL maintainer="Sam Su samsu42@yahoo.ca"
-LABEL description="Self-contained Vim/Tmux based CLI Workspace"
+ENV LANG=C.UTF-8
+ENV LC_ALL=C.UTF-8
 
 RUN sed -i '/^tsflags=nodocs/d' /etc/dnf/dnf.conf && \
   dnf -y update && \

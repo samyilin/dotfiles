@@ -1,7 +1,7 @@
 FROM archlinux:latest
 
-LABEL maintainer="Sam Su samsu42@yahoo.ca"
-LABEL description="Self-contained Vim/Tmux based CLI Workspace"
+ENV LANG=en_US.UTF-8
+ENV LC_ALL=en_US.UTF-8
 
 RUN printf "\nen_US.UTF-8 UTF-8\n" >>/etc/locale.gen && locale-gen && \
   sed -i '/^NoExtract/d' /etc/pacman.conf && \

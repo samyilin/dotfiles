@@ -1,9 +1,8 @@
-FROM ubuntu:24.04
-
-LABEL maintainer="Sam Su samsu42@yahoo.ca"
-LABEL description="Self-contained Vim/Tmux based CLI Workspace"
+FROM ubuntu:latest
 
 ENV DEBIAN_FRONTEND=noninteractive
+ENV LANG=C.UTF-8
+ENV LC_ALL=C.UTF-8
 
 RUN yes | unminimize && \
   apt-get update && \
@@ -19,6 +18,9 @@ RUN yes | unminimize && \
   tmux \
   git \
   vim \
+  neovim \
+  ripgrep \
+  fd-find \
   shellcheck \
   busybox \
   iputils-ping && \

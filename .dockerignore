@@ -1,0 +1,11 @@
+.git
+.DS_Store
+*.bak
+*.spl
+.vscode
+nvim/neovim
+package-lock.json
+lazy-lock.json
+lazyvim.json
+lazygit/lazygit/config.yml
+lazygit/lazygit/state.yml
