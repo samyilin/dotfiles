@@ -38,9 +38,6 @@ possible.
 
 The "essentials", as minimal as possible, though not married to this idea.
 
-Note that Neovim have plans to replace netrw. When that time comes, I
-will get rid of netrw enhancements such as vim-vinegar and netrw.lua.
-
 ## How long am I dedicating to completing this DIY project?
 
 Try to finish it off as quick as possible in my spare time. So...
