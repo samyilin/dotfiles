@@ -18,7 +18,7 @@ Personal dotfiles, usable standalone or as a Docker dev container. Pure POSIX `#
 - Shell config is *sourced, not linked*: `bash/` and `profile/` append a `. <abs-path>` line to the user's existing `~/.bashrc` / `~/.bash_profile` / `~/.profile`; the stub files are copied only when none exists. Their `remove.sh` strips those lines back out.
 - Symlink via `link_config` only for programs with no default user config.
 - `config/` = deprecated/legacy configs (untouched by setup). `install/` and `misc/` = optional install scripts, also excluded from setup/remove loops.
-- Style: POSIX sh (shfmt settings live in `.editorconfig`: `shell_variant=posix` etc.). Existing scripts use 2-space indentation despite `.editorconfig`'s `indent_style = tab` — match the files, don't "fix" them. `.shellcheckrc` enables `external-sources=true`, disables SC1091/2328/2327.
+- Style: POSIX sh, 2-space indentation (see `.editorconfig` `[*.sh]`; keep shfmt defaults — the files are `shfmt -d`-clean as-is). Keep lines within 72 columns (`vim/.vimrc` sets `textwidth=72`; nvim config has no override). `.shellcheckrc` enables `external-sources=true`, disables SC1091/2328/2327.
 - No tests, no CI, no lint script — `shellcheck` + `shfmt -d` are the only verification.
 - `git/remove.sh` deliberately does NOT touch `~/.gitconfig`.
 
