@@ -70,7 +70,7 @@ init_user() {
     "") printf "No input was given, please try again.\n" ;;
     **) break ;;
     esac
-  done <"/etc/shells"
+  done
   test -n "${val}" && name="${val}"
   unset "$val"
   shell="/bin/sh"
@@ -79,12 +79,17 @@ init_user() {
   printf "Please enter your preferred interactive shell: \n"
   while true; do
     read -r val
+    found=0
     while IFS= read -r line; do
       if [ "$val" = "$line" ]; then
-        shell="$val"
+        found=1
         break
       fi
-    done
+    done <"/etc/shells"
+    if [ "$found" -eq 1 ]; then
+      shell="$val"
+      break
+    fi
     printf "%s is not an available shell. Please type shell's full path.\n" "$val"
   done
   test -n "${val}" && shell="${val}"
