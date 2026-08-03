@@ -6,6 +6,6 @@ if [ -f "$HOME"/.profile ]; then
     if [ ! "$line" = "$profile_default" ]; then
       printf "%s\n" "$line"
     fi
-  done <"$HOME"/.profile >o
-  mv o "$HOME"/.profile
+  done <"$HOME"/.profile >"$HOME"/.profile.tmp
+  mv "$HOME"/.profile.tmp "$HOME"/.profile
 fi
