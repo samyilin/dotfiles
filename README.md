@@ -96,20 +96,20 @@ There's 2 ways to set up this config.
    To pull this repo to your OS:
 
    ```bash
-   cd $HOME git clone https://github.com/samyilin/dotfiles.git
+   cd "$HOME" && git clone https://github.com/samyilin/dotfiles.git
    ```
 
    To set up everything:
 
    ```sh
-   cd $HOME/dotfiles ./setup && . "$HOME"/.profile
+   cd "$HOME"/dotfiles && ./setup.sh && . "$HOME"/.profile
    ```
 
    To setup additional programs after initial setup, i.e. your initial setup
    did not install vim but now it does, do
 
    ```sh
-   cd $HOME/dotfiles ./setup YOUR_PROGRAM
+   cd "$HOME"/dotfiles && ./setup.sh YOUR_PROGRAM
    ```
 
    Design principles above will make sure no repeated install would happen.
@@ -117,25 +117,25 @@ There's 2 ways to set up this config.
    To get the latest from this setup, do
 
    ```sh
-   cd $HOME/dotfiles git pull
+   cd "$HOME"/dotfiles && git pull
    ```
 
    If you want to remove this config:
 
    ```sh
-   cd $HOME/dotfiles ./remove && . "$HOME"/.bash_profile
+   cd "$HOME"/dotfiles && ./remove.sh && . "$HOME"/.bash_profile
    ```
 
    If you want to remove config for a certain program, i.e. vim, then
 
    ```sh
-   cd $HOME/dotfiles ./remove YOUR_PROGRAM
+   cd "$HOME"/dotfiles && ./remove.sh YOUR_PROGRAM
    ```
 
    To remove this repo from your setup altogether, do
 
    ```sh
-   rm -rf $HOME/dotfiles
+   rm -rf "$HOME"/dotfiles
    ```
 
    Additional mode:
@@ -146,7 +146,7 @@ There's 2 ways to set up this config.
    To install using non-interactive mode:
 
    ```sh
-   cd $HOME/dotfiles ./setup -d
+   cd "$HOME"/dotfiles && ./setup.sh -d
    ```
 
 2. Using this dotfile to setup a docker/podman image. This is good for
@@ -164,15 +164,15 @@ There's 2 ways to set up this config.
    docker image:
 
    ```sh
-   cd $HOME git clone https://github.com/samyilin/dotfiles cd dotfiles
-   docker build -f Dockerfile.DISTRO -t IMAGE_NAME
+   cd "$HOME" && git clone https://github.com/samyilin/dotfiles.git && cd dotfiles
+   docker build -f Dockerfile.ubuntu -t IMAGE_NAME
    ```
 
    Podman requires using buildah to build image, so:
 
    ```sh
-   cd $HOME git clone https://github.com/samyilin/dotfiles cd dotfiles
-   buildah build -f Dockerfile.DISTRO -t IMAGE_NAME
+   cd "$HOME" && git clone https://github.com/samyilin/dotfiles.git && cd dotfiles
+   buildah build -f Dockerfile.ubuntu -t IMAGE_NAME
    ```
 
    To enter this image, use
@@ -193,9 +193,10 @@ There's 2 ways to set up this config.
    use something like
 
    ```sh
-   docker run -it --rm -v $HOME/.ssh:$HOME/.ssh \ -v $HOME/.gitconfig
-   $HOME/.gitconfig \ localhost/IMAGE_NAME
-
+   docker run -it --rm \
+     -v "$HOME/.ssh:$HOME/.ssh" \
+     -v "$HOME/.gitconfig:$HOME/.gitconfig" \
+     localhost/IMAGE_NAME
    ```
 
    You can use a similar process to mount your git repo to the container so you
