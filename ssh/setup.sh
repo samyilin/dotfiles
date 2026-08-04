@@ -26,7 +26,7 @@ main() {
       *) printf "Invalid response, please try again.\n" ;;
       esac
     done
-    unset "$response"
+    unset response
     touch "$HOME"/.ssh/config
     printf "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
     printf "Which git provider would you like to connect to(domain name)?\n"
