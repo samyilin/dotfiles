@@ -41,40 +41,55 @@ export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
 # trap cleanup exit
 #
 # A command to automatically update all git repos to latest if they're
-# currently on the main branch.
+# currently on the default branch.
 update_repos() {
   dir=$(pwd)
+  failed=0
   printf "Attempting to update all git repos under folder to the latest default branch...\n"
   for i in "$dir"/*; do
     i="${i%*/}"
     i="${i##*/}"
-    if [ -d "$dir"/"$i"/.git ]; then
-      cd "$i" || return 1
-      if git remote -v | read -r; then
-        default_branch="$(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@')"
-        current_branch="$(git branch --show-current)"
+    if [ -d "$dir/$i/.git" ]; then
+      remote="$(git -C "$dir/$i" remote | sed -n '1p')"
+      if [ -n "$remote" ]; then
+        default_branch="$(git -C "$dir/$i" symbolic-ref "refs/remotes/$remote/HEAD" 2>/dev/null | sed 's@^refs/remotes/[^/]*/@@')"
+        if [ -z "$default_branch" ]; then
+          default_branch="$(git -C "$dir/$i" ls-remote --symref "$remote" HEAD 2>/dev/null | sed -n '1s@^ref: refs/heads/@@p' | cut -f1)"
+        fi
+        if [ -z "$default_branch" ]; then
+          printf "\342\235\214 Git repo %s: could not determine the default branch, skipping.\n" "$i"
+        else
+          current_branch="$(git -C "$dir/$i" branch --show-current)"
+          if [ -z "$current_branch" ]; then
+            printf "\342\235\214 Git repo %s is in detached HEAD state, skipping.\n" "$i"
+          elif [ "$current_branch" = "$default_branch" ]; then
+            if git -C "$dir/$i" pull --quiet; then
+              printf "\342\234\224 Git repo %s updated to the latest %s branch.\n" "$i" "$default_branch"
+            else
+              printf "\342\235\214 Git repo %s: pull failed.\n" "$i"
+              failed=1
+            fi
+          else
+            printf "\342\235\214 Git repo %s not on the default branch. Default branch is %s, but repo is in %s branch.\n" "$i" "$default_branch" "$current_branch"
+          fi
+        fi
       else
-        printf "\xE2\x9D\x8C Git repo %s is local only, no need to update.\n" "$i"
-        cd "$dir" && continue || return 1
+        printf "\342\235\214 Git repo %s is local only, no need to update.\n" "$i"
       fi
-      case "$current_branch" in
-      *$default_branch*) git pull --quiet && printf "\342\234\224 Git repo %s updated to the laster %s branch.\n" "$i" "$default_branch" || return 1 ;;
-      *) printf "\xE2\x9D\x8C Git repo %s not on the default branch. Default branch is %s, but repo is in %s branch.\n" "$i" "$default_branch" "$current_branch" ;;
-      esac
-      cd "$dir" || return 1
     fi
   done
-  return 1
+  return "$failed"
 }
 
 has() {
-  # if it is not an executable, then search in aliases to see if it's an
-  # alias. If it's an alias, then it can be configured.
-  case "$(type "$1" >>/dev/null 2>&1)" in
-  *alias*) return 0 ;;
+  # If the shell itself provides the name (alias, builtin, keyword, or
+  # function), it is available even without a PATH executable.
+  case "$(type "$1" 2>&1)" in
+  *alias* | *builtin* | *keyword* | *function*) return 0 ;;
   *) ;;
   esac
-  command -v "$1" >>/dev/null 2>&1 && test -x "$(command -v "$1")" >>/dev/null 2>&1 && return 0 || return 1
+  cmd="$(command -v "$1" 2>/dev/null)" || return 1
+  [ -x "$cmd" ]
 }
 # Use Starship prompt if present.
 if has starship; then
