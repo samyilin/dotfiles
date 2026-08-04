@@ -36,15 +36,17 @@ unlink_config() {
     printf "%s is not a symlink, skipping.\n" "$name"
   fi
 }
-# Helper to determine if a certain required program is missing from user
-# setup. Checks if the command/program exists and if is an executable.
-# This is more POSIX compliant than "which" or "type" in shell scripts.
+# Helper to determine if a required program is available. Returns 0 for
+# executables on PATH and anything the shell can run directly (an alias,
+# builtin, keyword, or function). More POSIX compliant than "which" or
+# "type" in shell scripts.
 has() {
-  # if it is not an executable, then search in aliases to see if it's an
-  # alias. If it's an alias, then it can be configured.
-  case "$(type "$1" >>/dev/null 2>&1)" in
-  *alias*) return 0 ;;
+  # If the shell itself provides the name (alias, builtin, keyword, or
+  # function), it is available even without a PATH executable.
+  case "$(type "$1" 2>&1)" in
+  *alias* | *builtin* | *keyword* | *function*) return 0 ;;
   *) ;;
   esac
-  command -v "$1" >>/dev/null 2>&1 && test -x "$(command -v "$1")" >>/dev/null 2>&1 && return 0 || return 1
+  cmd="$(command -v "$1" 2>/dev/null)" || return 1
+  [ -x "$cmd" ]
 }

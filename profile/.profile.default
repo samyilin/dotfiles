@@ -7,8 +7,8 @@ if [ -n "$BASH_VERSION" ]; then
     . "$HOME"/.bashrc
   fi
 else
-  # simple PS1 prompt for shells other than Bash.
-  PS1="[\u@\h \w ]$"
+  # simple prompt for shells other than Bash, expanded once at login.
+  PS1="[$(id -un)@$(uname -n) $(basename "$PWD")]$ "
 fi
 
 # set PATH so it includes user's private bin if it exists
@@ -16,20 +16,30 @@ if [ -d "$HOME/bin" ]; then
   PATH="$HOME/bin:$PATH"
 fi
 
-# set PATH so it includes user's private bin if it exists
+# set PATH so it includes user's private .local/bin if it exists
 if [ -d "$HOME/.local/bin" ]; then
   PATH="$HOME/.local/bin:$PATH"
 fi
 has() {
-  # if it is not an executable, then search in aliases to see if it's an
-  # alias. If it's an alias, then it can be configured.
-  case "$(type "$1" >>/dev/null 2>&1)" in
-  *alias*) return 0 ;;
+  # If the shell itself provides the name (alias, builtin, keyword, or
+  # function), it is available even without a PATH executable.
+  case "$(type "$1" 2>&1)" in
+  *alias* | *builtin* | *keyword* | *function*) return 0 ;;
   *) ;;
   esac
-  command -v "$1" >>/dev/null 2>&1 && test -x "$(command -v "$1")" >>/dev/null 2>&1 && return 0 || return 1
+  cmd="$(command -v "$1" 2>/dev/null)" || return 1
+  [ -x "$cmd" ]
 }
-# I don't care for dircolors, but put in her just in case.
+# Set up Homebrew PATH early so brew-installed tools are found below.
+if has brew; then
+  brew_prefix="$(brew --prefix)"
+  export PATH="$brew_prefix/bin:$PATH"
+  export PATH="$brew_prefix/sbin:$PATH"
+  if [ -f "$brew_prefix/etc/profile.d/bash_completion.sh" ]; then
+    . "$brew_prefix/etc/profile.d/bash_completion.sh"
+  fi
+fi
+# I don't care for dircolors, but put in here just in case.
 if has dircolors; then
   if [ -r "$HOME"/.dircolors ]; then
     eval "$(dircolors -b "$HOME"/.dircolors)"
@@ -43,11 +53,12 @@ elif has gdircolors; then
     eval "$(gdircolors -b)"
   fi
 fi
-for i in grep vi; do
-  if [ ! -x "$i" ] && [ -x busybox ]; then
-    alias '$i'='busybox $i'
-  fi
-done
+# Fall back to the busybox vi applet if vi is missing.
+if ! command -v vi >/dev/null 2>&1 &&
+  command -v busybox >/dev/null 2>&1; then
+  #shellcheck disable=SC2139
+  alias vi="busybox vi"
+fi
 if has nvim; then
   export EDITOR="nvim"
 fi
@@ -56,14 +67,6 @@ if has rg; then
 fi
 if has fastfetch; then
   fastfetch
-fi
-if has brew; then
-  brew_prefix="$(brew --prefix)"
-  export PATH="$brew_prefix/bin:$PATH"
-  export PATH="$brew_prefix/sbin:$PATH"
-  if [ -f "$brew_prefix/etc/profile.d/bash_completion.sh" ]; then
-    source "$brew_prefix/etc/profile.d/bash_completion.sh"
-  fi
 fi
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
@@ -75,6 +78,6 @@ if [ -d /proc ]; then
   *microsoft*)
     alias network="sudo chattr -i /etc/resolv.conf && sudo vim /etc/resolv.conf && sudo chattr +i /etc/resolv.conf"
     ;;
-  **) ;;
+  *) ;;
   esac
 fi

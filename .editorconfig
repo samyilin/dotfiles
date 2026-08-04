@@ -4,6 +4,15 @@ indent_size = 2
 
 shell_variant = posix
 
+# Bash/profile snippet files (non .sh) sourced into user shells.
+[.bash*]
+indent_style = space
+indent_size = 2
+
+[.profile*]
+indent_style = space
+indent_size = 2
+
 # Ignore the entire "third_party" directory.
 [third_party/**]
 ignore = true
