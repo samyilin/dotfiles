@@ -20,6 +20,8 @@ main() {
   elif [ ! -f "$HOME"/.bashrc ]; then
     cp "$dir"/.bashrc "$HOME"/.bashrc
     printf "\n%s\n" "$bashrc_custom" >>"$HOME"/.bashrc
+  else
+    printf ".bashrc is a symlink, skipping.\n"
   fi
   # force .bash_profile to read .profile. Avoids dup code and avoids
   # .profile not being read.
@@ -37,6 +39,8 @@ main() {
   elif [ ! -f "$HOME"/.bash_profile ]; then
     cp "$dir"/.bash_profile "$HOME"/.bash_profile
     printf "\n%s\n" "$profile_line" >>"$HOME"/.bash_profile
+  else
+    printf ".bash_profile is a symlink, skipping.\n"
   fi
   printf ".bash_profile is setup.\n"
   # Sets up .inputrc. It is only used by GNU Bash.
