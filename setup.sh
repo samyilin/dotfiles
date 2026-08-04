@@ -1,16 +1,18 @@
 #!/bin/sh
 # Sets up UNIXish configurations.
-# Helper to determine if a certain required program is missing from user
-# setup. Checks if the command/program exists and if is an executable.
-# This is more POSIX compliant than "which" or "type" in shell scripts.
+# Helper to determine if a required program is available. Returns 0 for
+# executables on PATH and anything the shell can run directly (an alias,
+# builtin, keyword, or function). More POSIX compliant than "which" or
+# "type" in shell scripts.
 has() {
-  # if it is not an executable, then search in aliases to see if it's an
-  # alias. If it's an alias, then it can be configured.
-  case "$(type "$1" >>/dev/null 2>&1)" in
-  *alias*) return 0 ;;
+  # If the shell itself provides the name (alias, builtin, keyword, or
+  # function), it is available even without a PATH executable.
+  case "$(type "$1" 2>&1)" in
+  *alias* | *builtin* | *keyword* | *function*) return 0 ;;
   *) ;;
   esac
-  command -v "$1" >>/dev/null 2>&1 && test -x "$(command -v "$1")" >>/dev/null 2>&1 && return 0 || return 1
+  cmd="$(command -v "$1" 2>/dev/null)" || return 1
+  [ -x "$cmd" ]
 }
 # Other setups exist in their own folders. This script checks for
 # existence of the program to be installed before calling the
@@ -72,7 +74,7 @@ init_user() {
     esac
   done
   test -n "${val}" && name="${val}"
-  unset "$val"
+  unset val
   shell="/bin/sh"
   printf "Installed shells are:\n\n"
   cat /etc/shells
@@ -93,7 +95,7 @@ init_user() {
     printf "%s is not an available shell. Please type shell's full path.\n" "$val"
   done
   test -n "${val}" && shell="${val}"
-  unset "$val"
+  unset val
   # dirty way to set admin priviledge to user. Don't like it, but will
   # have to optimize later.
   adduser -G wheel "$name" -s "$shell" >/dev/null 2>&1 || adduser -G sudo "$name" -s "$shell" >/dev/null 2>&1
@@ -109,7 +111,7 @@ init_user() {
   case "$(uname -r)" in
   *microsoft*)
     printf "\n[user]\ndefault = %s\n" "$name" >>/etc/wsl.conf
-    has systemctl && printf "\n [boot]\nsystemd=true\n" | tee -a /etc/wsl.conf
+    has systemctl && printf "\n[boot]\nsystemd=true\n" | tee -a /etc/wsl.conf
     ;;
   esac
   # change home folder's ownership so default user can have rwx access
@@ -146,8 +148,8 @@ main() {
       return 1
       ;;
     esac
-    shift
   done
+  shift $((OPTIND - 1))
   # Default variable has value no matter what.
   default=${default-0}
   # Safe way to ensure we have current working directory correctly.
@@ -161,7 +163,7 @@ main() {
         init_user
         # after successfully setting up the user, re-execute this script
         # under the user's new credential.
-        exec su - "$name" -C "$dir/setup.sh"
+        exec su - "$name" -c "$dir/setup.sh"
       else
         printf "You are running as root but your setup doesn't have useradd/adduser or passwd.\n"
         printf "Configs will be set to /root directory for now.\n"
