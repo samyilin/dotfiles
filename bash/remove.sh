@@ -1,6 +1,8 @@
 #!/bin/sh
 # Simple script to remove influence of my script in bash configs.
 
+. "$(dirname "$0")"/../common.sh
+
 dir=$(cd -- "$(dirname -- "$0")" >>/dev/null 2>&1 && pwd)
 bashrc_custom=". ""$dir""/.bashrc.custom"
 profile_line=". ""$HOME""/.profile"
