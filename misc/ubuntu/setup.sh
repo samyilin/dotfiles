@@ -1,7 +1,7 @@
 #!/bin/bash
 
 sudo apt update && sudo apt upgrade
-sudo apt install do-release-upgrade
+sudo apt install ubuntu-release-upgrader
 
 echo "If you wish to upgrade to the latest LTS release, first confirm your Ubuntu version"
 echo "You are running:"
