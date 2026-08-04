@@ -19,6 +19,8 @@ main() {
   elif [ ! -f "$HOME"/.profile ]; then
     cp "$dir"/.profile "$HOME"/.profile
     printf "\n%s\n" "$profile_default" >>"$HOME"/.profile
+  else
+    printf ".profile is a symlink, skipping.\n"
   fi
 }
 main "$@"
