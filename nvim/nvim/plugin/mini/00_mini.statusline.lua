@@ -1,1 +1,35 @@
+-- Optional aerial.nvim (stevearc) statusline integration: a symbol-path
+-- breadcrumb via `require('aerial').get_location()`, replacing the old
+-- nvim-treesitter statusline module (removed in the 1.0 rewrite).
+-- Needs aerial registered in plugin/other/ (pack.add + setup with LSP
+-- and/or treesitter backends) and its content guarded with pcall: this
+-- module loads before plugin/other/, so `require('aerial')` must not be
+-- assumed available at the first statusline render. When unloaded it
+-- returns '', and the breadcrumb appears on the next statusline refresh.
+--   Config.now(function()
+--     local MiniStatusline = require('mini.statusline')
+--     local function aerial()
+--       local ok, aerial = pcall(require, 'aerial')
+--       if not ok then return '' end
+--       local syms = aerial.get_location()
+--       if #syms == 0 then return '' end
+--       return table.concat(vim.tbl_map(function(s) return s.name end, syms),
+--         ' > ')
+--     end
+--     MiniStatusline.setup({
+--       content = { active = function()
+--         local mode, mode_hl = MiniStatusline.section_mode({ trunc_width = 120 })
+--         local filename      = MiniStatusline.section_filename({ trunc_width = 140 })
+--         local fileinfo      = MiniStatusline.section_fileinfo({ trunc_width = 120 })
+--         local location      = MiniStatusline.section_location({ trunc_width = 75 })
+--         return MiniStatusline.combine_groups({
+--           { hl = mode_hl,                  strings = { mode, aerial() } },
+--           '%<',
+--           { hl = 'MiniStatuslineFilename', strings = { filename } },
+--           '%=',
+--           { hl = 'MiniStatuslineFileinfo', strings = { fileinfo, location } },
+--         })
+--       end },
+--     })
+--   end)
 Config.now(function() require('mini.statusline').setup() end)
