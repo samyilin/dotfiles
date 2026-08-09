@@ -44,23 +44,33 @@ Config.now_if_args(function()
   -- Install parsers for the languages above
   require('nvim-treesitter').install(ensure_languages)
 
-  -- Incremental selection is no longer part of nvim-treesitter or
-  -- nvim-treesitter-textobjects. If wanted, get it from a plugin instead,
-  -- e.g. treesitter-modules.nvim (by the render-markdown.nvim author):
-  --   https://github.com/MeanderingProgrammer/treesitter-modules.nvim
-  --   require('treesitter-modules').setup({
-  --     incremental_selection = {
-  --       enable = true,
-  --       keymaps = {
-  --         init_selection = '<A-o>',
-  --         node_incremental = '<A-o>',
-  --         scope_incremental = '<A-O>',
-  --         node_decremental = '<A-i>',
-  --       },
-  --     },
-  --   })
-  -- Or use 0.12+'s builtin LSP-driven an/in (vim.lsp.buf.selection_range),
-  -- which needs a server implementing textDocument/selectionRange.
+  -- Incremental selection: 0.12+'s builtin an/in covers it, no plugin.
+  -- Treesitter-first (vim.treesitter.select()); the LSP selectionRange
+  -- path is only a fallback when no parser exists. an/in select parent/
+  -- child, ]n/[n move, ]N/[N grow. treesitter-modules.nvim would only add
+  -- scope selection (jump to the enclosing @local.scope), which the
+  -- nvim-treesitter-textobjects text objects below already cover.
+  --
+  -- nvim-treesitter-textobjects is loaded but has no setup()/keymaps, so
+  -- none of it is currently leveraged. Features, see plugin README and the
+  -- BUILTIN_TEXTOBJECTS.md list of built-in captures:
+  --
+  --   select: syntax-aware text objects from textobjects.scm, a<K> outer /
+  --     i<K> inner. E.g. af/if function, ac/ic class, ab/ib block, al/il
+  --     loop, ad/id conditional, aC/iC call, ap/ip parameter, a#/i#
+  --     comment, a=/i= assignment (daa deletes an assignment, yaC yanks a
+  --     call). setup() opts: lookahead, selection_modes (@function.outer
+  --     -> 'V' linewise), include_surrounding_whitespace.
+  --   move: syntax-aware ]-style jumps. ]m/[m function start, ]M/[M end,
+  --     ]]/[[ class, ]d/[d nearest conditional end/start. 'set_jumps'
+  --     adds jumplist entries. repeatable_move repeats with ;/,, but ';'
+  --     is taken by 3_keymaps.lua (':lua '), and ]m/[m may clash with
+  --     builtin ftplugin maps (e.g. python methods) if maps are enabled.
+  --   swap: swap node under cursor (e.g. a function argument) with next/
+  --     prev via swap_next/swap_previous (e.g. @parameter.inner).
+  --   locals.scm: @local.scope and @local.definition.* captures back both
+  --     select_textobject("@local.scope", "locals") and the move module,
+  --     giving scope text objects that core's an/in still lack.
   --
   -- TODO: revisit nvim-treesitter-locals once upstream is ready. The old
   -- locals/definitions module was removed along with the rest of

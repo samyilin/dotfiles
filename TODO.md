@@ -25,11 +25,6 @@ code so they can be examined in context.
       script in place.
       Source: `nvim/nvim/plugin/mini/00_mini.statusline.lua`
 
-- [ ] (optional) Incremental selection via treesitter-modules.nvim, or
-      the builtin 0.12+ LSP-driven `an`/`in` selection-range mappings.
-      Commented setup in place.
-      Source: `nvim/nvim/plugin/other/05_treesitter.lua`
-
 ## setup
 
 - [ ] Build all three Docker images (Dockerfile.ubuntu/fedora/archlinux)
