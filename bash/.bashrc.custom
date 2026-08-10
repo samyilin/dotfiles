@@ -46,6 +46,63 @@ update_repos() {
   dir=$(pwd)
   failed=0
   printf "Attempting to update all git repos under folder to the latest default branch...\n"
+  # The agent unlock below only matters for SSH remotes, so first find
+  # the repos and note whether any uses an SSH remote.
+  git_repos=0
+  ssh_repos=0
+  for i in "$dir"/*; do
+    i="${i%*/}"
+    i="${i##*/}"
+    [ -d "$dir/$i/.git" ] || continue
+    git_repos=$((git_repos + 1))
+    remote="$(git -C "$dir/$i" remote | sed -n '1p')"
+    if [ -n "$remote" ]; then
+      url="$(git -C "$dir/$i" remote get-url "$remote" 2>/dev/null)"
+      case "$url" in
+      http://* | https://* | file://*) ;;
+      *:*) ssh_repos=$((ssh_repos + 1)) ;;
+      esac
+    fi
+  done
+  if [ "$git_repos" -eq 0 ]; then
+    printf "No git repos found under %s.\n" "$dir"
+    return 0
+  fi
+  # Unlock SSH keys once for 5m so pulls don't re-prompt. Reuse a
+  # fixed-socket agent so repeated runs share one daemon instead of
+  # leaking a new one.
+  if [ "$ssh_repos" -gt 0 ]; then
+    sock="$HOME/.ssh/agent.sock"
+    ssh-add -l >/dev/null 2>&1
+    agent=$?
+    if [ "$agent" -eq 2 ]; then
+      SSH_AUTH_SOCK="$sock"
+      export SSH_AUTH_SOCK
+      ssh-add -l >/dev/null 2>&1
+      agent=$?
+      if [ "$agent" -eq 2 ]; then
+        mkdir -p "$HOME/.ssh"
+        rm -f "$sock"
+        eval "$(ssh-agent -a "$sock" -s)" >/dev/null 2>&1 || return 1
+      fi
+    fi
+    # Agent is reachable; leave a populated one alone. Otherwise add
+    # the default-named keys plus custom-named ones declared via
+    # IdentityFile in ~/.ssh/config, all with a 5-minute lifetime.
+    if ! ssh-add -l >/dev/null 2>&1; then
+      ssh-add -t 5m >/dev/null 2>&1
+      sed -n 's@^[[:space:]]*[Ii]dentityFile[[:space:]]\+@@p' \
+        "$HOME"/.ssh/config 2>/dev/null |
+        while IFS= read -r key; do
+          if [ -n "$key" ]; then
+            ssh-add -t 5m "${key/#\~/$HOME}" >/dev/null 2>&1
+          fi
+        done
+      if ! ssh-add -l >/dev/null 2>&1; then
+        printf "No SSH keys loaded; pulls may prompt per repo.\n"
+      fi
+    fi
+  fi
   for i in "$dir"/*; do
     i="${i%*/}"
     i="${i##*/}"

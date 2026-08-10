@@ -75,6 +75,26 @@ multiplexer, ssh and git could work together or separately.
 SSH setup script here is a wrapper to allow users to set up git and SSH so we
 can SSH into git repos easier, and nothing else.
 
+## Commands
+
+### update_repos
+
+A bash function (defined in `bash/.bashrc.custom`) that updates every git repo
+under the current directory to its latest default branch. Repos that are
+local-only, on a non-default branch, or in detached HEAD state are skipped.
+
+To avoid re-entering your SSH key passphrase for every repo, it unlocks keys
+once through ssh-agent with a 5-minute lifetime:
+
+- Reuses a fixed agent socket at `~/.ssh/agent.sock` (created on first run), so
+  repeated calls share one daemon instead of leaking a new one per run.
+- Loads default-named keys plus any custom-named keys declared via
+  `IdentityFile` in `~/.ssh/config`.
+- A reachable agent (e.g. the macOS launchd agent) is reused as-is and left
+  alone if it already has keys.
+- Only runs when at least one repo uses an SSH remote; HTTPS and local-only
+  repos don't need it.
+
 ## Non-goals?
 
 1. dircolors. I realize they exist, I just don't care about them enough to
