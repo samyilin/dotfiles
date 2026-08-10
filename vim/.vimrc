@@ -131,12 +131,50 @@ set undofile
 set hlsearch
 set linebreak
 
+" don't wrap long lines; mark lines that run off the screen instead
+set nowrap
+
+" 'list' renders otherwise-invisible characters using the symbols in
+" 'listchars'. Only the entries you set are displayed:
+" - trail:*    trailing whitespace as '*'
+" - nbsp:*     non-breaking spaces as '*'
+" - extends:>  '>' at the right edge when a line continues off-screen
+" - precedes:< '<' at the left edge when a line continues off-screen
+" - tab:\|>    tabs as '|>'
+" extends/precedes only matter with 'nowrap', which we set above.
+set list
+set listchars=trail:*,nbsp:*,extends:>,precedes:<,tab:\|>
+
+" highlight the line the cursor is on
+set cursorline
+
+" keep the cursor from touching the top/bottom screen edges
+set scrolloff=1
+
+" open new splits below / right instead of above / left
+set splitbelow
+set splitright
+
+" sync yanks/pastes with the system clipboard, unless over SSH
+if empty($SSH_CONNECTION)
+  set clipboard=unnamedplus
+endif
+
 set ignorecase
 set smartcase
 
-" prevents truncated yanks, deletes, etc.
-" TODO
-set viminfo='20,<1000,s1000
+" viminfo persists history across sessions (shada in Neovim). Flags:
+" - !     save g:UPPERCASE global variables across sessions
+" - '20   save marks for the last 20 edited files
+" - <1000 save up to 1000 lines per register (yank/delete)
+" - s1000 save registers up to 1000 Kbyte
+" - h     don't restore 'hlsearch' highlight on startup
+set viminfo=!,'20,<1000,s1000,h
+
+" Neovim default also excludes removable/scratch paths from file marks
+if has('nvim')
+  set viminfo+=r/tmp/,r/private/
+endif
 
 " stop complaints about switching buffer with changes.
 set hidden
@@ -167,10 +205,6 @@ if !has('nvim')
   if v:version >= 800
     " stop vim from silently messing with files that it shouldn't
     set nofixendofline
-
-    " better ascii friendly listchars
-    " set listchars=space:*,trail:*,nbsp:*,extends:>,precedes:<,tab:\|>
-    set listchars=trail:*,nbsp:*,extends:>,precedes:<,tab:\|>
 
     set foldmethod=manual
     set nofoldenable
