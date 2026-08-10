@@ -95,6 +95,15 @@ once through ssh-agent with a 5-minute lifetime:
 - Only runs when at least one repo uses an SSH remote; HTTPS and local-only
   repos don't need it.
 
+### Vim plugin updates
+
+vim-plug has no lockfile and plugins are not auto-updated. Run `:PlugUpdate`
+inside Vim whenever you pull this repo:
+
+```sh
+vim +PlugUpdate
+```
+
 ## Non-goals?
 
 1. dircolors. I realize they exist, I just don't care about them enough to

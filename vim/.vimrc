@@ -8,14 +8,6 @@ endif
 
 if !has('nvim')
 
-  " automatically indent new lines
-  set autoindent
-
-  " turn col and row position on in bottom right
-  set ruler " see ruf for formatting
-
-  " show command and insert mode
-  set showmode
   " inhibits errors when running Alacritty on Windows
   set t_u7=
 endif
@@ -30,14 +22,11 @@ set autowrite
 "#######################################################################
 "vim-plug Scripts-----------------------------
 if !has('nvim')
-  if &compatible
-    set nocompatible               " Be iMproved
-  endif
-  let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
+  let data_dir = '~/.vim'
   if empty(glob(data_dir . '/autoload/plug.vim'))
-    execute '!git clone https://github.com/junegunn/vim-plug' data_dir.'/autoload/'
+    call mkdir(expand(data_dir), 'p')
+    execute '!git clone --depth 1 https://github.com/junegunn/vim-plug' data_dir.'/autoload/'
     autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-    autocmd VimEnter * PlugUpdate | source $MYVIMRC
   endif
   call plug#begin()
   " The default plugin directory will be as follows:
@@ -47,7 +36,6 @@ if !has('nvim')
   " You can specify a custom plugin directory by passing it as the argument
   "   - e.g. `call plug#begin('~/.vim/plugged')`
   "   - Avoid using standard Vim directory names like 'plugin'
-  Plug 'junegunn/vim-plug'
   " Tim Pope's sensible default. A lot of code can be avoided by using
   " this. Battle-tested, good default.
   Plug 'tpope/vim-sensible'
@@ -81,7 +69,7 @@ if !has('nvim')
   " - Automatically executes `filetype plugin indent on` and `syntax enable`.
   call plug#end()
 
-  autocmd VimEnter * PlugUpdate | source $MYVIMRC | :q
+  " Reminder: run :PlugUpdate occasionally to update plugins
   "End vim-plug Scripts-------------------------
 endif
 "#######################################################################
@@ -98,33 +86,27 @@ if !has("nvim")
 
   let g:gruvbox_material_background = 'medium'
   let g:gruvbox_material_foreground = "original"
-  autocmd vimenter * ++nested colorscheme gruvbox-material
+  colorscheme gruvbox-material
 endif
 "#######################################################################
 " General Settings
 " disable visual bell (also disable in .inputrc)
 if !has('nvim')
-  set vb t_vb=
+  set belloff=all
+  " enable mouse support in all modes
+  set mouse=a
   " mark trailing spaces as errors
-   match IncSearch '\s\+$'
-  set icon
-  " wrap around when searching
-  set wrapscan
-  " faster scrolling. If you are ont SSHing into a slow remote connection,
-  " this will be good.
-  set ttyfast
-  " better command-line completion
-  set wildmenu
-  " enable omni-completion
-  set omnifunc=syntaxcomplete#Complete
+  highlight TrailingSpace ctermbg=red guibg=red
+  match TrailingSpace /\s\+$/
+  " faster scrolling on older Vim; Vim 9.0+ always sets 'ttyfast'
+  if v:version < 900
+    set ttyfast
+  endif
   " start at last place you were editing
   autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
   " python setting
-  autocmd FileType python if executable('black')| setlocal equalprg=black\ -q\ -| endif
+  autocmd FileType python if executable('ruff')| setlocal equalprg=ruff\ format\ -q\ -| elseif executable('black')| setlocal equalprg=black\ -q\ -| endif
 endif
-
-set smartindent
-set smarttab
 
 set shiftwidth=2 tabstop=2 softtabstop=2
 
@@ -152,11 +134,13 @@ set nobackup
 set noswapfile
 set nowritebackup
 
+" keep undo history across sessions as a safety net
+set undofile
+
 
 
 " highlight search hits
 set hlsearch
-set incsearch
 set linebreak
 
 set ignorecase
@@ -184,21 +168,6 @@ set formatoptions-=t
 "  endfunc
 "endif
 
-" functions keys
-" F0 toggles showing line number
-"nmap <F1> :set number!<CR>:set relativenumber!<CR>
-" F2 shows syntax of item in vim
-" nmap <F2> :call <SID>SynStack()<CR>
-" F3 to Toggle paste mode. Useful for pasting into vim
-" set pastetoggle=<F3>
-" F4 to see spaces as "*"
-" map <F4> :set list!<CR>
-" " F5 to show current line at which our cursor is
-"map <F5> :set cursorline!<CR>
-" F6 to toggle spellchecking
-" map <F6> :set spell!<CR>
-" map <F12> :set fdm=indent<CR>
-
 " Search down into subfolders
 " Provides tab-completion for all file-related tasks
 set path+=**
@@ -206,6 +175,6 @@ set path+=**
 "if executable('ctags')
 "  command! MakeTags !ctags -R .
 "endif
-if !empty(expand(glob("~/work.vim")))
+if filereadable(expand('~/work.vim'))
   source ~/work.vim
 endif
