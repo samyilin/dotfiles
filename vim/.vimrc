@@ -110,18 +110,6 @@ endif
 
 set shiftwidth=2 tabstop=2 softtabstop=2
 
-if v:version >= 800
-  " stop vim from silently messing with files that it shouldn't
-  set nofixendofline
-
-  " better ascii friendly listchars
-  " set listchars=space:*,trail:*,nbsp:*,extends:>,precedes:<,tab:\|>
-  set listchars=trail:*,nbsp:*,extends:>,precedes:<,tab:\|>
-
-  set foldmethod=manual
-  set nofoldenable
-endif
-
 
 " enough for line numbers + gutter within 80 standard
 set textwidth=72
@@ -175,6 +163,20 @@ set path+=**
 "if executable('ctags')
 "  command! MakeTags !ctags -R .
 "endif
-if filereadable(expand('~/work.vim'))
-  source ~/work.vim
+if !has('nvim')
+  if v:version >= 800
+    " stop vim from silently messing with files that it shouldn't
+    set nofixendofline
+
+    " better ascii friendly listchars
+    " set listchars=space:*,trail:*,nbsp:*,extends:>,precedes:<,tab:\|>
+    set listchars=trail:*,nbsp:*,extends:>,precedes:<,tab:\|>
+
+    set foldmethod=manual
+    set nofoldenable
+  endif
+
+  if filereadable(expand('~/work.vim'))
+    source ~/work.vim
+  endif
 endif
