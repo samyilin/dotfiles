@@ -18,6 +18,13 @@ code so they can be examined in context.
       builtin per-filetype indent scripts.
       Source: `nvim/nvim/plugin/other/05_treesitter.lua`
 
+- [ ] (optional) aerial.nvim statusline breadcrumb. Replaces the removed
+      nvim-treesitter statusline module via `require('aerial').get_location()`;
+      needs a `plugin/other/` registration plus a pcall-guarded content
+      function (mini modules load before `plugin/other/`). Full commented
+      script in place.
+      Source: `nvim/nvim/plugin/mini/00_mini.statusline.lua`
+
 - [ ] Revisit _ui2 experimental API when it stabilizes. The native
       notification override in `nvim/nvim/plugin/other/00_ui2.lua`
       overrides `vim.notify` and works with UI2's message routing.
