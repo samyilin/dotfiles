@@ -25,6 +25,17 @@ code so they can be examined in context.
       script in place.
       Source: `nvim/nvim/plugin/mini/00_mini.statusline.lua`
 
+- [ ] Revisit _ui2 experimental API when it stabilizes. The native
+      notification override in `nvim/nvim/plugin/other/00_ui2.lua`
+      overrides `vim.notify` and works with UI2's message routing.
+      Verify all 4 notification classes still work:
+      A. `vim.notify` by level (INFO/WARN/ERROR)
+      B. `vim.notify` with `title`/`keep` opts
+      C. Plugin sources (`FormatToggle`, conform `notify_on_error`)
+      D. Native messages (`:echomsg`→cmdline, `:echoerr`/`lua_error`/E518→pager, `:!`→pager)
+      Remove the inline TODO in `00_ui2.lua` when _ui2 is marked stable.
+      Source: `nvim/nvim/plugin/other/00_ui2.lua`
+
 ## setup
 
 - [ ] Build all three Docker images (Dockerfile.ubuntu/fedora/archlinux)
