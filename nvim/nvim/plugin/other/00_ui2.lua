@@ -82,7 +82,6 @@ Config.now(function()
         anchor = 'NE',
         row = 1,
         col = vim.o.columns - 1,
-        border = 'rounded',
       })
     end
   end
