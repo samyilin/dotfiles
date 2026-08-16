@@ -42,6 +42,17 @@ code so they can be examined in context.
       when the experiment concludes.
       Source: `nvim/nvim/plugin/mini/00_mini.notify.lua`
 
+- [ ] Remove the snacks.nvim checkhealth amendment once upstream no
+      longer hangs on Neovim 0.12+. `:checkhealth snacks` freezes
+      because the image and notifier health functions drive the event
+      queue with `vim.wait` (image: `nvim_ui_send` CSI probe +
+      `vim.wait(1500)`; notifier: `vim.wait(500)`) while TermResponse/
+      UI events still drain — an infinite-loop on 0.12. `05_snacks.lua`
+      patches around it by swapping in non-blocking health functions;
+      delete both override blocks (image + notifier) when upstream
+      fixes the hang (a TODO comment is inline in the same file).
+      Source: `nvim/nvim/plugin/other/05_snacks.lua`
+
 ## setup
 
 - [ ] Build all three Docker images (Dockerfile.ubuntu/fedora/archlinux)
