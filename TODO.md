@@ -53,10 +53,3 @@ code so they can be examined in context.
       fixes the hang (a TODO comment is inline in the same file).
       Source: `nvim/nvim/plugin/other/05_snacks.lua`
 
-## setup
-
-- [x] Build all three Docker images (Dockerfile.ubuntu/fedora/archlinux)
-      and confirm `./setup.sh -d` completes. Done 2026-08-17; see
-      `docker-notes.md` for platform quirks (Ubuntu 26.04 `unminimize`,
-      Arch amd64 + seccomp sandbox).
-      Source: `README.md` (Systems Tested section)
