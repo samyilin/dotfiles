@@ -47,6 +47,9 @@ has() {
   *alias* | *builtin* | *keyword* | *function*) return 0 ;;
   *) ;;
   esac
-  cmd="$(command -v "$1" 2>/dev/null)" || return 1
-  [ -x "$cmd" ]
+  # use a name unlikely to collide with caller variables: POSIX sh has no
+  # local scope, and clobbering e.g. the requires-loop's "$cmd" made the
+  # "requires X but it is not installed" message print a blank.
+  has_cmd="$(command -v "$1" 2>/dev/null)" || return 1
+  [ -x "$has_cmd" ]
 }

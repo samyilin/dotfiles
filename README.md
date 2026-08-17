@@ -184,10 +184,11 @@ There's 2 ways to set up this config.
    To use this method, you would need to install docker or podman on your
    setup. I would suggest podman.
 
-   I have 3 Dockerfiles here, one Ubuntu based on `ubuntu:latest` which
+   I have 4 Dockerfiles here, one Ubuntu based on `ubuntu:latest` which
    tracks the latest LTS (more stable-ish), one Fedora latest based
-   (current stable, good for testing recent software) and one Arch Linux
-   based (bleeding-edge, good for testing development software)
+   (current stable, good for testing recent software), one Arch Linux
+   based (bleeding-edge, good for testing development software) and one
+   Alpine based (musl, smallest image, good for slim containers)
 
    Using the appropriate Dockerfile name, the below code would generate a
    docker image:
@@ -217,8 +218,8 @@ There's 2 ways to set up this config.
    ```
 
    Note: these Dockerfiles have been built and tested (Ubuntu 26.04 LTS,
-   Fedora latest, Arch Linux latest). On Apple Silicon / arm64 hosts,
-   `archlinux:latest` has no arm64 image, so build Arch with
+   Fedora latest, Arch Linux latest, Alpine latest). On Apple Silicon /
+   arm64 hosts, `archlinux:latest` has no arm64 image, so build Arch with
    `docker build --platform linux/amd64 -f Dockerfile.archlinux -t IMAGE_NAME`
    (and run it with `docker run --platform linux/amd64`).
 

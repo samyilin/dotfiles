@@ -1,0 +1,42 @@
+FROM alpine:latest
+
+ENV LANG=C.UTF-8
+ENV LC_ALL=C.UTF-8
+
+RUN apk add --no-cache \
+  bash \
+  bash-completion \
+  vim \
+  vim-tutor \
+  neovim \
+  git \
+  tmux \
+  ripgrep \
+  fd \
+  shellcheck \
+  curl \
+  wget \
+  less \
+  xz \
+  unzip \
+  man-db \
+  man-pages \
+  texinfo \
+  procps \
+  iputils \
+  iproute2 \
+  sudo \
+  openssh-client \
+  starship \
+  lazygit \
+  delta \
+  coreutils-doc \
+  busybox-doc \
+  vim-doc \
+  git-doc
+
+COPY . /usr/share/workspace
+WORKDIR /usr/share/workspace
+RUN ./setup.sh -d
+
+CMD ["/bin/bash"]
