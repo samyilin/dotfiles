@@ -216,10 +216,11 @@ There's 2 ways to set up this config.
    podman run -it --rm localhost/IMAGE_NAME
    ```
 
-   Note: these Dockerfiles have not been built and tested after recent
-   updates (locale env vars, Ubuntu base switched to `ubuntu:latest`, and
-   package additions). TODO: build all three images and confirm
-   `./setup.sh -d` completes.
+   Note: these Dockerfiles have been built and tested (Ubuntu 26.04 LTS,
+   Fedora latest, Arch Linux latest). On Apple Silicon / arm64 hosts,
+   `archlinux:latest` has no arm64 image, so build Arch with
+   `docker build --platform linux/amd64 -f Dockerfile.archlinux -t IMAGE_NAME`
+   (and run it with `docker run --platform linux/amd64`).
 
    Default container/docker install would not help you set up ssh and git.
    These belong in your host system so you don't have to reset your ssh every
