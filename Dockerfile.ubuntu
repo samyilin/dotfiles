@@ -15,7 +15,10 @@ RUN rm -f /etc/dpkg/dpkg.cfg.d/excludes && \
   curl \
   wget \
   less \
-  sudo \
+  iproute2 \
+  unzip \
+  texinfo \
+  info \
   openssh-client \
   tmux \
   git \
@@ -25,7 +28,11 @@ RUN rm -f /etc/dpkg/dpkg.cfg.d/excludes && \
   fd-find \
   shellcheck \
   busybox \
-  iputils-ping && \
+  iputils-ping \
+  bash-completion \
+  starship \
+  lazygit && \
+  ln -sf /usr/bin/fdfind /usr/bin/fd && \
   apt-get install -y --reinstall --no-install-recommends \
   $(dpkg --get-selections | awk '{print $1}') && \
   rm -f /usr/bin/man && \

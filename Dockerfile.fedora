@@ -3,6 +3,12 @@ FROM fedora:latest
 ENV LANG=C.UTF-8
 ENV LC_ALL=C.UTF-8
 
+# lazygit/starship are not in Fedora's default repos (the lazygit COPR is
+# unmaintained); fetch the official static binaries from GitHub, pinned so
+# rebuilds are reproducible.
+ARG LAZYGIT_VERSION=0.64.1
+ARG STARSHIP_VERSION=1.26.0
+
 RUN sed -i '/^tsflags=nodocs/d' /etc/dnf/dnf.conf && \
   dnf -y update && \
   dnf -y reinstall "*" && \
@@ -24,7 +30,22 @@ RUN sed -i '/^tsflags=nodocs/d' /etc/dnf/dnf.conf && \
   less \
   xz \
   ripgrep \
-  fd-find && \
+  fd-find \
+  openssh-clients \
+  unzip \
+  bash-completion && \
+  case "$(uname -m)" in \
+  x86_64) lazygit_arch=x86_64; starship_arch=x86_64-unknown-linux-musl ;; \
+  aarch64) lazygit_arch=arm64; starship_arch=aarch64-unknown-linux-musl ;; \
+  *) echo "unsupported arch: $(uname -m)" >&2; exit 1 ;; \
+  esac && \
+  curl -fsSL -o /tmp/lazygit.tar.gz \
+    "https://github.com/jesseduffield/lazygit/releases/download/v${LAZYGIT_VERSION}/lazygit_${LAZYGIT_VERSION}_linux_${lazygit_arch}.tar.gz" && \
+  tar -xzf /tmp/lazygit.tar.gz -C /usr/local/bin lazygit && \
+  curl -fsSL -o /tmp/starship.tar.gz \
+    "https://github.com/starship/starship/releases/download/v${STARSHIP_VERSION}/starship-${starship_arch}.tar.gz" && \
+  tar -xzf /tmp/starship.tar.gz -C /usr/local/bin starship && \
+  rm -f /tmp/lazygit.tar.gz /tmp/starship.tar.gz && \
   dnf clean all
 
 COPY . /usr/share/workspace

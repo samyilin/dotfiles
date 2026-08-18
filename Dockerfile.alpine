@@ -25,11 +25,9 @@ RUN apk add --no-cache \
   procps \
   iputils \
   iproute2 \
-  sudo \
   openssh-client \
   starship \
   lazygit \
-  delta \
   coreutils-doc \
   busybox-doc \
   vim-doc \

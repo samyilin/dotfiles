@@ -53,27 +53,3 @@ code so they can be examined in context.
       fixes the hang (a TODO comment is inline in the same file).
       Source: `nvim/nvim/plugin/other/05_snacks.lua`
 
-## setup
-
-- [ ] Audit the package sets exposed by the four Dockerfiles
-      (`Dockerfile.ubuntu/fedora/archlinux/alpine`): compare what each
-      image actually exposes on PATH and how the sets differ. Known
-      drift in the explicit install lists:
-      - `sudo`: Ubuntu/Alpine only. `openssh`: Ubuntu (client), Arch
-        (`openssh`), Alpine (client), Fedora none.
-      - `busybox`: installed on Ubuntu/Fedora, *is* the base on Alpine,
-        absent from Arch.
-      - `less`/`xz`: explicit on Ubuntu/Fedora/Alpine, not listed on
-        Arch. `unzip`: Arch/Alpine only.
-      - `procps-ng`/`iproute2`/`man-pages`: Fedora/Alpine only.
-      - Alpine alone ships the full toolbelt: starship, lazygit, delta,
-        bash-completion, vim-tutor, and the `-doc` man subpackages.
-      Base images also differ in what they preinstall (e.g. Arch base),
-      so verify inside built images — compare `command -v` over a
-      shared baseline, or `dpkg -l` / `rpm -qa` / `pacman -Q` /
-      `apk info`. Then decide whether to unify to a documented baseline
-      or accept per-distro differences, and record the choice in
-      `docker-notes.md`.
-      Source: `Dockerfile.ubuntu`, `Dockerfile.fedora`,
-      `Dockerfile.archlinux`, `Dockerfile.alpine`, `docker-notes.md`
-

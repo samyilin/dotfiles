@@ -140,8 +140,74 @@ docker run --rm dotfiles:ubuntu sh -c 'man -w ls && man ls | head'
   default; within the RPM family, Fedora + EPEL covers most of the long
   tail.
 
+## Package sets (audit, 2026-08-18)
+
+Every image must expose the same core toolbelt on PATH. Decision after
+auditing all four built images (`command -v` over a shared baseline):
+unify to the documented baseline below, fixing the gaps found, and accept
+only the deviations explicitly called out. `sudo` is deliberately *not*
+part of the baseline — the containers run as root and no `setup.sh -d`
+path uses it — and was dropped from the install lists where we control
+them.
+
+Canonical baseline (all four images):
+
+| category    | commands                              |
+|-------------|---------------------------------------|
+| shell       | bash, sh                              |
+| editors     | vim, nvim, vi, vimtutor               |
+| VCS/TUI     | git, lazygit, tmux                    |
+| prompt      | starship                              |
+| search/lint | ripgrep, fd, shellcheck               |
+| network     | curl, wget, ssh, scp                  |
+| archives    | less, xz, unzip, tar, gzip            |
+| docs        | man (working pages), info             |
+| system      | ps, top, ip, ping, busybox            |
+| completion  | bash-completion                       |
+
+The lazygit setup expects a diff highlighter (`difft` or `delta`) only
+to pick a pager; no distro packages either, and Alpine no longer ships
+`delta`, so no image has one — the setup skips the pager config and
+lazygit still works everywhere.
+
+Per-distro install source (and any symlink), plus gaps the audit fixed:
+
+| command         | Ubuntu                           | Fedora                          | Arch                                  | Alpine             |
+|-----------------|----------------------------------|---------------------------------|---------------------------------------|--------------------|
+| fd              | apt (fd-find) + `fd` symlink     | dnf (fd-find)                   | pacman                                | apk                |
+| less            | apt                              | dnf                             | pacman (man-db dep; now explicit)     | apk                |
+| unzip           | apt (was missing)                | dnf (weak dep of less; now explicit) | pacman                            | apk                |
+| info            | apt (`info` pkg, was missing)    | dnf (info)                      | pacman (texinfo)                      | apk (texinfo)      |
+| vi              | apt (neovim registers `vi` alt)  | base (vim-minimal)              | pacman (vim) + `vi` symlink           | base (busybox)     |
+| busybox         | apt                              | dnf                             | pacman (was missing)                  | the base image     |
+| ip              | apt (iproute2, was missing)      | dnf                             | base (iproute2)                       | apk (iproute2)     |
+| starship        | apt (universe)                   | GitHub (pinned release)         | pacman                                | apk                |
+| lazygit         | apt (universe)                   | GitHub (pinned release)         | pacman                                | apk                |
+| bash-completion | apt (was missing)                | dnf (was missing)               | pacman (was missing)                  | apk                |
+
+Notes:
+
+- `sudo` is not in the baseline (see above): dropped from the Ubuntu and
+  Alpine install lists — their bases have none — and never added to
+  Arch. Only Fedora exposes it, because its base ships `sudo` as a
+  *protected* package (removal needs `--setopt=protected_packages=`/
+  `--allowerasing` surgery). No `setup.sh -d` path uses sudo.
+- Fedora does not package lazygit/starship (the `atim/lazygit` COPR is
+  unmaintained), so `Dockerfile.fedora` downloads the official static
+  binaries from GitHub — pinned with `ARG LAZYGIT_VERSION` /
+  `ARG STARSHIP_VERSION`, musl builds, one per arch (`uname -m`).
+- Arch's `vim` package does not provide `vi`; `Dockerfile.archlinux`
+  symlinks `vi -> vim`.
+- Base images preinstall different subsets (Arch base: iproute2/iputils/
+  procps-ng/xz/tar/gzip/curl; Fedora base: sudo/vim-minimal/xz/curl;
+  Ubuntu minimized base: procps but no iproute2/unzip; Alpine: busybox).
+  The explicit install lists exist to guarantee the baseline regardless
+  of that base drift.
+
 ## Last verified
 
-2026-08-17: Ubuntu 26.04 LTS, Fedora 44, Arch Linux latest, Alpine
-latest — all four images build and `./setup.sh -d` passes (idempotent
-on re-run; `man` works inside each image).
+2026-08-18: Ubuntu 26.04 LTS, Fedora 44, Arch Linux latest, Alpine
+latest — all four build and `./setup.sh -d` passes (idempotent on re-run;
+`man` works inside each image). Package sets audited against the baseline
+above (see "Package sets" section); Fedora build also exercises the
+pinned GitHub downloads for lazygit/starship.
