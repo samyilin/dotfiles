@@ -139,14 +139,16 @@ Config.now_if_args(function()
   ---@return boolean
   local function is_pdf_image(buf)
     return is_image_buf(buf)
-      and vim.fn.fnamemodify(vim.api.nvim_buf_get_name(buf), ':e'):lower() == 'pdf'
+      and vim.fn.fnamemodify(vim.api.nvim_buf_get_name(buf), ':e'):lower()
+        == 'pdf'
   end
 
   ---@param buf number
   ---@return boolean
   local function is_pdf(buf)
     return vim.api.nvim_buf_is_valid(buf)
-      and vim.fn.fnamemodify(vim.api.nvim_buf_get_name(buf), ':e'):lower() == 'pdf'
+      and vim.fn.fnamemodify(vim.api.nvim_buf_get_name(buf), ':e'):lower()
+        == 'pdf'
   end
 
   -- Image buffers fill their window ------------------------------------
@@ -191,9 +193,7 @@ Config.now_if_args(function()
   end
 
   local function pdf_src(buf)
-    if not is_pdf_image(buf) then
-      return nil
-    end
+    if not is_pdf_image(buf) then return nil end
     return vim.api.nvim_buf_get_name(buf)
   end
 
@@ -202,7 +202,11 @@ Config.now_if_args(function()
   local function pdf_total(path)
     local esc = path:gsub('[()\\]', function(c) return '\\' .. c end)
     local out = vim.fn.system({
-      'gs', '-q', '-dNOSAFER', '-dNODISPLAY', '-c',
+      'gs',
+      '-q',
+      '-dNOSAFER',
+      '-dNODISPLAY',
+      '-c',
       ('(%s) (r) file runpdfbegin pdfpagecount = quit'):format(esc),
     })
     return tonumber(out:match('%d+')) -- nil when gs is unavailable (no clamping)
@@ -212,7 +216,11 @@ Config.now_if_args(function()
     local buf = vim.api.nvim_get_current_buf()
     local src = pdf_src(buf)
     if not src then
-      vim.notify('Not a PDF image buffer', vim.log.levels.WARN, { title = 'PDF page' })
+      vim.notify(
+        'Not a PDF image buffer',
+        vim.log.levels.WARN,
+        { title = 'PDF page' }
+      )
       return
     end
     local st = pdf.page[buf]
@@ -239,7 +247,11 @@ Config.now_if_args(function()
       auto_resize = true,
     })
     vim.notify(
-      ('%s - page %d/%s'):format(vim.fn.fnamemodify(src, ':t'), page, st.total or '?'),
+      ('%s - page %d/%s'):format(
+        vim.fn.fnamemodify(src, ':t'),
+        page,
+        st.total or '?'
+      ),
       vim.log.levels.INFO,
       { title = 'PDF', id = 'snacks.pdf.page' } -- same id replaces the previous counter
     )
@@ -261,17 +273,13 @@ Config.now_if_args(function()
   vim.api.nvim_create_autocmd('BufWinEnter', {
     pattern = '*.pdf',
     callback = function(e)
-      if not is_pdf(e.buf) then
-        return
-      end
+      if not is_pdf(e.buf) then return end
       if #vim.api.nvim_tabpage_list_wins(0) == 1 then
         return -- already fullscreen
       end
       local win = vim.api.nvim_get_current_win()
       vim.schedule(function()
-        if not vim.api.nvim_buf_is_valid(e.buf) then
-          return
-        end
+        if not vim.api.nvim_buf_is_valid(e.buf) then return end
         vim.cmd('tab sbuffer ' .. e.buf) -- new fullscreen tab
         if vim.api.nvim_win_is_valid(win) then
           vim.api.nvim_win_close(win, false) -- drop the original split
@@ -292,6 +300,16 @@ Config.now_if_args(function()
   })
 
   -- jumplist-style shortcuts: ]p / [p = next / previous page
-  vim.keymap.set('n', ']p', function() pdf_flip(1) end, { desc = 'PDF next page' })
-  vim.keymap.set('n', '[p', function() pdf_flip(-1) end, { desc = 'PDF previous page' })
+  vim.keymap.set(
+    'n',
+    ']p',
+    function() pdf_flip(1) end,
+    { desc = 'PDF next page' }
+  )
+  vim.keymap.set(
+    'n',
+    '[p',
+    function() pdf_flip(-1) end,
+    { desc = 'PDF previous page' }
+  )
 end)

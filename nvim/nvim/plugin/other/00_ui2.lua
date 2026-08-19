@@ -156,13 +156,24 @@ Config.now(function()
     end
     if not vim.api.nvim_win_is_valid(win) then
       win = vim.api.nvim_open_win(b, false, {
-        relative = 'editor', anchor = 'NE', row = 1,
-        col = vim.o.columns - 1, width = 40, height = 1,
-        style = 'minimal', border = 'rounded', zindex = 50,
+        relative = 'editor',
+        anchor = 'NE',
+        row = 1,
+        col = vim.o.columns - 1,
+        width = 40,
+        height = 1,
+        style = 'minimal',
+        border = 'rounded',
+        zindex = 50,
       })
-      vim.api.nvim_set_option_value('wrap', true, { scope = 'local', win = win })
       vim.api.nvim_set_option_value(
-        'winhighlight', 'Normal:NormalFloat,FloatBorder:FloatBorder',
+        'wrap',
+        true,
+        { scope = 'local', win = win }
+      )
+      vim.api.nvim_set_option_value(
+        'winhighlight',
+        'Normal:NormalFloat,FloatBorder:FloatBorder',
         { scope = 'local', win = win }
       )
       vim.keymap.set('n', 'q', hide, { buffer = b })
@@ -171,13 +182,22 @@ Config.now(function()
       vim.keymap.set('n', '<LeftRelease>', hide, { buffer = b })
     end
     local w, h = 40, #lines
-    for _, l in ipairs(lines) do w = math.max(w, vim.api.nvim_strwidth(l) + 2) end
+    for _, l in ipairs(lines) do
+      w = math.max(w, vim.api.nvim_strwidth(l) + 2)
+    end
     h = math.min(h, math.max(1, math.floor(vim.o.lines * 0.3)))
     w = math.min(w, math.max(20, vim.o.columns - 2))
     vim.api.nvim_win_set_config(win, {
-      hide = false, relative = 'editor', anchor = 'NE', row = 1,
-      col = vim.o.columns - 1, width = w, height = h,
-      style = 'minimal', border = 'rounded', zindex = 50,
+      hide = false,
+      relative = 'editor',
+      anchor = 'NE',
+      row = 1,
+      col = vim.o.columns - 1,
+      width = w,
+      height = h,
+      style = 'minimal',
+      border = 'rounded',
+      zindex = 50,
     })
     if #lines > h then vim.api.nvim_win_set_cursor(win, { #lines, 0 }) end
   end
@@ -185,11 +205,15 @@ Config.now(function()
   local function schedule_hide(ms)
     if timer then timer:stop() end
     timer = vim.uv.new_timer()
-    timer:start(ms, 0, vim.schedule_wrap(function()
-      timer:close()
-      timer = nil
-      hide()
-    end))
+    timer:start(
+      ms,
+      0,
+      vim.schedule_wrap(function()
+        timer:close()
+        timer = nil
+        hide()
+      end)
+    )
   end
 
   vim.notify = function(msg, level, opts)
@@ -226,7 +250,11 @@ Config.now(function()
         keep_active = true
         -- Global Esc to dismiss keep window
         vim.on_key(function(key)
-          if keep_active and key == vim.keycode('<Esc>') and vim.api.nvim_get_mode().mode == 'n' then
+          if
+            keep_active
+            and key == vim.keycode('<Esc>')
+            and vim.api.nvim_get_mode().mode == 'n'
+          then
             hide()
           end
         end, esc_ns)
