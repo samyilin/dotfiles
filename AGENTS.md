@@ -8,9 +8,7 @@ is idempotent: re-running must skip what's already configured.
 
 - Entrypoint is `./setup.sh [-h|-d] [program...]` (`-d` is
   non-interactive/docker mode). No args → runs every top-level
-  folder's setup except `misc*`, `install*`, `config`. README's
-  `./setup`/`./remove` examples are stale; the real files are
-  `setup.sh`/`remove.sh`.
+  folder's setup except `misc*`, `install*`, `config`.
 - Each program folder owns a `setup.sh` (and optional `remove.sh`).
   Metadata files the top-level driver honors:
   - `requires` — every listed command must exist, else abort
@@ -43,8 +41,9 @@ is idempotent: re-running must skip what's already configured.
   lines within 72 columns (`vim/.vimrc` sets `textwidth=72`; nvim
   config has no override). `.shellcheckrc` enables
   `external-sources=true`, disables SC1091/2328/2327.
-- No tests, no CI, no lint script — `shellcheck` + `shfmt -d` are the
-  only verification.
+- Verification: `pre-commit run --all-files` (shellcheck, shfmt,
+  stylua, hadolint, markdownlint; see `.pre-commit-config.yaml`). No
+  tests, no CI.
 - `git/remove.sh` deliberately does NOT touch `~/.gitconfig`.
 
 ## Non-obvious gotchas
