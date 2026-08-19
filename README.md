@@ -1,12 +1,12 @@
 # README
 
-This is my dotfile. Usable both as a standalone Git repository or work in a
-Docker environment.
+This is my dotfile. Usable both as a standalone Git repository or work
+in a Docker environment.
 
 This repo has 2 purposes:
 
-1. This is my personal dotfile. I do try to make it as distro/OS-agnostic as
-   possible though.
+1. This is my personal dotfile. I do try to make it as
+   distro/OS-agnostic as possible though.
 
 2. To be able to run development container(s). This is not a priority.
 
@@ -22,20 +22,22 @@ This repo has 2 purposes:
 3. Use links for customizations that won't have a default configuration
    at all, at least not in the user context.
 
-4. Make sure it (this config) is easy to delete. After deleting this config,
-   you should have a default (or non-existent) config.
+4. Make sure it (this config) is easy to delete. After deleting this
+   config, you should have a default (or non-existent) config.
 
-   Keep in mind that removing this config won't help you uninstall packages
-   such as vim, emacs, etc. This is the job of your package manager.
+   Keep in mind that removing this config won't help you uninstall
+   packages such as vim, emacs, etc. This is the job of your package
+   manager.
 
 5. Make it modular. Scripts/configs for each program are be separated by
    folder to make maintenance easier.
 
-6. Make it so that using setup script(s) repeatedly will skip the parts that's
-   already been set up.
+6. Make it so that using setup script(s) repeatedly will skip the parts
+   that's already been set up.
 
-7. Make it as simple and cross-platform as possible. What does cross-platform
-   even mean? Hard to tell these days. But I choose POSIX shell for now.
+7. Make it as simple and cross-platform as possible. What does
+   cross-platform even mean? Hard to tell these days. But I choose
+   POSIX shell for now.
 
 ## Assumptions
 
@@ -43,8 +45,8 @@ There're very few assumptions here, not in any particular order:
 
 1. You are running a UNIX-ish system.
 
-2. You would prefer to have more than 1 ssh setup if needed. Separation of work
-   and life account is typically needed, amongst other reasons.
+2. You would prefer to have more than 1 ssh setup if needed. Separation
+   of work and life account is typically needed, amongst other reasons.
 
 3. At least you have Busybox or similar minimal environment.
 
@@ -66,39 +68,41 @@ Bash, Vim, Neovim, tmux, SSH, git. A "complete" CLI working environment.
 These days I dabble in Zed, etc., so whatever other configurable
 programs.
 
-This script can also helps you set up your user name and password where applicable.
-Good for initializing things on WSL or other root systems.
+This script can also helps you set up your user name and password where
+applicable. Good for initializing things on WSL or other root systems.
 
 Bash for interactive shell, Vim/Neovim for text editor, tmux for screen
 multiplexer, ssh and git could work together or separately.
 
-SSH setup script here is a wrapper to allow users to set up git and SSH so we
-can SSH into git repos easier, and nothing else.
+SSH setup script here is a wrapper to allow users to set up git and SSH
+so we can SSH into git repos easier, and nothing else.
 
 ## Commands
 
 ### update_repos
 
-A bash function (defined in `bash/.bashrc.custom`) that updates every git repo
-under the current directory to its latest default branch. Repos that are
-local-only, on a non-default branch, or in detached HEAD state are skipped.
+A bash function (defined in `bash/.bashrc.custom`) that updates every
+git repo under the current directory to its latest default branch. Repos
+that are local-only, on a non-default branch, or in detached HEAD state
+are skipped.
 
-To avoid re-entering your SSH key passphrase for every repo, it unlocks keys
-once through ssh-agent with a 5-minute lifetime:
+To avoid re-entering your SSH key passphrase for every repo, it unlocks
+keys once through ssh-agent with a 5-minute lifetime:
 
-- Reuses a fixed agent socket at `~/.ssh/agent.sock` (created on first run), so
-  repeated calls share one daemon instead of leaking a new one per run.
+- Reuses a fixed agent socket at `~/.ssh/agent.sock` (created on first
+  run), so repeated calls share one daemon instead of leaking a new one
+  per run.
 - Loads default-named keys plus any custom-named keys declared via
   `IdentityFile` in `~/.ssh/config`.
-- A reachable agent (e.g. the macOS launchd agent) is reused as-is and left
-  alone if it already has keys.
-- Only runs when at least one repo uses an SSH remote; HTTPS and local-only
-  repos don't need it.
+- A reachable agent (e.g. the macOS launchd agent) is reused as-is
+  and left alone if it already has keys.
+- Only runs when at least one repo uses an SSH remote; HTTPS and
+  local-only repos don't need it.
 
 ### Vim plugin updates
 
-vim-plug has no lockfile and plugins are not auto-updated. Run `:PlugUpdate`
-inside Vim whenever you pull this repo:
+vim-plug has no lockfile and plugins are not auto-updated. Run
+`:PlugUpdate` inside Vim whenever you pull this repo:
 
 ```sh
 vim +PlugUpdate
@@ -106,12 +110,12 @@ vim +PlugUpdate
 
 ## Non-goals?
 
-1. dircolors. I realize they exist, I just don't care about them enough to
-   write one.
+1. dircolors. I realize they exist, I just don't care about them enough
+   to write one.
 
-2. Zsh or fish. I try to minimize working directly within shell CLI  because
-   nowadays I live in Vim/Neovim/Emacs whenever possible. So I don't even
-   heavily rely on Bash at all.
+2. Zsh or fish. I try to minimize working directly within shell CLI
+   because nowadays I live in Vim/Neovim/Emacs whenever possible. So
+   I don't even heavily rely on Bash at all.
 
 3. IDEs/Full programming environment setup.
 
@@ -119,8 +123,8 @@ vim +PlugUpdate
 
 There's 2 ways to set up this config.
 
-1. Using this dotfile on an existing install. In other words, not a container
-   setup.
+1. Using this dotfile on an existing install. In other words, not a
+   container setup.
 
    To pull this repo to your OS:
 
@@ -134,14 +138,15 @@ There's 2 ways to set up this config.
    cd "$HOME"/dotfiles && ./setup.sh && . "$HOME"/.profile
    ```
 
-   To setup additional programs after initial setup, i.e. your initial setup
-   did not install vim but now it does, do
+   To setup additional programs after initial setup, i.e. your initial
+   setup did not install vim but now it does, do
 
    ```sh
    cd "$HOME"/dotfiles && ./setup.sh YOUR_PROGRAM
    ```
 
-   Design principles above will make sure no repeated install would happen.
+   Design principles above will make sure no repeated install would
+   happen.
 
    To get the latest from this setup, do
 
@@ -168,9 +173,9 @@ There's 2 ways to set up this config.
    ```
 
    Additional mode:
-   Docker/default mode. Skips over interactive mode that the user need to
-   intervene, i.e. setting up username/password, git and ssh. This is the
-   default on Docker setup. More about this below.
+   Docker/default mode. Skips over interactive mode that the user
+   need to intervene, i.e. setting up username/password, git and ssh.
+   This is the default on Docker setup. More about this below.
 
    To install using non-interactive mode:
 
@@ -181,8 +186,8 @@ There's 2 ways to set up this config.
 2. Using this dotfile to setup a docker/podman image. This is good for
    developing in a container and avoid "dependency hell."
 
-   To use this method, you would need to install docker or podman on your
-   setup. I would suggest podman.
+   To use this method, you would need to install docker or podman on
+   your setup. I would suggest podman.
 
    I have 4 Dockerfiles here, one Ubuntu based on `ubuntu:latest` which
    tracks the latest LTS (more stable-ish), one Fedora latest based
@@ -190,8 +195,8 @@ There's 2 ways to set up this config.
    based (bleeding-edge, good for testing development software) and one
    Alpine based (musl, smallest image, good for slim containers)
 
-   Using the appropriate Dockerfile name, the below code would generate a
-   docker image:
+   Using the appropriate Dockerfile name, the below code would
+   generate a docker image:
 
    ```sh
    cd "$HOME" && git clone https://github.com/samyilin/dotfiles.git && cd dotfiles
@@ -223,10 +228,10 @@ There's 2 ways to set up this config.
    `docker build --platform linux/amd64 -f Dockerfile.archlinux -t IMAGE_NAME`
    (and run it with `docker run --platform linux/amd64`).
 
-   Default container/docker install would not help you set up ssh and git.
-   These belong in your host system so you don't have to reset your ssh every
-   time you spin up a container. To mount host's ssh and git configurations,
-   use something like
+   Default container/docker install would not help you set up ssh and
+   git. These belong in your host system so you don't have to reset
+   your ssh every time you spin up a container. To mount host's ssh and
+   git configurations, use something like
 
    ```sh
    docker run -it --rm \
@@ -235,14 +240,14 @@ There's 2 ways to set up this config.
      localhost/IMAGE_NAME
    ```
 
-   You can use a similar process to mount your git repo to the container so you
-   don't have to keep copying your repo over. Writing a basic Bash script for
-   this is trivial and won't be covered here.
+   You can use a similar process to mount your git repo to the
+   container so you don't have to keep copying your repo over. Writing
+   a basic Bash script for this is trivial and won't be covered here.
 
 ## Systems Tested
 
-I've tested this setup in Alpine, Arch, Ubuntu and Fedora Linux containers.
-Also MacOS. I would try this in VMs one day.
+I've tested this setup in Alpine, Arch, Ubuntu and Fedora Linux
+containers. Also MacOS. I would try this in VMs one day.
 
 Will try to test this on BSD VMs one day.
 
@@ -252,8 +257,8 @@ If you really want the greybeards' power tools, read up [The
 Grymoire](https://www.grymoire.com/index.html). This is a series of
 practical guide for Unix/Linux tools that is actually pleasant to read,
 unlike the [POSIX standard
-specification](https://pubs.opengroup.org/onlinepubs/9699919799/) (which you
-have to read if you found Grymoire not clear enough).
+specification](https://pubs.opengroup.org/onlinepubs/9699919799/)
+(which you have to read if you found Grymoire not clear enough).
 
 ## WSL Notes
 
@@ -267,7 +272,8 @@ problem when using Git (Git itself or package managers who use git) or
 anything that uses opensssl. Here's the actual fix, don't disable SSL
 globally to try to fix this:
 
-[Reference](https://stackoverflow.com/questions/72167566/wsl-docker-curl-60-ssl-certificate-problem-unable-to-get-local-issuer-certi) here:
+[Reference](https://stackoverflow.com/questions/72167566/wsl-docker-curl-60-ssl-certificate-problem-unable-to-get-local-issuer-certi)
+here:
 Basically:
 
 1. run certmgr.msc.
@@ -288,7 +294,9 @@ sudo cp eset.crt /usr/local/share/ca-certificates/
 sudo update-ca-certificates
 ```
 
-If under [Arch](https://wiki.archlinux.org/title/User:Grawity/Adding_a_trusted_CA_certificate), do
+If under
+[Arch](https://wiki.archlinux.org/title/User:Grawity/Adding_a_trusted_CA_certificate),
+do
 
 ```sh
 sudo trust anchor --store ~/cert.crt

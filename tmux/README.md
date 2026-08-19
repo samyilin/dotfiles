@@ -10,15 +10,17 @@ This is not a thorough setup like
 
 ## Documentation
 
-1. A lot of people prefer using Ctrl-a over Ctrl-b as the prefix due to Ctr-a
-   being the default on [GNU Screen](https://www.gnu.org/software/screen/). I
-   don't really care for either, so I've used Ctrl-b as my prefix.
+1. A lot of people prefer using Ctrl-a over Ctrl-b as the prefix, like
+   [GNU Screen](https://www.gnu.org/software/screen/) does. I don't
+   really care for either, so I've used Ctrl-b as my prefix.
 
-2. Default keybinding "Ctrl-b ?" gives abridged version of list-keys, but I've
-   forced it to print out all the nitty-gritty details of key maps.
+2. Default keybinding "Ctrl-b ?" gives abridged version of list-keys,
+   but I've forced it to print out all the nitty-gritty details of key
+   maps.
 
-3. use copy-mode-vi to force vi-like key bindings. Does it matter? Meh. I don't
-   use bash's vi-like keybindings either even though I have set them up.
+3. use copy-mode-vi to force vi-like key bindings. Does it matter? Meh.
+   I don't use bash's vi-like keybindings either even though I have set
+   them up.
 
 ## Style/colorscheme?
 
@@ -29,4 +31,5 @@ Colorscheme used here is Gruvbox, I've barely grabbed the palette from
 
 TBH I don't even use tmux that often, so no.
 
-These days I use Wezterm/Kitty/ghostty's local functionalities most of the time anyways.
+These days I use Wezterm/Kitty/ghostty's local functionalities most of
+the time anyways.

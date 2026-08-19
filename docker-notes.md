@@ -73,6 +73,7 @@ docker run --rm dotfiles:ubuntu sh -c 'man -w ls && man ls | head'
   docker build --platform linux/amd64 -f Dockerfile.archlinux -t dotfiles:archlinux .
   docker run --rm --platform linux/amd64 dotfiles:archlinux ./setup.sh -d
   ```
+
 - Re-check when: archlinux publishes an arm64 image
 
 ### Arch: pacman seccomp sandbox fails under emulation
@@ -87,6 +88,7 @@ docker run --rm dotfiles:ubuntu sh -c 'man -w ls && man ls | head'
   ```sh
   sed -i 's/^#DisableSandboxSyscalls/DisableSandboxSyscalls/' /etc/pacman.conf
   ```
+
 - Cosmetic build noise (does not fail the build):
   - `==> ERROR: There is no secret key available to sign with.` during
     the `archlinux-keyring` reinstall (pacman-key is never initialized
@@ -144,11 +146,11 @@ docker run --rm dotfiles:ubuntu sh -c 'man -w ls && man ls | head'
 
 Every image must expose the same core toolbelt on PATH. Decision after
 auditing all four built images (`command -v` over a shared baseline):
-unify to the documented baseline below, fixing the gaps found, and accept
-only the deviations explicitly called out. `sudo` is deliberately *not*
-part of the baseline — the containers run as root and no `setup.sh -d`
-path uses it — and was dropped from the install lists where we control
-them.
+unify to the documented baseline below, fixing the gaps found, and
+accept only the deviations explicitly called out. `sudo` is
+deliberately *not* part of the baseline — the containers run as root
+and no `setup.sh -d` path uses it — and was dropped from the install
+lists where we control them.
 
 Canonical baseline (all four images):
 
@@ -207,7 +209,7 @@ Notes:
 ## Last verified
 
 2026-08-18: Ubuntu 26.04 LTS, Fedora 44, Arch Linux latest, Alpine
-latest — all four build and `./setup.sh -d` passes (idempotent on re-run;
-`man` works inside each image). Package sets audited against the baseline
-above (see "Package sets" section); Fedora build also exercises the
-pinned GitHub downloads for lazygit/starship.
+latest — all four build and `./setup.sh -d` passes (idempotent on
+re-run; `man` works inside each image). Package sets audited against
+the baseline above (see "Package sets" section); Fedora build also
+exercises the pinned GitHub downloads for lazygit/starship.

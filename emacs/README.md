@@ -1,6 +1,8 @@
 # README
 
-Mostly a beginner Emacs config, grabbed from [here](https://protesilaos.com/codelog/2024-11-28-basic-emacs-configuration/) then added Elpaca as package manager.
+Mostly a beginner Emacs config, grabbed from
+[here](https://protesilaos.com/codelog/2024-11-28-basic-emacs-configuration/)
+then added Elpaca as package manager.
 
 I have no motivation to improve this any further at this point, learning
 Emacs keybindings and such. Don't have time for this at the moment. Just

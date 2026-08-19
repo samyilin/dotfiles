@@ -27,8 +27,8 @@ type, when this configuration is mature enough.
 ## What I'm getting rid of
 
 I'm getting rid of package manager in favour of builtin package manager
-vim.pack. It simplifies configuration templating, but it complicates things by
-replacing that template with configuration structure.
+vim.pack. It simplifies configuration templating, but it complicates
+things by replacing that template with configuration structure.
 
 I'm getting rid of a lot of UI niceties for simpler approaches, yes it
 isn't as pretty, but the point is to reduce dependency as much as
@@ -36,7 +36,8 @@ possible.
 
 ## What I'm keeping
 
-The "essentials", as minimal as possible, though not married to this idea.
+The "essentials", as minimal as possible, though not married to this
+idea.
 
 ## How long am I dedicating to completing this DIY project?
 
