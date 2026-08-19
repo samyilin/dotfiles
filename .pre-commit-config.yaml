@@ -1,0 +1,62 @@
+# Pre-commit hooks: https://pre-commit.com
+#
+# Local setup:
+#   brew install pre-commit hadolint
+#   pre-commit install
+# Run against the whole tree: pre-commit run --all-files
+#
+# Revs are pinned (two repos have no tags, so they use commit SHAs); bump
+# with: pre-commit autoupdate
+repos:
+  # shellcheck — pip-installed binary, no Docker. The default types: [shell]
+  # filter only matches *.sh / shebang'd scripts, so the sourced stub files
+  # (no .sh extension) get explicit entries with the right dialect.
+  - repo: https://github.com/shellcheck-py/shellcheck-py
+    rev: d0bbf5502ddb39b9bd171dc2d769481c147d36bd  # shellcheck v0.11.0
+    hooks:
+      - id: shellcheck
+      - id: shellcheck
+        name: shellcheck (bash stubs)
+        files: '^bash/\.(bashrc|bash_profile|bashrc\.custom)$'
+        types: [text]
+        args: [-s, bash]
+      - id: shellcheck
+        name: shellcheck (profile stubs)
+        files: '^profile/\.profile(\.default)?$'
+        types: [text]
+        args: [-s, sh]
+
+  # shfmt — prebuilt executable via python, no Go toolchain needed.
+  - repo: https://github.com/scop/pre-commit-shfmt
+    rev: ef6310bef55167c14702bc9c5d81d9c0d43e86c4
+    hooks:
+      - id: shfmt
+      - id: shfmt
+        name: shfmt (bash stubs)
+        files: '^bash/\.(bashrc|bash_profile|bashrc\.custom)$'
+        types: [text]
+        args: [--write]
+      - id: shfmt
+        name: shfmt (profile stubs)
+        files: '^profile/\.profile(\.default)?$'
+        types: [text]
+        args: [--write]
+
+  # stylua — downloads the prebuilt binary (no cargo/Rust).
+  - repo: https://github.com/JohnnyMorganz/StyLua
+    rev: v2.5.2
+    hooks:
+      - id: stylua-github
+        exclude: '^config/'  # legacy configs, untouched by setup
+
+  # hadolint — system binary, so `brew install hadolint` is required.
+  - repo: https://github.com/hadolint/hadolint
+    rev: v2.15.1
+    hooks:
+      - id: hadolint
+
+  # markdownlint — see .markdownlint.yaml for rule overrides.
+  - repo: https://github.com/igorshubovych/markdownlint-cli
+    rev: v0.49.1
+    hooks:
+      - id: markdownlint

@@ -1,0 +1,10 @@
+# hadolint rule overrides. These are intentional for a dev/smoke-test
+# harness that follows each distro's latest packages, not production images.
+ignored:
+  - DL3007  # FROM :latest — the point of the per-distro test images
+  - DL3008  # apt version pins
+  - DL3018  # apk version pins
+  - DL3041  # dnf version pins
+  - DL4006  # pipefail — RUNs run under /bin/sh (dash on ubuntu); the arch
+            # reinstall pipe and the ubuntu $(...) pipe are intentional
+  - SC2046  # unquoted $(dpkg ...) package list — word-splitting is intended
