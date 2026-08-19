@@ -12,7 +12,7 @@ repos:
   # filter only matches *.sh / shebang'd scripts, so the sourced stub files
   # (no .sh extension) get explicit entries with the right dialect.
   - repo: https://github.com/shellcheck-py/shellcheck-py
-    rev: d0bbf5502ddb39b9bd171dc2d769481c147d36bd  # shellcheck v0.11.0
+    rev: v0.11.0.1  # shellcheck v0.11.0
     hooks:
       - id: shellcheck
       - id: shellcheck
@@ -28,7 +28,7 @@ repos:
 
   # shfmt — prebuilt executable via python, no Go toolchain needed.
   - repo: https://github.com/scop/pre-commit-shfmt
-    rev: ef6310bef55167c14702bc9c5d81d9c0d43e86c4
+    rev: v3.13.1-1
     hooks:
       - id: shfmt
       - id: shfmt
