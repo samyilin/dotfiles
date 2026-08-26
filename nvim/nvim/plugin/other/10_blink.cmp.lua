@@ -8,9 +8,6 @@ Config.on_event('InsertEnter', function()
   })
   require('blink.cmp').setup({
     fuzzy = { implementation = 'prefer_rust' },
-    appearance = {
-      use_nvim_cmp_as_default = true,
-    },
     completion = {
       documentation = {
         auto_show = true,
