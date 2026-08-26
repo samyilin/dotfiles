@@ -1,4 +1,4 @@
-Config.later(function()
+Config.on_event('InsertEnter', function()
   -- Pinning V1.X until blink 2.0 is stable
   vim.pack.add({
     {

@@ -1,4 +1,4 @@
-Config.now(function()
+Config.now_if_args(function()
   vim.pack.add(
     { { src = 'https://github.com/stevearc/oil.nvim.git' } },
     { load = true }

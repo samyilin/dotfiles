@@ -1,4 +1,4 @@
-Config.now_if_args(function()
+Config.on_filetype('markdown,markdown.mdx', function()
   vim.pack.add({
     {
       src = 'https://github.com/MeanderingProgrammer/render-markdown.nvim',
