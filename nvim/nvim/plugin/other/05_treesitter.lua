@@ -86,7 +86,16 @@ Config.now_if_args(function()
   vim.api.nvim_create_autocmd('FileType', {
     pattern = filetypes,
     group = Config.custom_group,
-    callback = function() vim.treesitter.start() end,
+    callback = function()
+      -- SQL uses dbtpal's regex syntax instead of Tree-sitter.
+      if vim.bo.filetype == 'sql' then return end
+      vim.treesitter.start()
+    end,
+  })
+  vim.api.nvim_create_autocmd('FileType', {
+    pattern = 'sql',
+    group = Config.custom_group,
+    callback = function() vim.wo.foldexpr = 'syntax' end,
   })
 
   -- TODO: revisit treesitter-based indentation once it is good enough.
