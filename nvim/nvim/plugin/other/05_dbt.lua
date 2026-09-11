@@ -1,5 +1,9 @@
 Config.now_if_args(function()
+  vim.g.dbtpal_sql_base = 'sqlbigquery'
   vim.pack.add({
+    {
+      src = 'https://github.com/samyilin/vim-bigquery-syntax',
+    },
     {
       src = 'https://github.com/samyilin/dbtpal.nvim',
     },
