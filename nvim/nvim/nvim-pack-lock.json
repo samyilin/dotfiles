@@ -18,7 +18,7 @@
       "src": "file:///Users/yilin/dbt-treesitter.nvim"
     },
     "dbtpal.nvim": {
-      "rev": "3a8891fb1303716632a4fad3befd0f1448156a26",
+      "rev": "eb010e595ad8a62ae6486716f633b645afc13b9d",
       "src": "https://github.com/samyilin/dbtpal.nvim"
     },
     "gitsigns.nvim": {
