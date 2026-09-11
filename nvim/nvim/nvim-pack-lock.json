@@ -18,7 +18,7 @@
       "src": "file:///Users/yilin/dbt-treesitter.nvim"
     },
     "dbtpal.nvim": {
-      "rev": "e645d0af5cc7ace5c23598379decf5aaf2d24e68",
+      "rev": "0b218945b2b83e267e9063799644d9f0ed40ff38",
       "src": "https://github.com/samyilin/dbtpal.nvim"
     },
     "gitsigns.nvim": {
@@ -67,7 +67,7 @@
       "src": "https://github.com/geigerzaehler/tree-sitter-jinja2"
     },
     "vim-bigquery-syntax": {
-      "rev": "57ab80239320cc7efb6ff1c889cc4bc598d46164",
+      "rev": "44bbf82e99d69a48b4d39ce518e9aa9182cd9639",
       "src": "https://github.com/samyilin/vim-bigquery-syntax"
     },
     "vim-fugitive": {
