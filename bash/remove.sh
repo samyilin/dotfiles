@@ -23,3 +23,9 @@ if [ -f "$HOME"/.bash_profile ]; then
   mv "$HOME"/.bash_profile.tmp "$HOME"/.bash_profile
 fi
 unlink_config "$HOME/.inputrc"
+if [ -d "$dir/bin" ]; then
+  for script in "$dir"/bin/*; do
+    [ -e "$script" ] || continue
+    unlink_config "$HOME/bin/$(basename "$script")"
+  done
+fi

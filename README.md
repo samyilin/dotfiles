@@ -99,6 +99,25 @@ keys once through ssh-agent with a 5-minute lifetime:
 - Only runs when at least one repo uses an SSH remote; HTTPS and
   local-only repos don't need it.
 
+### export-stars-csv
+
+A script (`bash/bin/export-stars-csv`, symlinked to `~/bin` by
+`bash/setup.sh`) that exports your GitHub stars to CSV, including
+which of your [GitHub star
+lists](https://github.com/stars) each repo belongs to (empty means
+unlisted) plus repo metadata. Requires `curl`, `jq`, and `rg`.
+
+```sh
+export-stars-csv                  # writes ~/stars-export.csv
+export-stars-csv out.csv          # custom path
+GITHUB_TOKEN=ghp_... export-stars-csv  # recommended: 60 -> 5000 req/hr
+```
+
+Columns: `full_name,html_url,lists,starred_at,description,language,
+stargazers_count,repo_updated_at`. `lists` holds `;`-separated list
+names. List membership is scraped from `github.com/stars` pages (no
+public API exists for lists); star metadata comes from the REST API.
+
 ### Vim plugin updates
 
 vim-plug has no lockfile and plugins are not auto-updated. Run

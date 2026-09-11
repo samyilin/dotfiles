@@ -23,6 +23,13 @@ HISTSIZE=5000
 HISTFILESIZE=10000
 export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
 
+# Ensure ~/bin is on PATH for non-login interactive shells too
+# (login shells already get it via profile/.profile.default).
+case ":$PATH:" in
+*":$HOME/bin:"*) ;;
+*) [ -d "$HOME/bin" ] && PATH="$HOME/bin:$PATH" ;;
+esac
+
 # launches emacs in server mode if not already running. Optional code.
 # You would know what I mean here if you've used emacs extensively.
 

@@ -1,0 +1,135 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Export stars to CSV with list membership + repo metadata.
+# Usage: ./export-stars-csv.sh [output.csv]
+# Env: GITHUB_TOKEN (optional, raises rate limit 60 -> 5000 req/hr)
+
+command -v jq >/dev/null || {
+	echo "Error: 'jq' is not installed." >&2
+	exit 1
+}
+command -v rg >/dev/null || {
+	echo "Error: 'rg' (ripgrep) is not installed." >&2
+	exit 1
+}
+
+read -rp "Enter GitHub username: " username
+if [[ -z "$username" ]]; then exit 1; fi
+
+output="${1:-$HOME/stars-export.csv}"
+
+tmpdir=$(mktemp -d)
+trap 'rm -rf "$tmpdir"' EXIT
+stars_jsonl="$tmpdir/stars.jsonl"
+map_tsv="$tmpdir/map.tsv"
+listmap_json="$tmpdir/listmap.json"
+touch "$stars_jsonl" "$map_tsv"
+
+auth=()
+if [[ -n "${GITHUB_TOKEN:-}" ]]; then
+	auth=(-H "Authorization: Bearer $GITHUB_TOKEN")
+fi
+
+echo "1. Fetching ALL stars (with metadata)"
+page=1
+total=0
+while true; do
+	echo -ne "Fetching API page $page...\r"
+	response=$(curl -sL --fail --retry 3 \
+		-H "Accept: application/vnd.github.v3.star+json" \
+		"${auth[@]}" \
+		"https://api.github.com/users/$username/starred?per_page=100&page=$page")
+
+	# Single jq pass; empty output means last page. Guard non-arrays (API errors).
+	chunk=$(jq -c 'if type == "array" then .[] else empty end' 2>/dev/null <<<"$response" || true)
+	if [[ -z "$chunk" ]]; then
+		break
+	fi
+	printf '%s\n' "$chunk" >>"$stars_jsonl"
+	total=$(wc -l <"$stars_jsonl" | tr -d ' ')
+	((page++))
+	sleep 0.2
+done
+echo -e "\nFound $total total stars."
+
+echo "2. Finding your GitHub Lists..."
+list_links=$(curl -sL -A "Mozilla/5.0" "https://github.com/$username?tab=stars" | rg -F "stars/$username/lists/" || true)
+if [[ -z "$list_links" ]]; then
+	lists=()
+else
+	mapfile -t lists < <(awk -F'[/"]' '{print $(NF-1)}' <<<"$list_links" | sort -u)
+fi
+
+if [[ ${#lists[@]} -eq 0 ]]; then
+	echo "No lists found."
+else
+	echo "Found ${#lists[@]} lists: ${lists[*]}"
+fi
+
+# Single-process extractor (extract + blocklist filter in one awk;
+# rg has no lookahead so the blocklist can't fold into the match).
+extract_from_html() {
+	awk '
+    {
+      line = $0
+      while (match(line, /href="\/[^\/"]+\/[^\/"]+"/)) {
+        s = substr(line, RSTART + 7, RLENGTH - 8)
+        line = substr(line, RSTART + RLENGTH)
+        if (s !~ /^(stars|site|settings|orgs|contact|about|customer-stories|topics|collections|trending|events|marketplace|pricing|exploring|features|security|login|join|notifications|search|dashboard|projects|pulls|issues)\//) print s
+      }
+    }'
+}
+
+for list_name in ${lists[@]+"${lists[@]}"}; do
+	page=1
+	while true; do
+		echo -ne "Scraping list [$list_name] page $page...\r"
+		url="https://github.com/stars/$username/lists/$list_name?page=$page"
+		content=$(curl -sL -A "Mozilla/5.0" "$url")
+		repos=$(extract_from_html <<<"$content" | sort -u || true)
+		if [[ -z "$repos" ]]; then break; fi
+		while IFS= read -r repo; do
+			[[ -z "$repo" ]] && continue
+			printf '%s\t%s\n' "$repo" "$list_name"
+		done <<<"$repos" >>"$map_tsv"
+		((page++))
+		sleep 0.5
+	done
+done
+sort -u -o "$map_tsv" "$map_tsv"
+
+echo -e "\n3. Writing CSV to $output"
+# repo -> "list1;list2" map (empty when no lists)
+if [[ -s "$map_tsv" ]]; then
+	jq -R -s '
+    [split("\n")[] | select(length > 0) | split("\t") | {repo: .[0], list: .[1]}]
+    | group_by(.repo)
+    | map({key: .[0].repo, value: ([.[].list] | unique | join(";"))})
+    | from_entries
+  ' "$map_tsv" >"$listmap_json"
+else
+	echo '{}' >"$listmap_json"
+fi
+
+{
+	printf '%s\n' '"full_name","html_url","lists","starred_at","description","language","stargazers_count","repo_updated_at"'
+	if [[ -s "$stars_jsonl" ]]; then
+		jq -rn --slurpfile m "$listmap_json" '
+      [inputs]
+      | sort_by(.repo.full_name | ascii_downcase)
+      | .[]
+      | [.repo.full_name,
+         .repo.html_url,
+         ($m[0][.repo.full_name] // ""),
+         .starred_at,
+         (.repo.description // ""),
+         (.repo.language // ""),
+         .repo.stargazers_count,
+         .repo.updated_at]
+      | @csv
+    ' "$stars_jsonl"
+	fi
+} >"$output"
+
+echo "Wrote $(($(wc -l <"$output" | tr -d ' ') - 1)) rows (+ header) to $output"

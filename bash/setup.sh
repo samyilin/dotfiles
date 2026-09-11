@@ -50,5 +50,15 @@ main() {
   fi
   ln -sf "$dir"/.inputrc "$HOME"/.inputrc
   printf ".inputrc setup complete.\n"
+  # Expose helper scripts in bin/ on PATH ($HOME/bin is added to PATH
+  # by profile/.profile.default).
+  if [ -d "$dir"/bin ]; then
+    mkdir -p "$HOME"/bin
+    for script in "$dir"/bin/*; do
+      [ -e "$script" ] || continue
+      ln -sf "$script" "$HOME/bin/$(basename "$script")"
+    done
+    printf "bin scripts setup complete.\n"
+  fi
 }
 main "$@"
