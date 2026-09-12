@@ -27,7 +27,12 @@ Config.now_if_args(function()
     pattern = { 'sql', 'dbt' },
     group = Config.custom_group,
     callback = function()
-      vim.keymap.set('n', 'gd', '<cmd>DbtGotoModel<cr>', { buffer = true })
+      vim.keymap.set(
+        'n',
+        'gd',
+        function() require('dbtpal').goto_model() end,
+        { buffer = true }
+      )
     end,
   })
 end)

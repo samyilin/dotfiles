@@ -18,7 +18,7 @@
       "src": "file:///Users/yilin/dbt-treesitter.nvim"
     },
     "dbtpal.nvim": {
-      "rev": "0b218945b2b83e267e9063799644d9f0ed40ff38",
+      "rev": "8829579d61f7d764e3e03a3c5a79fba1d39da8b6",
       "src": "https://github.com/samyilin/dbtpal.nvim"
     },
     "gitsigns.nvim": {
@@ -38,7 +38,7 @@
       "src": "https://github.com/neovim/nvim-lspconfig"
     },
     "nvim-treesitter": {
-      "rev": "d4d59cb369da46b95699bd2200efbcffc6dadb3b",
+      "rev": "de9f0f3dbdab1952f136dc7bd67ff3bafdf994da",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter"
     },
     "nvim-treesitter-context": {
