@@ -155,6 +155,18 @@ has() {
   cmd="$(command -v "$1" 2>/dev/null)" || return 1
   [ -x "$cmd" ]
 }
+# Notify on Cursor agent completion, like opencode2's
+# desktop notification (OSC 9; portable across Ghostty
+# on macOS/Linux). Cursor already emits BEL for the
+# audio chime; this adds the banner half.
+if has agent; then
+  agent() {
+    command agent "$@"
+    code=$?
+    printf "\033]9;%s\033\\" "agent done (exit $code)"
+    return "$code"
+  }
+fi
 # Use Starship prompt if present.
 if has starship; then
   eval "$(starship init bash)"
