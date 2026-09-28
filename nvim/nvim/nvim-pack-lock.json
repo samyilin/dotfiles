@@ -54,6 +54,11 @@
       "rev": "b73018b75affd13fa38e2fc94ef753b465f770d7",
       "src": "https://github.com/stevearc/oil.nvim.git"
     },
+    "real-icons.nvim": {
+      "rev": "671e8522b9cd1d35a824c4eee0c7b026e85a19cf",
+      "src": "https://github.com/samyilin/real-icons.nvim.git",
+      "version": "'dev'"
+    },
     "render-markdown.nvim": {
       "rev": "640a3ec6d538bad17c328be373c7cad0293d9589",
       "src": "https://github.com/MeanderingProgrammer/render-markdown.nvim"
