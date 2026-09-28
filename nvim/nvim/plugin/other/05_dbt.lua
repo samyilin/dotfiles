@@ -19,7 +19,6 @@ Config.now_if_args(function()
     extended_path_search = true,
     protect_compiled_files = true,
     picker_backend = 'mini.pick',
-    output_mode = 'float',
   })
 
   vim.api.nvim_create_autocmd('FileType', {
