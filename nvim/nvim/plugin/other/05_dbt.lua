@@ -15,7 +15,6 @@ Config.now_if_args(function()
     path_to_dbt_profiles_dir = vim.env.DBT_PROFILES_DIR
       or vim.fn.expand('~/.dbt'),
     include_project_dir = true,
-    include_profiles_dir = true,
     include_log_level = true,
     extended_path_search = true,
     protect_compiled_files = true,
