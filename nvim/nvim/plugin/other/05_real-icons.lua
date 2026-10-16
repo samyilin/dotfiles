@@ -1,8 +1,7 @@
 Config.now_if_args(function()
   vim.pack.add({
     {
-      src = 'https://github.com/samyilin/real-icons.nvim.git',
-      version = 'dev',
+      src = 'https://github.com/Mirsmog/real-icons.nvim.git',
     },
   }, { load = true })
   require('real-icons').setup({
