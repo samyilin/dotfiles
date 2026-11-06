@@ -18,11 +18,11 @@
       "src": "file:///Users/yilin/dbt-treesitter.nvim"
     },
     "dbtpal.nvim": {
-      "rev": "5933ad791b3d51665fb1b9ec0b01bb53e25b50cc",
+      "rev": "78acc2bcc777381527f2ad649f52637caf10c7a5",
       "src": "https://github.com/samyilin/dbtpal.nvim"
     },
     "gitsigns.nvim": {
-      "rev": "fd780920613e541cbdfac41bf711583ed49f9249",
+      "rev": "ef707fb93301a9b856f36eae4c8f56f5b988a794",
       "src": "https://github.com/lewis6991/gitsigns.nvim.git"
     },
     "lazydev.nvim": {
@@ -30,15 +30,15 @@
       "src": "https://github.com/folke/lazydev.nvim"
     },
     "mini.nvim": {
-      "rev": "e3f2349a65143ff062f0b70ee9d68d8ce35c7059",
+      "rev": "a321b535c75ca88ba7fddfd8eb5b583fbda50dd6",
       "src": "https://github.com/nvim-mini/mini.nvim"
     },
     "nvim-lspconfig": {
-      "rev": "ac062d0d01c019c0dbdb798968f3e5d8b35c3853",
+      "rev": "cc404d425c7752f56b8eaa269107be44d888ea51",
       "src": "https://github.com/neovim/nvim-lspconfig"
     },
     "nvim-treesitter": {
-      "rev": "ca581c3436fc2b236847f5b739ebc263739e5ca6",
+      "rev": "610734c5d3e59761d5f79318d120633374537fa5",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter"
     },
     "nvim-treesitter-context": {
@@ -71,7 +71,7 @@
       "src": "https://github.com/geigerzaehler/tree-sitter-jinja2"
     },
     "vim-bigquery-syntax": {
-      "rev": "44bbf82e99d69a48b4d39ce518e9aa9182cd9639",
+      "rev": "8609d09dcd3c145cf283a2e6c68d39c52d260a88",
       "src": "https://github.com/samyilin/vim-bigquery-syntax"
     },
     "vim-fugitive": {
