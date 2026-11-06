@@ -23,5 +23,5 @@ keybind = global:super+grave_accent=toggle_quick_terminal
 
 # Optional customization
 quick-terminal-position = center
-quick-terminal-size = 80%,80%
+quick-terminal-size = 100%,100%
 quick-terminal-autohide = true
