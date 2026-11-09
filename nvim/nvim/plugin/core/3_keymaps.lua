@@ -15,5 +15,3 @@ vim.keymap.set(
   function() vim.pack.update({}, { target = 'lockfile' }) end,
   { desc = 'Plugin update against lockfile' }
 )
--- Quick :lua
-vim.keymap.set('n', ';', ':lua ', { desc = 'lua command line' })
