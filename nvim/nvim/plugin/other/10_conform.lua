@@ -24,6 +24,10 @@ Config.later(function()
       return { timeout_ms = 50000, lsp_format = 'fallback' }
     end,
     formatters = {
+      sqlfluff = {
+        stdin = false,
+        args = { 'fix', '$FILENAME' },
+      },
       -- ['markdown-toc'] = {
       --   condition = function(_, ctx)
       --     for _, line in ipairs(vim.api.nvim_buf_get_lines(ctx.buf, 0, -1, false)) do
