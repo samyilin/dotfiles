@@ -15,3 +15,9 @@ vim.keymap.set(
   function() vim.pack.update({}, { target = 'lockfile' }) end,
   { desc = 'Plugin update against lockfile' }
 )
+vim.keymap.set(
+  'n',
+  '<leader>cp',
+  ':let @+ = expand("%:p")<CR>',
+  { silent = true, desc = 'Copy absolute path to clipboard' }
+)
