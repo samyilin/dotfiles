@@ -35,12 +35,6 @@ Config.now_if_args(function()
   vim.keymap.set('n', '-', '<CMD>Oil<CR>', { desc = 'Open parent directory' })
   vim.keymap.set(
     'n',
-    '`',
-    '<CMD>Oil --float<CR>',
-    { desc = 'Open parent directory' }
-  )
-  vim.keymap.set(
-    'n',
     '<leader>g1',
     function() vim.cmd(':e ' .. vim.uv.cwd()) end,
     { desc = 'Open CWD' }
