@@ -11,7 +11,13 @@ Config.now_if_args(function()
 
   require('snacks').setup({
     -- Technically only image needs to be enabed, enable here for sanity check
-    lazygit = { enabled = true },
+    lazygit = {
+      enabled = true,
+      win = {
+        -- backdrop = { transparent = false },
+        wo = { winblend = 0 },
+      },
+    },
     image = {
       enabled = true,
       -- Display size in terminal cells (defaults 80 X 40).
